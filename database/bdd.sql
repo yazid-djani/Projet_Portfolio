@@ -2,14 +2,14 @@
 -- 1. Configuration initiale et Base de données
 -- --------------------------------------------------------
 -- Création de l'utilisateur (si nécessaire)
-CREATE USER IF NOT EXISTS 'user_ipssi'@'localhost' IDENTIFIED BY 'Welcome2025!';
+CREATE USER IF NOT EXISTS 'user_quizzeo'@'localhost' IDENTIFIED BY 'Welcome2025!';
 
 -- Création de la BDD
 CREATE DATABASE IF NOT EXISTS quizzeo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE quizzeo;
 
 -- Attribution des droits
-GRANT SELECT, INSERT, UPDATE, DELETE ON quizzeo.* TO 'user_ipssi'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON quizzeo.* TO 'user_quizzeo'@'localhost';
 FLUSH PRIVILEGES;
 
 -- --------------------------------------------------------

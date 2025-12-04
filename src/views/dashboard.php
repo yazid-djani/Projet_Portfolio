@@ -47,5 +47,7 @@
             </tbody>
         </table>
     </div>
+    
+    <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@
                 
                 <select name="role" required>
                     <option value="" disabled selected>Type de compte</option>
-                    <option value="utilisateur">Joueur</option>
+                    <option value="utilisateur">Utilisateur Standard</option>
                     <option value="ecole">École</option>
                     <option value="entreprise">Entreprise</option>
                 </select>
@@ -76,6 +76,7 @@
         </div>
     </div>
 
+    <script src="public/scriptJS/dark_mode.js"></script>
     <script src="public/scriptJS/script_user.js"></script>
 </body>
 </html>

@@ -44,7 +44,6 @@
                 require __DIR__ . '/src/views/accueil.php';
                 break;
 
-            // Route générique (par défaut login)
             case 'auth':
                 (new UtilisateurController())->pageAuth('login'); 
                 break;
@@ -52,10 +51,8 @@
             // --- INSCRIPTION ---
             case 'inscription': 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // Traitement du formulaire
                     (new UtilisateurController())->inscription();
                 } else {
-                    // Affichage : Panneau Inscription ouvert ('register')
                     (new UtilisateurController())->pageAuth('register');
                 }
                 break;
@@ -63,10 +60,8 @@
             // --- CONNEXION ---
             case 'connexion':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // Traitement du formulaire
                     (new UtilisateurController())->connexion();
                 } else {
-                    // Affichage : Panneau Connexion ouvert ('login')
                     (new UtilisateurController())->pageAuth('login');
                 }
                 break;
@@ -156,6 +151,27 @@
             case 'admin_archive_quiz':
                 if (isset($_GET['id'])) {
                     (new AdminController())->archiverQuiz($_GET['id']);
+                }
+                break;
+
+            // --- NOUVELLES ROUTES CRÉATEURS ---
+            case 'admin_creators':
+                (new AdminController())->listeCreateurs();
+                break;
+
+            case 'admin_add_creator':
+                (new AdminController())->pageAjoutCreateur();
+                break;
+
+            case 'admin_grant_right':
+                if (isset($_GET['id'])) {
+                    (new AdminController())->validerCreateur($_GET['id']);
+                }
+                break;
+            
+            case 'admin_revoke_right':
+                if (isset($_GET['id'])) {
+                    (new AdminController())->retirerCreateur($_GET['id']);
                 }
                 break;
 

@@ -18,8 +18,14 @@ if (session_status() === PHP_SESSION_NONE) {
             
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 
-                <a href="index.php?route=admin_quizzes" class="nav-link" style="color:var(--primary-color); font-weight:bold;">Tous les Quiz</a>
+                <a href="index.php?route=admin_creators" class="nav-link">Créateurs</a>
+                
                 <span style="color:#ccc">|</span>
+
+                <a href="index.php?route=admin_quizzes" class="nav-link" style="color:var(--primary-color); font-weight:bold;">Tous les Quiz</a>
+                
+                <span style="color:#ccc">|</span>
+
                 <a href="index.php?route=admin_users&type=utilisateur" class="nav-link">Joueurs</a>
                 <a href="index.php?route=admin_users&type=ecole" class="nav-link">Écoles</a>
                 <a href="index.php?route=admin_users&type=entreprise" class="nav-link">Entreprises</a>

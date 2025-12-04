@@ -19,10 +19,8 @@ class AdminController {
 
     /**
      * Instancie le modèle Administrateur avec l'ID de la session courante.
-     * Cela permet d'utiliser les méthodes de gestion (voir utilisateurs, etc.).
      */
     private function getAdminModel() {
-        // On passe l'ID de l'admin connecté pour respecter le constructeur de Utilisateur
         return new Administrateur(['user_id' => $_SESSION['user_id']]);
     }
 
@@ -31,14 +29,12 @@ class AdminController {
      */
     public function dashboard() {
         $this->isAdmin();
-        
-        // Pour l'instant, on affiche le dashboard standard
         require __DIR__ . '/../views/dashboard.php'; 
     }
 
     /**
      * GESTION DES UTILISATEURS
-     * MODIFIÉ : Gère le filtrage par rôle via l'URL
+     * Gère le filtrage par rôle via l'URL
      */
     public function gererUtilisateurs() {
         $this->isAdmin();
@@ -73,55 +69,99 @@ class AdminController {
     public function toggleUserStatus($userId) {
         $this->isAdmin();
         $admin = $this->getAdminModel();
-        
         $admin->toggleStatutUtilisateur($userId);
-        
-        // On redirige vers la liste, en gardant le filtre s'il y en avait un (optionnel, ici retour simple)
         header('Location: index.php?route=admin_users');
         exit;
     }
 
     /**
-     * Donne ou retire le droit de création de quiz (pour Écoles/Entreprises).
+     * Donne ou retire le droit de création de quiz (Méthode générique).
      */
     public function toggleQuizCreationRight($userId) {
         $this->isAdmin();
         $admin = $this->getAdminModel();
-        
         $admin->toggleDroitCreationQuiz($userId);
-        
         header('Location: index.php?route=admin_users');
         exit;
     }
 
     /**
      * GESTION DES QUIZ
-     * Affiche la liste de tous les quiz créés sur la plateforme.
      */
     public function gererQuiz() {
         $this->isAdmin();
         $admin = $this->getAdminModel();
-
-        // Récupération de tous les quiz
         $quizzes = $admin->voirListeQuiz();
-
-        // Si vous avez créé la vue spécifique, utilisez admin_quizzes.php
-        // Sinon, dashboard.php peut faire l'affaire temporairement
-        // require __DIR__ . '/../views/admin_quizzes.php'; 
         require __DIR__ . '/../views/dashboard.php'; 
     }
 
     /**
-     * Archive un quiz (le rend inaccessible/désactivé).
+     * Archive un quiz.
      */
     public function archiverQuiz($quizId) {
         $this->isAdmin();
         $admin = $this->getAdminModel();
-        
-        // On passe le statut à 'archived'
         $admin->changerStatutQuiz($quizId, 'archived');
-        
         header('Location: index.php?route=admin_quizzes');
+        exit;
+    }
+
+    // ============================================================
+    // GESTION DES CRÉATEURS (Nouvelles méthodes)
+    // ============================================================
+
+    /**
+     * Affiche la liste des utilisateurs qui ONT le droit de créer des quiz.
+     */
+    public function listeCreateurs() {
+        $this->isAdmin();
+        $admin = $this->getAdminModel();
+        
+        // On récupère ceux qui ont le droit (1)
+        $creators = $admin->recupererParDroitCreation(1);
+        
+        require __DIR__ . '/../views/admin_creators.php';
+    }
+
+    /**
+     * Affiche la liste des utilisateurs qui N'ONT PAS le droit (pour les ajouter).
+     */
+    public function pageAjoutCreateur() {
+        $this->isAdmin();
+        $admin = $this->getAdminModel();
+        
+        // On récupère ceux qui n'ont pas le droit (0)
+        $users = $admin->recupererParDroitCreation(0);
+        
+        require __DIR__ . '/../views/admin_add_creator.php';
+    }
+
+    /**
+     * Donne le droit de création à un utilisateur spécifique.
+     */
+    public function validerCreateur($userId) {
+        $this->isAdmin();
+        $admin = $this->getAdminModel();
+        
+        // On donne le droit
+        $admin->toggleDroitCreationQuiz($userId);
+        
+        // Retour à la page d'ajout
+        header('Location: index.php?route=admin_add_creator');
+        exit;
+    }
+    
+    /**
+     * Retire le droit de création (depuis la liste des créateurs).
+     */
+    public function retirerCreateur($userId) {
+        $this->isAdmin();
+        $admin = $this->getAdminModel();
+        
+        // On retire le droit
+        $admin->toggleDroitCreationQuiz($userId);
+        
+        header('Location: index.php?route=admin_creators');
         exit;
     }
 }

@@ -40,6 +40,6 @@
         </div>
     </div>
 
-    <script src="public/scriptJS/accueil.js"></script>
+    <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

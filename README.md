@@ -1,5 +1,10 @@
 # Projet_Quizzeo
 
+0. Code de connexion SuperAdministrateur 
+
+email : admin@quizzeo.com
+mdp	  : admin123
+
 1. Présentation du projet
 
 Quizzeo est une application web permettant :
@@ -12,44 +17,80 @@ Quizzeo est une application web permettant :
 Le projet est construit en PHP, architecturé en MVC, et utilise Composer pour l’autoload.
 
 2. Arborescence du projet
-Projet_Quizzeo/
+
+Quizzeo_SLY/
 │
-├── public/
-│   ├── index.php           # Router principal
-│   ├── connexion_inscription.php
-│   ├── quiz_form.php
-│   ├── resultat.php
-│   ├── admin_users.php
-│   └── assets/             # (CSS/JS)
+├── .env
+├── .gitignore
+├── composer.json
+├── composer.lock
+├── index.php
+├── LICENSE
+├── README.md
 │
-├── src/
-│   ├── Controllers/
-│   │   ├── UtilisateurController.php
-│   │   ├── QuizController.php
-│   │   ├── GameController.php
-│   │   └── AdminController.php
-│   │
-│   ├── Models/
-│   │   ├── Utilisateur.php
-│   │   ├── Administrateur.php
-│   │   ├── Ecole.php
-│   │   ├── Entreprise.php
-│   │   ├── Quiz.php
-│   │   ├── Question.php
-│   │   ├── Choix.php
-│   │   ├── Tentative.php
-│   │   └── Reponse.php
-│   │
-│   └── Lib/
-│       └── Database.php
+├── annexe/
+│   ├── Diagramme_utilisation.drawio.png
+│   ├── doc_avancement.md
+│   ├── UML_V1.png
+│   └── UML_V2.png
 │
 ├── database/
-│   └── bdd.sql            # Structure + données de test
+│   └── bdd.sql
 │
-├── composer.json          # Autoload PSR-4  [oai_citation:1‡composer.json](file-service://file-EiYXWdrELtvRLR46JkRniB)
-├── composer.lock
-├── LICENSE
-└── README.md
+├── public/
+│   ├── css/
+│   │   ├── dark_mode.css
+│   │   ├── navbar.css
+│   │   ├── style_admin.css
+│   │   ├── style_user.css
+│   │   └── variables.css
+│   │
+│   └── scriptJS/
+│       ├── dark_mode.js
+│       ├── script_role.js
+│       └── script_user.js
+│
+├── src/
+│   ├── controllers/
+│   │   ├── AdminController.php
+│   │   ├── GameController.php
+│   │   ├── QuizController.php
+│   │   └── UtilisateurController.php
+│   │
+│   ├── lib/
+│   │   └── Database.php
+│   │
+│   ├── models/
+│   │   ├── Administrateur.php
+│   │   ├── Choix.php
+│   │   ├── Ecole.php
+│   │   ├── Entreprise.php
+│   │   ├── Question.php
+│   │   ├── Quiz.php
+│   │   ├── Reponse.php
+│   │   ├── Tentative.php
+│   │   └── Utilisateur.php
+│   │
+│   └── views/
+│       ├── admin/
+│       │   ├── admin_add_creator.php
+│       │   ├── admin_create_group.php
+│       │   ├── admin_creators.php
+│       │   ├── admin_edit_user.php
+│       │   ├── admin_groups_list.php
+│       │   └── admin_users.php
+│       │
+│       ├── layout/
+│       │   └── navbar.php
+│       │
+│       ├── accueil.php
+│       ├── add_question.php
+│       ├── connexion_inscription.php
+│       ├── dashboard.php
+│       ├── play_quiz.php
+│       ├── quiz_form.php
+│       └── resultat.php
+
 
 3. Accéder au site
  

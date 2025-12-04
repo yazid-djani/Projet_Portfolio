@@ -13,8 +13,6 @@ class Utilisateur {
     protected $role;
     private $status;
     private $can_create_quiz;
-    
-    // Modification : On stocke l'ID du groupe (clé étrangère), pas le code
     private $group_id;
 
     public function __construct(array $data) {
@@ -27,8 +25,6 @@ class Utilisateur {
         $this->role = $data['role'] ?? "utilisateur";
         $this->status = $data['status'] ?? "active";
         $this->can_create_quiz = $data['can_create_quiz'] ?? 0;
-        
-        // On récupère l'ID du groupe s'il est fourni
         $this->group_id = $data['group_id'] ?? null;
     }
 
@@ -49,7 +45,6 @@ class Utilisateur {
     }
 
     // --- NOUVELLE MÉTHODE : Vérifier un code groupe ---
-    // Retourne l'ID du groupe si le code existe, sinon false
     public static function verifierCodeGroupe($code) {
         $pdo = Database::getPDO();
         $stmt = $pdo->prepare("SELECT group_id FROM groups WHERE code = ?");
@@ -60,8 +55,6 @@ class Utilisateur {
     // --- SAUVEGARDE EN BDD ---
     public function save(){
         $pdo = Database::getPDO();
-        
-        // Modification : Insertion de 'group_id' au lieu de 'group_code'
         $sql = "INSERT INTO users (user_firstname, user_lastname, user_email, user_age, password_hash, role, status, can_create_quiz, group_id, created_at) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         
@@ -76,7 +69,7 @@ class Utilisateur {
             $this->role,
             $this->status,
             $this->can_create_quiz,
-            $this->group_id // Ici on enregistre l'ID du groupe (ou NULL)
+            $this->group_id
         ]);
     }
 

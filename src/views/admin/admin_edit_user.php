@@ -12,13 +12,10 @@ $allGroups = $groupsStmt->fetchAll();
 // 3. Traitement du formulaire de modification
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newGroupId = $_POST['group_id'];
-    
-    // Mise à jour
     $updateStmt = $pdo->prepare("UPDATE users SET group_id = ? WHERE user_id = ?");
     $updateStmt->execute([$newGroupId, $id_user_a_modifier]);
     
     echo "Utilisateur déplacé vers le nouveau groupe !";
-    // Rafraichir la page pour voir le changement
     header("Refresh:0"); 
 }
 ?>

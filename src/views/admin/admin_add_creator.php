@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="stylesheet" href="public/css/variables.css">
     <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/dark_mode.css">
     <link rel="stylesheet" href="public/css/style_user.css">
     <link rel="stylesheet" href="public/css/style_admin.css">
-    
     <title>Ajouter un Créateur</title>
 </head>
 <body>

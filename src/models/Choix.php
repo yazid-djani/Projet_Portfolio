@@ -4,13 +4,13 @@ use App\Lib\Database;
 
 class Choix {
     private $id_choix;
-    private $id_question; // Ajouté
+    private $id_question;
     private $libelle;
     private $estCorrect;
 
     public function __construct(array $data){
         $this->id_choix = $data['id_choix'] ?? null;
-        $this->id_question = $data['id_question']; // Important
+        $this->id_question = $data['id_question'];
         $this->libelle = $data['libelle'];
         $this->estCorrect = $data['est_correct'] ?? 0;
     }

@@ -9,7 +9,7 @@ class Quiz{
     private $description;
     private $statut;
     private $proprietaire;
-    private $visibility; // NOUVEAU
+    private $visibility;
     private $date_lancement;
     private $date_cloture;
     private $created_at;
@@ -21,7 +21,7 @@ class Quiz{
         $this->description      = $data['description'] ?? null;
         $this->statut           = $data['statut'] ?? 'brouillon';
         $this->proprietaire     = $data['proprietaire'] ?? 'utilisateur';
-        $this->visibility       = $data['visibility'] ?? 'public'; // Par défaut public
+        $this->visibility       = $data['visibility'] ?? 'public';
         $this->date_lancement   = !empty($data['date_lancement']) ? $data['date_lancement'] : null;
         $this->date_cloture     = !empty($data['date_cloture']) ? $data['date_cloture'] : null;
         $this->created_at       = $data['created_at'] ?? null;
@@ -33,7 +33,6 @@ class Quiz{
 
     public function save() {
         $pdo = Database::getPDO();
-        // Ajout de 'visibility' dans l'INSERT
         $sql = "INSERT INTO quiz (user_id, titre, description, proprietaire, status, visibility, date_lancement, date_cloture) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
@@ -42,7 +41,7 @@ class Quiz{
             $this->description,
             $this->proprietaire,
             $this->statut,
-            $this->visibility, // Sauvegarde de la visibilité
+            $this->visibility,
             $this->date_lancement,
             $this->date_cloture
         ]);
@@ -59,36 +58,33 @@ class Quiz{
         return Database::getPDO()->lastInsertId();
     }
 
-    /**
-     * NOUVEAU : Récupère les quiz visibles pour un utilisateur donné.
-     * - Les quiz PUBLIC
-     * - Les quiz PRIVÉS dont le créateur a le MÊME group_code que l'utilisateur
-     */
     public static function getAvailableQuizzesForUser($user) {
         $pdo = Database::getPDO();
-        
-        // Si l'utilisateur n'est pas connecté ou n'a pas de groupe
-        $userGroup = ($user) ? $user->getGroupCode() : null;
+        $userGroupId = ($user) ? $user->getGroupId() : null;
 
-        if (empty($userGroup)) {
-            // Uniquement les quiz publics
-            $sql = "SELECT * FROM quiz WHERE status = 'published' AND visibility = 'public' ORDER BY created_at DESC";
+        if (!$userGroupId) {
+            $sql = "SELECT q.*, u.user_firstname, u.user_lastname 
+                    FROM quiz q
+                    JOIN users u ON q.user_id = u.user_id
+                    WHERE q.status = 'published' AND q.visibility = 'public'
+                    ORDER BY q.created_at DESC";
             $stmt = $pdo->query($sql);
             return $stmt->fetchAll();
-        } else {
-            // Publics + Privés du même groupe
-            $sql = "SELECT q.* FROM quiz q
+        } 
+        else {
+            $sql = "SELECT q.*, u.user_firstname, u.user_lastname 
+                    FROM quiz q
                     JOIN users u ON q.user_id = u.user_id
                     WHERE q.status = 'published' 
                     AND (
                         q.visibility = 'public' 
                         OR 
-                        (q.visibility = 'private' AND u.group_code = ?)
+                        (q.visibility = 'private' AND u.group_id = ?)
                     )
                     ORDER BY q.created_at DESC";
             
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$userGroup]);
+            $stmt->execute([$userGroupId]);
             return $stmt->fetchAll();
         }
     }

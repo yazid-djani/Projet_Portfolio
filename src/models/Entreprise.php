@@ -26,7 +26,6 @@ class Entreprise extends Utilisateur
         return $stmt->fetchAll();
     }
 
-    // Statistiques spécifiques pour l'entreprise (ex: moyenne des scores)
     public function visualiserResultatsEntreprise() {
         $pdo = Database::getPDO();
         $sql = "SELECT q.titre, AVG(t.score_total) as moyenne_score, COUNT(t.id_tentative) as nb_participants

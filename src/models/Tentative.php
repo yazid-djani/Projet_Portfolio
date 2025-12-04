@@ -15,8 +15,6 @@ class Tentative {
         $this->id_tentative = $data['id_tentative'] ?? null;
         $this->id_quiz      = $data['id_quiz'] ?? null;
         $this->user_id      = $data['user_id'] ?? null;
-        
-        // Si aucune date n'est fournie, on prend la date actuelle
         $this->date_debut   = $data['date_debut'] ?? date('Y-m-d H:i:s');
         $this->date_fin     = $data['date_fin'] ?? null;
         $this->score_total  = $data['score_total'] ?? 0;
@@ -30,15 +28,14 @@ class Tentative {
     public function getDateFin()     { return $this->date_fin; }
     public function getScoreTotal()  { return $this->score_total; }
 
-    // --- SETTERS (si besoin pour mettre à jour après le constructeur) ---
+    // --- SETTERS ---
     public function setScoreTotal($score) { $this->score_total = $score; }
     public function setDateFin($date)     { $this->date_fin = $date; }
 
     // --- SAUVEGARDE EN BDD ---
     public function save() {
         $pdo = Database::getPDO();
-        
-        // Si on a déjà un ID, c'est une mise à jour (fin de quiz)
+    
         if ($this->id_tentative) {
             $stmt = $pdo->prepare("UPDATE tentative SET score_total = ?, date_fin = ? WHERE id_tentative = ?");
             return $stmt->execute([
@@ -47,7 +44,6 @@ class Tentative {
                 $this->id_tentative
             ]);
         } 
-        // Sinon, c'est une nouvelle tentative (début de quiz)
         else {
             $stmt = $pdo->prepare("INSERT INTO tentative (id_quiz, user_id, date_debut, score_total) VALUES (?, ?, ?, ?)");
             $result = $stmt->execute([
@@ -57,7 +53,6 @@ class Tentative {
                 $this->score_total
             ]);
             
-            // On récupère l'ID généré pour l'objet actuel
             if ($result) {
                 $this->id_tentative = $pdo->lastInsertId();
             }

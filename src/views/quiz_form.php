@@ -15,10 +15,8 @@
     <div class="container">
         <form method="POST" action="index.php?route=creer_quiz">
             <h1>Nouveau Quiz</h1>
-            
             <input type="text" name="titre" placeholder="Titre du quiz" required>
             <input type="text" name="description" placeholder="Description courte">
-            
             <div style="text-align:left; width:100%; margin: 15px 0;">
                 <span style="font-weight:bold; color:var(--text-muted); font-size:0.9em;">Visibilité :</span>
                 <div style="margin-top: 5px;">
@@ -32,7 +30,6 @@
                     </label>
                 </div>
             </div>
-
             <span style="display:block; text-align:left; margin-top:10px;">Dates (Optionnel)</span>
             <input type="datetime-local" name="date_lancement" placeholder="Date de début">
             <input type="datetime-local" name="date_cloture" placeholder="Date de fin">
@@ -41,7 +38,6 @@
             <a href="index.php?route=dashboard" style="margin-top: 15px; display:inline-block; font-size:0.9em;">Annuler</a>
         </form>
     </div>
-
     <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

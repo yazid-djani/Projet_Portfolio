@@ -3,15 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link rel="stylesheet" href="public/css/variables.css">
-    
     <link rel="stylesheet" href="public/css/navbar.css">
-    
     <link rel="stylesheet" href="public/css/dark_mode.css">
-    
     <link rel="stylesheet" href="public/css/style_user.css">
-    
     <title>Quizzeo</title>
 </head>
 <body>
@@ -20,7 +15,7 @@
         <h2>Ajouter une question</h2>
         <form method="POST" action="index.php?route=traitement_question">
             <input type="hidden" name="id_quiz" value="<?= htmlspecialchars($id_quiz) ?>">
-            
+
             <label>Question :</label>
             <input type="text" name="libelle_question" required placeholder="Intitulé de la question">
             

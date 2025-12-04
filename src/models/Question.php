@@ -5,7 +5,6 @@
     use App\Lib\Database;
 
     class Question{
-        // CORRECTION : Typage nullable correct
         private ?int $id_question;
         private int $id_quiz;
         private string $libelle;        
@@ -19,16 +18,11 @@
         
         // --- GETTERS ---
         public function getIdQuestion() : ?int   { return $this->id_question; }
-        
-        // CORRECTION : Uniformisation du nom (un seul 'z' comme la propriété)
         public function getIdQuiz()    : int    { return $this->id_quiz; }
 
         // --- SETTERS ---
         public function setIdQuestion(int $id_question) : void { $this->id_question = $id_question; }
-        
-        // CORRECTION : Uniformisation du nom (un seul 'z')
         public function setIdQuiz(int $id_quiz)        : void { $this->id_quiz = $id_quiz; }
-        
 
         // --- METHODE ---
         public function save(){

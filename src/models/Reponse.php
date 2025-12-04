@@ -7,7 +7,6 @@
         private $est_correct;
 
         public function __construct(array $data){
-            // CORRECTION : Utilisation de l'opérateur null coalescent pour éviter les erreurs "Undefined index"
             $this->id_reponse = $data['id_reponse'] ?? null;
             $this->est_correct = $data['est_correct'] ?? null;
         }
@@ -16,7 +15,6 @@
         public function getId_reponse(){ return $this->id_reponse; }
         public function getest_correct(){ return $this->est_correct; }
 
-        
          // SAUVEGARDE DES SAISIES UTILISATEURS
         public function save(int $tentativeId, int $questionId, int $choixId, bool $estCorrect){
             $pdo = Database::getPDO();

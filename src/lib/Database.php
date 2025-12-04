@@ -8,10 +8,6 @@
 
     class Database
     {
-        /**
-         * Retourne une instance PDO connectée à la base de données.
-         * Utilise un singleton pour éviter les reconnexions multiples.
-         */
         public static function getPDO(): PDO
         {
             static $pdo = null;

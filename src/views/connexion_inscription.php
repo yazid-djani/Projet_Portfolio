@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="public/css/navbar.css">
     <link rel="stylesheet" href="public/css/dark_mode.css">
     <link rel="stylesheet" href="public/css/style_user.css">
-    
     <title>Quizzeo - Authentification</title>
 </head>
 

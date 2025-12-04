@@ -1,7 +1,5 @@
 <?php
     declare(strict_types=1);
-
-    // Importation des classes nécessaires
     use Dotenv\Dotenv;
     use App\Controllers\UtilisateurController;
     use App\Controllers\QuizController;

@@ -1,59 +1,83 @@
 <?php
     declare(strict_types=1);
 
+    // Importation des classes nécessaires
     use Dotenv\Dotenv;
     use App\Controllers\UtilisateurController;
     use App\Controllers\QuizController;
     use App\Controllers\GameController;
     use App\Controllers\AdminController;
 
+    // Chargement de l'autoloader Composer
     require_once __DIR__ . '/vendor/autoload.php';
 
+    // Démarrage de la session
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
 
+    // Chargement des variables d'environnement (.env)
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
 
     // --- ROUTAGE ---
-    $route          = $_GET['route'] ?? 'accueil'; // On met 'accueil' par défaut
+    $route          = $_GET['route'] ?? 'accueil';
     $is_logged_in   = isset($_SESSION['user_id']);
     
-    // AJOUT DE 'accueil' DANS LES ROUTES PUBLIQUES
+    // Liste des routes accessibles sans être connecté
     $public_routes  = ['home', 'accueil', 'auth', 'inscription', 'connexion'];
 
+    // Redirection si l'utilisateur n'est pas connecté et tente d'accéder à une page privée
     if (!$is_logged_in && !in_array($route, $public_routes)) {
-        header('Location: index.php?route=auth&mode=login&message=' . urlencode('Veuillez vous connecter.'));
+        header('Location: index.php?route=connexion&error=auth_required');
         exit;
     }
 
     try {
         switch ($route) {
+            // ==============================
+            // ROUTES PUBLIQUES
+            // ==============================
             
-            // CORRECTION : AJOUT DE LA ROUTE ACCUEIL
             case 'accueil':
             case 'home':
                 require __DIR__ . '/src/views/accueil.php';
                 break;
 
+            // Route générique (par défaut login)
             case 'auth':
-                (new UtilisateurController())->inscription_form(); 
+                (new UtilisateurController())->pageAuth('login'); 
                 break;
             
-            // ... LE RESTE DE VOS ROUTES RESTE INCHANGÉ ...
+            // --- INSCRIPTION ---
             case 'inscription': 
-                (new UtilisateurController())->inscription();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // Traitement du formulaire
+                    (new UtilisateurController())->inscription();
+                } else {
+                    // Affichage : Panneau Inscription ouvert ('register')
+                    (new UtilisateurController())->pageAuth('register');
+                }
                 break;
 
+            // --- CONNEXION ---
             case 'connexion':
-                (new UtilisateurController())->connexion();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // Traitement du formulaire
+                    (new UtilisateurController())->connexion();
+                } else {
+                    // Affichage : Panneau Connexion ouvert ('login')
+                    (new UtilisateurController())->pageAuth('login');
+                }
                 break;
 
             case 'deconnexion':
                 (new UtilisateurController())->deconnexion();
                 break;
 
+            // ==============================
+            // ROUTES TABLEAU DE BORD
+            // ==============================
             case 'dashboard':
                 (new QuizController())->dashboard();
                 break;
@@ -83,6 +107,9 @@
                 }
                 break;
 
+            // ==============================
+            // ROUTES JEU & RÉSULTATS
+            // ==============================
             case 'jouer_quiz':
                 if (isset($_GET['id'])) {
                     (new GameController())->play($_GET['id']);
@@ -103,6 +130,9 @@
                 require __DIR__ . '/src/views/resultat.php';
                 break;
 
+            // ==============================
+            // ROUTES ADMINISTRATION
+            // ==============================
             case 'admin_users':
                 (new AdminController())->gererUtilisateurs(); 
                 break;
@@ -129,9 +159,12 @@
                 }
                 break;
 
+            // ==============================
+            // GESTION 404
+            // ==============================
             default:
                 http_response_code(404);
-                echo "<h1>Erreur 404</h1><p>Page introuvable.</p>";
+                echo "<h1>Erreur 404</h1><p>La page demandée n'existe pas.</p>";
                 echo '<a href="index.php?route=accueil">Retour à l\'accueil</a>';
                 break;
         }

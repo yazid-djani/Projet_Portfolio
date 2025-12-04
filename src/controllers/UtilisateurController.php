@@ -4,19 +4,24 @@ use App\Models\Utilisateur;
 
 class UtilisateurController {
     
-    public function inscription_form(){
+    /**
+     * Affiche la page d'authentification (Vue unique avec Sliding Panel).
+     * @param string $mode 'login' (défaut) ou 'register'
+     */
+    public function pageAuth($mode = 'login') {
+        // La variable $containerClass sera utilisée dans la vue.
+        // Si mode = 'register', on ajoute la classe 'active' pour faire glisser le panneau.
+        $containerClass = ($mode === 'register') ? 'active' : '';
+
         require __DIR__ . '/../views/connexion_inscription.php';
     }
     
     public function inscription() : void {
-        // SÉCURITÉ : On vérifie que le formulaire a bien été soumis
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            // CORRECTION : Redirection vers 'auth' car 'accueil' n'existe pas dans le routeur
-            header("Location: index.php?route=auth");
+            header("Location: index.php?route=inscription");
             exit;
         }
 
-        // 1. GESTION DU RÔLE
         $rolePost = $_POST['role'] ?? 'utilisateur';
         $rolesAutorises = ['utilisateur', 'ecole', 'entreprise'];
         
@@ -24,7 +29,6 @@ class UtilisateurController {
             $rolePost = 'utilisateur';
         }
 
-        // 2. PRÉPARATION DES DONNÉES
         $data = [
             "user_firstname"  => htmlspecialchars($_POST['prenom'] ?? ''),
             "user_lastname"   => htmlspecialchars($_POST['nom'] ?? ''),
@@ -38,24 +42,23 @@ class UtilisateurController {
 
         $user = new Utilisateur($data);
         
-        // 3. SAUVEGARDE EN BDD
         try {
             if($user->save()) {
-                // CORRECTION : Redirection vers 'auth' avec message de succès
-                header("Location: index.php?route=auth&success=1");
+                // SUCCÈS : On redirige vers la page CONNEXION (mode login)
+                header("Location: index.php?route=connexion&success=1");
             } else {
-                header("Location: index.php?route=auth&error=1");
+                // ERREUR : On reste sur INSCRIPTION (mode register)
+                header("Location: index.php?route=inscription&error=1");
             }
         } catch (\Exception $e) {
-            header("Location: index.php?route=auth&error=" . urlencode($e->getMessage()));
+            header("Location: index.php?route=inscription&error=" . urlencode($e->getMessage()));
         }
         exit;
     }
 
     public function connexion(){
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            // CORRECTION : Redirection vers 'auth'
-            header("Location: index.php?route=auth");
+            header("Location: index.php?route=connexion");
             exit;
         }
 
@@ -63,16 +66,15 @@ class UtilisateurController {
         $password = $_POST['password'] ?? ''; 
 
         if (empty($email) || empty($password)) {
-            // CORRECTION : Redirection vers 'auth'
-            header("Location: index.php?route=auth&error=missing_fields");
+            header("Location: index.php?route=connexion&error=missing_fields");
             exit;
         }
 
         $user = Utilisateur::findByEmail($email);
 
         if (!$user || !$user->verifyPassword($password)) {
-            // CORRECTION : Redirection vers 'auth'
-            header("Location: index.php?route=auth&error=login_failed");
+            // ERREUR : On reste sur CONNEXION
+            header("Location: index.php?route=connexion&error=login_failed");
             exit;
         }
 
@@ -90,8 +92,8 @@ class UtilisateurController {
 
     public function deconnexion(){
         session_destroy();
-        // CORRECTION : Redirection vers 'auth' après déconnexion
-        header("Location: index.php?route=auth");
+        // Après déconnexion, on retourne sur la page de connexion
+        header("Location: index.php?route=connexion");
         exit;
     }
 }

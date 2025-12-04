@@ -1,4 +1,5 @@
 <?php
+// On vérifie si la session est active, sinon on la démarre (sécurité)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,10 +18,8 @@ if (session_status() === PHP_SESSION_NONE) {
             
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 
-                <a href="index.php?route=admin_quizzes" class="nav-link" style="color:var(--primary-color); font-weight:bold;">Touts les Quiz</a>
-                
+                <a href="index.php?route=admin_quizzes" class="nav-link" style="color:var(--primary-color); font-weight:bold;">Tous les Quiz</a>
                 <span style="color:#ccc">|</span>
-
                 <a href="index.php?route=admin_users&type=utilisateur" class="nav-link">Joueurs</a>
                 <a href="index.php?route=admin_users&type=ecole" class="nav-link">Écoles</a>
                 <a href="index.php?route=admin_users&type=entreprise" class="nav-link">Entreprises</a>
@@ -34,8 +33,10 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php else: ?>
             <a href="index.php?route=informationentreprise" class="nav-link">Entreprises</a>
             <a href="index.php?route=informationecole" class="nav-link">Écoles</a>
+
             <a href="index.php?route=inscription" class="nav-link">Inscription</a>
             <a href="index.php?route=connexion" class="nav-btn btn-login">Connexion</a>
+
         <?php endif; ?>
 
         <button id="theme-toggle" class="theme-btn">

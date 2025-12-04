@@ -13,7 +13,7 @@
     <title>Ajouter un Créateur</title>
 </head>
 <body>
-    <?php require_once __DIR__ . '/layout/navbar.php'; ?>
+    <?php require_once __DIR__ . '/../layout/navbar.php'; ?>
 
     <div class="app-container">
         <div style="margin-bottom: 20px;">

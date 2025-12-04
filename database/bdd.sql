@@ -161,7 +161,7 @@ VALUES
 (1, 2, 'Quiz PHP débutant', 'Questions simples pour réviser les bases de PHP.', 'ecole', 'published', 'public', '2025-01-01 10:00:00', '2025-01-05 09:00:00', NULL),
 
 -- Quiz 2 : Culture G (Privé, créé par Emma TECH_CORP) -> Visible UNIQUEMENT par Lucas (qui est dans TECH_CORP)
-(2, 6, 'Culture d\'Entreprise', 'Test interne pour les employés de Tech Corp.', 'entreprise', 'published', 'private', '2025-01-02 11:00:00', '2025-01-06 09:00:00', NULL),
+(2, 6, "Culture d\'Entreprise", 'Test interne pour les employés de Tech Corp.', 'entreprise', 'published', 'private', '2025-01-02 11:00:00', '2025-01-06 09:00:00', NULL),
 
 -- Quiz 3 : Sport (Brouillon, créé par Paul) -> Visible par personne sauf Paul
 (3, 3, 'Quiz Sport', 'Questions sur le sport et ses règles.', 'utilisateur', 'brouillon', 'public', '2025-01-03 12:00:00', NULL, NULL);
@@ -172,11 +172,11 @@ VALUES
 
 INSERT INTO question (id_question, id_quiz, libelle)
 VALUES
-(1, 1, 'Que signifie l''acronyme PHP ?'),
+(1, 1, "Que signifie l'acronyme PHP ?"),
 (2, 1, 'Quelle superglobale PHP contient les données envoyées en POST ?'),
 (3, 1, 'Quel opérateur est utilisé pour la concaténation de chaînes en PHP ?'),
 (4, 2, 'Quelle est la valeur principale de Tech Corp ?'),
-(5, 2, 'En quelle année a été fondée l\'entreprise ?'),
+(5, 2, "En quelle année a été fondée l\'entreprise ?"),
 (6, 2, 'Qui est le CEO actuel ?'),
 (7, 3, 'Combien de joueurs y a-t-il sur le terrain pour une équipe de football en match officiel ?'),
 (8, 3, 'En NBA, combien de points vaut un tir derrière la ligne à trois points ?'),

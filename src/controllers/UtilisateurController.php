@@ -15,6 +15,7 @@ class UtilisateurController {
             exit;
         }
 
+        // Gestion du rôle
         $rolePost = $_POST['role'] ?? 'utilisateur';
         $rolesAutorises = ['utilisateur', 'ecole', 'entreprise'];
         
@@ -22,8 +23,25 @@ class UtilisateurController {
             $rolePost = 'utilisateur';
         }
 
-        // Récupération et nettoyage du code groupe
+        // --- DEBUT DE LA MODIFICATION POUR LE GROUPE ---
+        
+        // 1. Récupération du code saisi
         $groupCode = !empty($_POST['group_code']) ? strtoupper(trim(htmlspecialchars($_POST['group_code']))) : null;
+        $groupIdTrouve = null;
+
+        // 2. Vérification s'il y a un code
+        if ($groupCode) {
+            // Appel de la méthode statique du Modèle
+            $groupIdTrouve = Utilisateur::verifierCodeGroupe($groupCode);
+
+            // Si le code est incorrect (la méthode renvoie false)
+            if (!$groupIdTrouve) {
+                $msg = "Le code groupe '{$groupCode}' est invalide.";
+                header("Location: index.php?route=inscription&error=" . urlencode($msg));
+                exit; // On arrête tout ici
+            }
+        }
+        // --- FIN DE LA MODIFICATION ---
 
         $data = [
             "user_firstname"  => htmlspecialchars($_POST['prenom'] ?? ''),
@@ -34,7 +52,7 @@ class UtilisateurController {
             "role"            => $rolePost,
             "status"          => "active",
             "can_create_quiz" => 0,
-            "group_code"      => $groupCode // Ajout ici
+            "group_id"        => $groupIdTrouve // On passe l'ID validé (ou null)
         ];
 
         $user = new Utilisateur($data);

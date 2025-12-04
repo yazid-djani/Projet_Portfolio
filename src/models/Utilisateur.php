@@ -14,8 +14,8 @@ class Utilisateur {
     private $status;
     private $can_create_quiz;
     
-    // NOUVEAU : Code de groupe (pour lier des élèves à une école/entreprise)
-    private $group_code;
+    // Modification : On stocke l'ID du groupe (clé étrangère), pas le code
+    private $group_id;
 
     public function __construct(array $data) {
         $this->id = $data['user_id'] ?? $data['id'] ?? null;
@@ -28,8 +28,8 @@ class Utilisateur {
         $this->status = $data['status'] ?? "active";
         $this->can_create_quiz = $data['can_create_quiz'] ?? 0;
         
-        // Initialisation du code groupe
-        $this->group_code = $data['group_code'] ?? null;
+        // On récupère l'ID du groupe s'il est fourni
+        $this->group_id = $data['group_id'] ?? null;
     }
 
     // --- GETTERS ---
@@ -41,22 +41,29 @@ class Utilisateur {
     public function getRole() { return $this->role; }
     public function isActive() { return $this->status === 'active'; }
     public function canCreateQuiz() { return $this->can_create_quiz == 1; }
-    
-    // Getter pour le groupe
-    public function getGroupCode() { return $this->group_code; }
+    public function getGroupId() { return $this->group_id; }
 
     // --- VÉRIFICATION MOT DE PASSE ---
     public function verifyPassword($password){
         return password_verify($password, $this->password);
     }
 
+    // --- NOUVELLE MÉTHODE : Vérifier un code groupe ---
+    // Retourne l'ID du groupe si le code existe, sinon false
+    public static function verifierCodeGroupe($code) {
+        $pdo = Database::getPDO();
+        $stmt = $pdo->prepare("SELECT group_id FROM groups WHERE code = ?");
+        $stmt->execute([$code]);
+        return $stmt->fetchColumn(); 
+    }
+
     // --- SAUVEGARDE EN BDD ---
     public function save(){
         $pdo = Database::getPDO();
         
-        // Ajout de 'group_code' dans la requête
-        $sql = "INSERT INTO users (user_firstname, user_lastname, user_email, user_age, password_hash, role, status, can_create_quiz, group_code) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Modification : Insertion de 'group_id' au lieu de 'group_code'
+        $sql = "INSERT INTO users (user_firstname, user_lastname, user_email, user_age, password_hash, role, status, can_create_quiz, group_id, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
         
         $stmt = $pdo->prepare($sql);
         
@@ -69,7 +76,7 @@ class Utilisateur {
             $this->role,
             $this->status,
             $this->can_create_quiz,
-            $this->group_code // Insertion du code groupe
+            $this->group_id // Ici on enregistre l'ID du groupe (ou NULL)
         ]);
     }
 

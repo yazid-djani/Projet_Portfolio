@@ -13,7 +13,7 @@
     <title>Gestion des Créateurs</title>
 </head>
 <body>
-    <?php require_once __DIR__ . '/layout/navbar.php'; ?>
+    <?php require_once __DIR__ . '/../layout/navbar.php'; ?>
 
     <div class="app-container">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">

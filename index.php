@@ -42,13 +42,12 @@
             // ==============================
             
             case 'home':
-                // Affiche la Landing Page (Page d'accueil vitrine)
-                (new UtilisateurController())->pageAccueil(); 
-                break;
+                // CORRECTION : Redirection vers auth car pageAccueil() n'existe pas dans le contrôleur
+                header('Location: index.php?route=auth');
+                exit;
 
             case 'auth':
                 // Affiche la page de Connexion / Inscription
-                // Le paramètre &mode=login ou &mode=register gère l'onglet actif
                 (new UtilisateurController())->inscription_form(); 
                 break;
             
@@ -75,15 +74,16 @@
                 break;
 
             case 'creer_quiz':
+                $quizController = new QuizController();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    (new QuizController())->creerQuiz();
+                    $quizController->creerQuiz();
                 } else {
-                    (new QuizController())->creerQuizForm();
+                    $quizController->creerQuizForm();
                 }
                 break;
 
             case 'modifier_quiz':
-                // Fonctionnalité future
+                // Fonctionnalité future (placeholder)
                 echo "Fonctionnalité de modification à implémenter."; 
                 break;
 

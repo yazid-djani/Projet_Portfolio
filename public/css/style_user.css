@@ -1,0 +1,130 @@
+/* ==========================================================================
+    STYLE_USER.CSS
+    Styles pour l'accueil, la connexion, l'inscription et le dashboard utilisateur.
+    ========================================================================== */
+
+/* --- ACCUEIL (Landing) --- */
+.landing-container {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 850px;
+    margin: 40px auto;
+}
+
+.landing-title {
+    font-family: 'Righteous', cursive; /* Titre rétro */
+    color: var(--text-main);
+    font-size: 3em;
+    margin-bottom: 20px;
+    /* Légère ombre portée pour le relief */
+    text-shadow: 2px 2px 0px var(--border-color);
+}
+
+.btn-group {
+    margin-top: 40px;
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+}
+
+/* Gros boutons de l'accueil */
+.btn-landing {
+    padding: 14px 35px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    color: var(--bg-container) !important;
+    background-color: var(--accent-color); /* Bleu rétro */
+    border-bottom: 3px solid #506070; /* Effet 3D basique */
+    transition: all 0.2s;
+}
+.btn-landing:hover {
+    transform: translateY(2px); /* Effet d'enfoncement */
+    border-bottom-width: 1px;
+    background-color: var(--primary-color); /* Passe au rouge au survol */
+}
+
+/* --- FORMULAIRES (Connexion/Inscription) --- */
+/* Style du conteneur principal */
+.container {
+    background-color: var(--bg-container);
+    border-radius: 10px;
+    /* Bordure épaisse et ombre pour un effet "Cadre" */
+    border: 3px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    
+    position: relative; overflow: hidden;
+    width: 900px; max-width: 100%; min-height: 600px;
+    margin: 30px auto;
+}
+
+/* (Insérer ici le reste de la logique du "sliding form" si vous l'utilisez encore) */
+/* ... .form-container, .sign-in, .sign-up ... */
+
+form {
+    background-color: var(--bg-container);
+    display: flex; flex-direction: column;
+    padding: 0 50px; height: 100%;
+    justify-content: center; text-align: center;
+}
+
+/* Champs de saisie style "Papier" */
+input, select {
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    margin: 10px 0;
+    padding: 12px 15px;
+    border-radius: 6px;
+    width: 100%;
+    color: var(--text-main);
+    font-weight: 500;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Boutons de formulaire */
+button:not(.theme-btn):not(.nav-btn) {
+    background-color: var(--primary-color);
+    color: var(--bg-container);
+    padding: 12px 45px;
+    border-radius: 6px;
+    font-weight: 700; font-size: 14px;
+    text-transform: uppercase;
+    margin-top: 20px; border: none; cursor: pointer;
+    border-bottom: 3px solid var(--primary-hover);
+}
+button:not(.theme-btn):not(.nav-btn):hover {
+    transform: translateY(2px); border-bottom-width: 1px;
+}
+
+/* --- DASHBOARD UTILISATEUR --- */
+.app-container {
+    width: 92%; max-width: 1200px;
+    background: var(--bg-container);
+    padding: 40px;
+    border-radius: 10px;
+    border: 3px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    margin: 30px auto;
+}
+
+h2 { 
+    font-family: 'Righteous', cursive;
+    color: var(--text-main); text-align: center; 
+    margin-bottom: 30px; font-size: 2em;
+}
+
+/* Tableaux style "Registre" */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { 
+    padding: 15px; text-align: left; 
+    border-bottom: 2px solid var(--border-color); 
+}
+th { 
+    background-color: var(--table-header-bg); 
+    color: var(--text-main); 
+    font-weight: 700; text-transform: uppercase; font-size: 0.9em;
+    border-top: 2px solid var(--border-color);
+}
+tr:hover td { background-color: var(--table-row-hover); }

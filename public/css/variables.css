@@ -1,0 +1,77 @@
+/* ==========================================================================
+   VARIABLES.CSS
+   Gère la palette de couleurs "Thème Rétro/Vintage", les polices et le reset.
+   ========================================================================== */
+
+/* Import des polices Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Righteous&display=swap');
+
+:root {
+  /* --- PALETTE RÉTRO (Mode Clair - Défaut) --- */
+  /* Arrière-plans type "papier vieilli" */
+  --bg-body: #f4f1e8;       /* Crème cassé très clair */
+  --bg-container: #fcfbf7;  /* Blanc cassé, texture papier */
+  --input-bg: #edeadd;      /* Beige clair pour les champs */
+
+  /* Couleurs de texte */
+  --text-main: #5a4a42;     /* Marron foncé sépia */
+  --text-muted: #8c7b70;    /* Taupe / Gris chaud */
+
+  /* Couleurs d'accentuation "Vintage" */
+  --primary-color: #c0504d; /* Rouge brique délavé */
+  --primary-hover: #a0403d; /* Rouge brique plus foncé */
+  --accent-color: #6b7b8c;  /* Bleu/Gris sourd rétro */
+  
+  /* Bordures et Ombres chaudes */
+  --border-color: #d8c8b8;  /* Beige moyen */
+  --shadow-soft: 0 10px 30px rgba(90, 74, 66, 0.1); /* Ombre brunâtre */
+  --shadow-card: 0 4px 12px rgba(90, 74, 66, 0.08);
+
+  /* Tableaux */
+  --table-header-bg: #edeadd;
+  --table-row-hover: #f4f1e8;
+}
+
+/* --- PALETTE RÉTRO (Mode Sombre) --- */
+body.dark-mode {
+  --bg-body: #2c2622;       /* Marron très foncé */
+  --bg-container: #3a322e;  /* Marron foncé */
+  --input-bg: #4a3f38;      /* Taupe foncé */
+
+  --text-main: #e8dcc8;     /* Beige clair */
+  --text-muted: #b5a192;    /* Beige moyen */
+
+  --primary-color: #d46a67; /* Rouge plus vif pour le contraste */
+  --primary-hover: #e88d8a;
+  --accent-color: #8d9eb0;  /* Bleu gris plus clair */
+
+  --border-color: #5a4a42;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  --table-header-bg: #4a3f38;
+  --table-row-hover: #423833;
+}
+
+/* RESET GLOBAL & BASE */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Police par défaut pour tout le site */
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  /* Transition fluide lors du changement de thème */
+  transition: background-color 0.5s ease, color 0.5s ease;
+  /* Espace pour la navbar fixe */
+  padding-top: 90px; 
+}
+
+a {
+  text-decoration: none;
+  transition: 0.3s;
+}

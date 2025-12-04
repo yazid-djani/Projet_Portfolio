@@ -3,47 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/style_con_ins.css">
-    <title>Jouer : <?= htmlspecialchars($quiz['titre']) ?></title>
-    <style>
-        /* Ajout de styles spécifiques pour le quiz */
-        .question-block {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-        }
-        .question-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-        .choice-label {
-            display: block;
-            margin: 10px 0;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background 0.2s;
-        }
-        .choice-label:hover {
-            background-color: var(--table-row-hover);
-        }
-        input[type="radio"] {
-            margin-right: 10px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="public/css/variables.css">
+    
+    <link rel="stylesheet" href="public/css/navbar.css">
+    
+    <link rel="stylesheet" href="public/css/dark_mode.css">
+    
+    <link rel="stylesheet" href="public/css/style_user.css">
+    
+    <title>Quizzeo</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><strong>Quizzeo</strong></li>
-            <li><a href="index.php?route=dashboard">Retour au Dashboard</a></li>
-        </ul>
-    </nav>
+    <?php require_once __DIR__ . '/navbar.php'; ?>
 
     <div class="app-container">
         <h2><?= htmlspecialchars($quiz['titre']) ?></h2>

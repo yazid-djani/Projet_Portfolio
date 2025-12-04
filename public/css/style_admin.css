@@ -1,0 +1,44 @@
+/* ==========================================================================
+    STYLE_ADMIN.CSS
+    Éléments graphiques spécifiques au back-office (badges, actions).
+    ========================================================================== */
+
+/* Badges de statut style "Étiquette" */
+.badge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    border: 2px solid transparent;
+}
+
+/* Actif (Vert sourd rétro) */
+.badge-active {
+    background-color: #e2e8d8;
+    color: #4a5a3a;
+    border-color: #c8d8b8;
+}
+
+/* Désactivé (Rouge brique clair) */
+.badge-desactive {
+    background-color: #f0dada;
+    color: var(--primary-color);
+    border-color: #e0baba;
+}
+
+/* Petits boutons d'action dans les tableaux */
+.btn-action {
+    font-size: 0.75em; padding: 6px 10px; margin: 0 2px;
+    border-radius: 4px; text-transform: uppercase; font-weight: 700;
+    border: 1px solid transparent; color: var(--bg-container) !important;
+}
+
+/* Modifier (Bleu rétro) */
+.btn-warning { background-color: var(--accent-color); }
+.btn-warning:hover { background-color: #5a6a7a; }
+
+/* Supprimer (Rouge brique) */
+.btn-danger { background-color: var(--primary-color); }
+.btn-danger:hover { background-color: var(--primary-hover); }

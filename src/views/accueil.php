@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/accueil.css">
-
-    <title>Accueil</title>
+    
+    <link rel="stylesheet" href="public/css/variables.css">
+    
+    <link rel="stylesheet" href="public/css/navbar.css">
+    
+    <link rel="stylesheet" href="public/css/dark_mode.css">
+    
+    <link rel="stylesheet" href="public/css/style_user.css">
+    
+    <title>Quizzeo</title>
 </head>
 <body>
 
-    <nav style="position:absolute; top:20px; left:20px;">
-        <button id="theme-toggle">🌙 Mode Sombre</button>
-    </nav>
+    <?php require_once __DIR__ . '/navbar.php'; ?>
 
     <div class="landing-container">
         <h1 class="landing-title">Salut ! C'est Quizzeo, une plateforme qui propose des quiz à tous les niveaux</h1>

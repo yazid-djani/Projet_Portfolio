@@ -2,60 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/public/css/style_con_ins.css">
-    <title>Administration Utilisateurs - Quizzeo</title>
-    <style>
-        .badge {
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        .badge-active {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .badge-desactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .btn-action {
-            font-size: 0.8em;
-            padding: 5px 10px;
-            margin: 0 2px;
-            text-decoration: none;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        .btn-warning {
-            background-color: #ffc107;
-            color: #212529;
-            border-color: #ffc107;
-        }
-        .btn-warning:hover {
-            background-color: #e0a800;
-        }
-        .btn-info {
-            background-color: #17a2b8;
-            color: white;
-            border-color: #17a2b8;
-        }
-        .btn-info:hover {
-            background-color: #138496;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="public/css/variables.css">
+    
+    <link rel="stylesheet" href="public/css/navbar.css">
+    <link rel="stylesheet" href="public/css/dark_mode.css">
+    
+    <link rel="stylesheet" href="public/css/style_user.css">
+    
+    <link rel="stylesheet" href="public/css/style_admin.css">
+    
+    <title>Administration - Quizzeo</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><strong>Admin Panel</strong></li>
-            <li><a href="index.php?route=dashboard">Dashboard</a></li>
-            <li><a href="index.php?route=admin_quizzes">Gérer les Quiz</a></li>
-            <li><a href="index.php?route=deconnexion">Déconnexion</a></li>
-        </ul>
-    </nav>
+    <?php require_once __DIR__ . '/navbar.php'; ?>
 
     <div class="app-container">
         <h2>Gestion des Utilisateurs</h2>

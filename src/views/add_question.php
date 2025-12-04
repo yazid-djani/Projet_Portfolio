@@ -2,10 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/public/css/style_con_ins.css">
-    <title>Ajouter des questions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="public/css/variables.css">
+    
+    <link rel="stylesheet" href="public/css/navbar.css">
+    
+    <link rel="stylesheet" href="public/css/dark_mode.css">
+    
+    <link rel="stylesheet" href="public/css/style_user.css">
+    
+    <title>Quizzeo</title>
 </head>
 <body>
+    <?php require_once __DIR__ . '/navbar.php'; ?>
     <div class="app-container">
         <h2>Ajouter une question</h2>
         <form method="POST" action="index.php?route=traitement_question">

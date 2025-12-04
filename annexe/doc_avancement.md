@@ -6,39 +6,59 @@
 
 Mise en place de l'arborescence du projet (vu avec le prof) :
 
-/Bibliotheque
-├── README.md                   (Vitrine du Projet)
-├── composer.json               (Configuration BDD)
-├── .env                        (Configuration BDD)
-├── .gitignore                  (Sécurité pour push GitHub)
+Quizzeo_SLY/
 │
-├── /annexe                     (Dossier comportant les fichiers annexe (Diagramme, UML, ...))
-│ ├── Diagramme_utilisation.png
-│ ├── UML_V1.png                
-│ ├── UML_V2.png               
-│ ├── UML_V3.png           
-│ └── doc_avancement.md
+├── database/
+│   └── bdd.sql
 │
-├── /database
-│ └── bdd.sql                   (Requete SQL pour BDD)
+├── public/
+│   ├── css/
+│   │   ├── accueil.css
+│   │   └── style_con_ins.css
+│   │
+│   └── scriptJS/
+│       └── script_con_ins.js
 │
-├── /public
-│ ├── /css
-│ ├── /images
-│ │ ├──form_livre.php          (Formulaire Ajout/Modification)
-│ │ └── liste.php               (Tableau des livres)
-│ ├── /scriptJS
-│ │ ├──form_livre.php          (Formulaire Ajout/Modification)
-│ │ └── liste.php               (Tableau des livres)
-│ ├── UML_V2.png               
-│ ├── UML_V3.png           
-│ └── doc_avancement.md
+├── src/
+│   ├── controllers/
+│   │   ├── AdminController.php
+│   │   ├── GameController.php
+│   │   ├── QuizController.php
+│   │   └── UtilisateurController.php
+│   │
+│   ├── lib/
+│   │   └── Database.php
+│   │
+│   ├── models/
+│   │   ├── Administrateur.php
+│   │   ├── Choix.php
+│   │   ├── Ecole.php
+│   │   ├── Entreprise.php
+│   │   ├── Question.php
+│   │   ├── Quiz.php
+│   │   ├── Reponse.php
+│   │   ├── Tentative.php
+│   │   └── Utilisateur.php
+│   │
+│   └── views/
+│       ├── navbar.php       
+│       ├── accueil.php
+│       ├── add_question.php
+│       ├── admin_users.php
+│       ├── connexion_inscription.php
+│       ├── dashboard.php
+│       ├── play_quiz.php
+│       ├── quiz_form.php
+│       └── resultat.php
 │
-├── /public
-│ ├── /emprunt
-│ │ ├──form_livre.php          (Formulaire Ajout/Modification)
-│ │ └── liste.php               (Tableau des livres)
-│
+├── vendor/
+├── .env
+├── .gitignore
+├── composer.json
+├── composer.lock
+├── index.php
+├── LICENSE
+└── README.md
 
 Mise en place du serveur PHP et premier test
 Mise en place du GitHub collectif

@@ -50,5 +50,6 @@
             <button type="submit" name="finish" style="background-color:#4CAF50;">Terminer le Quiz</button>
         </form>
     </div>
+    <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

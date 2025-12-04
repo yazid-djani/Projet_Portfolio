@@ -34,5 +34,6 @@
 
         <a href="index.php?route=dashboard" class="btn">Retour au tableau de bord</a>
     </div>
+    <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

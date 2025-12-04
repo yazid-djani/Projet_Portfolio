@@ -31,5 +31,6 @@
             <a href="index.php?route=dashboard" style="margin-top: 15px; display:inline-block;">Annuler</a>
         </form>
     </div>
+    <script src="public/scriptJS/dark_mode.js"></script>
 </body>
 </html>

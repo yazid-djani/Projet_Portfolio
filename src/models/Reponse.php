@@ -7,8 +7,9 @@
         private $est_correct;
 
         public function __construct(array $data){
-            $this->id_reponse = $data['id_reponse'];
-            $this->est_correct = $data['est_correct'];
+            // CORRECTION : Utilisation de l'opérateur null coalescent pour éviter les erreurs "Undefined index"
+            $this->id_reponse = $data['id_reponse'] ?? null;
+            $this->est_correct = $data['est_correct'] ?? null;
         }
 
     // --- GETTERS ---
@@ -28,3 +29,4 @@
             ]);
         }
     }
+?>

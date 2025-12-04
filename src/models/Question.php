@@ -5,30 +5,29 @@
     use App\Lib\Database;
 
     class Question{
-        // CORRECTION 1 : Ajout du '?' devant int pour autoriser le NULL (nullable)
+        // CORRECTION : Typage nullable correct
         private ?int $id_question;
         private int $id_quiz;
         private string $libelle;        
         
         // --- CONSTRUCTEUR ---
         public function __construct(array $data) {
-            // Si pas d'id, on laisse null
             $this->id_question  = isset($data['id_question']) ? (int)$data['id_question'] : null;
-            
-            // CORRECTION 2 : Forçage du type (int) pour éviter l'erreur si c'est une string "12"
             $this->id_quiz      = (int)$data['id_quiz'];
-            
             $this->libelle      = $data['libelle'];
         }
         
         // --- GETTERS ---
-        // CORRECTION 3 : Le retour peut être null (?int)
         public function getIdQuestion() : ?int   { return $this->id_question; }
-        public function getIdQuizz()    : int    { return $this->id_quiz; }
+        
+        // CORRECTION : Uniformisation du nom (un seul 'z' comme la propriété)
+        public function getIdQuiz()    : int    { return $this->id_quiz; }
 
         // --- SETTERS ---
         public function setIdQuestion(int $id_question) : void { $this->id_question = $id_question; }
-        public function setIdQuizz(int $id_quiz)        : void { $this->id_quiz = $id_quiz; }
+        
+        // CORRECTION : Uniformisation du nom (un seul 'z')
+        public function setIdQuiz(int $id_quiz)        : void { $this->id_quiz = $id_quiz; }
         
 
         // --- METHODE ---

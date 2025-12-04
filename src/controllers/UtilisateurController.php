@@ -11,18 +11,15 @@ class UtilisateurController {
     public function inscription() : void {
         // SÉCURITÉ : On vérifie que le formulaire a bien été soumis
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: index.php?route=accueil");
+            // CORRECTION : Redirection vers 'auth' car 'accueil' n'existe pas dans le routeur
+            header("Location: index.php?route=auth");
             exit;
         }
 
         // 1. GESTION DU RÔLE
-        // On récupère le rôle choisi ou on met 'utilisateur' par défaut
         $rolePost = $_POST['role'] ?? 'utilisateur';
-        
-        // Liste blanche des rôles autorisés à l'inscription (Admin est INTERDIT ici)
         $rolesAutorises = ['utilisateur', 'ecole', 'entreprise'];
         
-        // Si le rôle envoyé n'est pas dans la liste, on force 'utilisateur'
         if (!in_array($rolePost, $rolesAutorises)) {
             $rolePost = 'utilisateur';
         }
@@ -34,9 +31,9 @@ class UtilisateurController {
             "user_email"      => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
             "user_age"        => (int) ($_POST['age'] ?? 0),
             "password_hash"   => password_hash($_POST['password'], PASSWORD_BCRYPT),
-            "role"            => $rolePost,     // Le rôle choisi (sécurisé)
+            "role"            => $rolePost,
             "status"          => "active",
-            "can_create_quiz" => 0              // IMPORTANT : 0 par défaut, seul l'admin pourra le changer
+            "can_create_quiz" => 0
         ];
 
         $user = new Utilisateur($data);
@@ -44,23 +41,21 @@ class UtilisateurController {
         // 3. SAUVEGARDE EN BDD
         try {
             if($user->save()) {
-                // Succès : redirection vers la page de connexion avec message
-                header("Location: index.php?route=accueil&success=1");
+                // CORRECTION : Redirection vers 'auth' avec message de succès
+                header("Location: index.php?route=auth&success=1");
             } else {
-                // Erreur générique
-                header("Location: index.php?route=accueil&error=1");
+                header("Location: index.php?route=auth&error=1");
             }
         } catch (\Exception $e) {
-            // Erreur SQL (ex: email déjà pris)
-            header("Location: index.php?route=accueil&error=" . urlencode($e->getMessage()));
+            header("Location: index.php?route=auth&error=" . urlencode($e->getMessage()));
         }
         exit;
     }
 
     public function connexion(){
-        // SÉCURITÉ : Empêche le crash si on accède à cette page sans soumettre le formulaire
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: index.php?route=accueil");
+            // CORRECTION : Redirection vers 'auth'
+            header("Location: index.php?route=auth");
             exit;
         }
 
@@ -68,28 +63,26 @@ class UtilisateurController {
         $password = $_POST['password'] ?? ''; 
 
         if (empty($email) || empty($password)) {
-            header("Location: index.php?route=accueil&error=missing_fields");
+            // CORRECTION : Redirection vers 'auth'
+            header("Location: index.php?route=auth&error=missing_fields");
             exit;
         }
 
         $user = Utilisateur::findByEmail($email);
 
         if (!$user || !$user->verifyPassword($password)) {
-            header("Location: index.php?route=accueil&error=login_failed");
+            // CORRECTION : Redirection vers 'auth'
+            header("Location: index.php?route=auth&error=login_failed");
             exit;
         }
 
-        // Connexion réussie : On stocke les infos en session
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['user_email'] = $user->getEmail(); 
         $_SESSION['role'] = $user->getRole(); 
 
-        // Redirection intelligente selon le rôle
         if ($user->getRole() === 'admin') {
             header("Location: index.php?route=admin_users");
         } else {
-            // École, Entreprise ou Utilisateur vont vers le dashboard standard
-            // Le dashboard gérera l'affichage spécifique selon le rôle
             header("Location: index.php?route=dashboard");
         }
         exit;
@@ -97,7 +90,8 @@ class UtilisateurController {
 
     public function deconnexion(){
         session_destroy();
-        header("Location: index.php?route=accueil");
+        // CORRECTION : Redirection vers 'auth' après déconnexion
+        header("Location: index.php?route=auth");
         exit;
     }
 }

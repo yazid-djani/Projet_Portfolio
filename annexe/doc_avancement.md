@@ -77,10 +77,10 @@ composer dump-autoload
 ======================================
 admin@ipssi 
 
-Schema de presentation :
-Uml
-Code 
-difficulté / avancement par jours et par taches
+Schema de presentation du powerpoint
+1. Uml
+2. Code 
+3. difficulté / avancement par jours et par taches
 
 
 

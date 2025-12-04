@@ -1,0 +1,14 @@
+h1 {
+    color: rgb(210, 100, 10);
+    text-align: center;
+}
+
+p {
+    color: rgb(69, 50, 2);
+    
+}
+
+div[class="btn-group"] {
+    color: rgb(102, 53, 7);
+    background:rgb(216, 145, 64);
+}

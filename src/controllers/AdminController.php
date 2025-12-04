@@ -60,7 +60,7 @@ class AdminController {
             default => 'Gestion de tous les Utilisateurs'
         };
 
-        require __DIR__ . '/../views/admin_users.php';
+        require __DIR__ . '/../views/admin/admin_users.php';
     }
 
     /**
@@ -120,7 +120,7 @@ class AdminController {
         // On récupère ceux qui ont le droit (1)
         $creators = $admin->recupererParDroitCreation(1);
         
-        require __DIR__ . '/../views/admin_creators.php';
+        require __DIR__ . '/../views/admin/admin_creators.php';
     }
 
     /**
@@ -133,7 +133,7 @@ class AdminController {
         // On récupère ceux qui n'ont pas le droit (0)
         $users = $admin->recupererParDroitCreation(0);
         
-        require __DIR__ . '/../views/admin_add_creator.php';
+        require __DIR__ . '/../views/admin/admin_add_creator.php';
     }
 
     /**

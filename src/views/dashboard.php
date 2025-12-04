@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <?php require_once __DIR__ . '/navbar.php'; ?>
+    <?php require_once __DIR__ . '/layout/navbar.php'; ?>
 
     <div class="app-container">
         <h2>Mes Quiz</h2>

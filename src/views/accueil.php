@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <?php require_once __DIR__ . '/navbar.php'; ?>
+    <?php require_once __DIR__ . '/layout/navbar.php'; ?>
 
     <div class="landing-container">
         <h1 class="landing-title">Salut ! C'est Quizzeo, une plateforme qui propose des quiz à tous les niveaux</h1>

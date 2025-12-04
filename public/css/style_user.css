@@ -35,8 +35,8 @@ body {
     min-height: 600px;
     
     /* LA CLÉ DU CENTRAGE : 
-       Dans un body flex, 'margin: auto' centre l'élément 
-       parfaitement dans l'espace disponible */
+        Dans un body flex, 'margin: auto' centre l'élément 
+        parfaitement dans l'espace disponible */
     margin: auto; 
     
     transition: background-color 0.4s ease;
@@ -344,4 +344,18 @@ th {
 
 tr:hover td {
     background-color: var(--table-row-hover);
+}
+
+/* --- AJOUT : Lien "Mot de passe oublié" en Mode Sombre --- */
+body.dark-mode form a {
+    /* Bleu pastel lumineux qui contraste bien avec le fond bleu nuit */
+    color: #93c5fd; 
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Petit effet au survol pour le rendre vivant */
+body.dark-mode form a:hover {
+    color: #bfdbfe; /* Encore plus clair au survol */
+    text-decoration: underline;
 }

@@ -15,7 +15,7 @@
     <title>Quizzeo</title>
 </head>
 <body>
-    <?php require_once __DIR__ . '/navbar.php'; ?>
+    <?php require_once __DIR__ . '/layout/navbar.php'; ?>
 
     <div class="app-container" style="text-align: center;">
         <h1>Quiz Terminé !</h1>

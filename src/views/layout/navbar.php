@@ -32,14 +32,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <?php else: ?>
                 <a href="index.php?route=creer_quiz" class="nav-link">Créer un Quiz</a>
+                
+                <a href="index.php?route=informationentreprise" class="nav-link">Info Entreprises</a>
+                <a href="index.php?route=informationecole" class="nav-link">Info Écoles</a>
             <?php endif; ?>
             
             <a href="index.php?route=deconnexion" class="nav-btn btn-logout" style="margin-left:15px;">Déconnexion</a>
 
         <?php else: ?>
-            <a href="index.php?route=informationentreprise" class="nav-link">Entreprises</a>
-            <a href="index.php?route=informationecole" class="nav-link">Écoles</a>
-
+            
             <a href="index.php?route=inscription" class="nav-link">Inscription</a>
             <a href="index.php?route=connexion" class="nav-btn btn-login">Connexion</a>
 

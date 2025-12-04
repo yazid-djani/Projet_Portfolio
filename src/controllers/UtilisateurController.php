@@ -4,15 +4,8 @@ use App\Models\Utilisateur;
 
 class UtilisateurController {
     
-    /**
-     * Affiche la page d'authentification (Vue unique avec Sliding Panel).
-     * @param string $mode 'login' (défaut) ou 'register'
-     */
     public function pageAuth($mode = 'login') {
-        // La variable $containerClass sera utilisée dans la vue.
-        // Si mode = 'register', on ajoute la classe 'active' pour faire glisser le panneau.
         $containerClass = ($mode === 'register') ? 'active' : '';
-
         require __DIR__ . '/../views/connexion_inscription.php';
     }
     
@@ -29,6 +22,9 @@ class UtilisateurController {
             $rolePost = 'utilisateur';
         }
 
+        // Récupération et nettoyage du code groupe
+        $groupCode = !empty($_POST['group_code']) ? strtoupper(trim(htmlspecialchars($_POST['group_code']))) : null;
+
         $data = [
             "user_firstname"  => htmlspecialchars($_POST['prenom'] ?? ''),
             "user_lastname"   => htmlspecialchars($_POST['nom'] ?? ''),
@@ -37,21 +33,26 @@ class UtilisateurController {
             "password_hash"   => password_hash($_POST['password'], PASSWORD_BCRYPT),
             "role"            => $rolePost,
             "status"          => "active",
-            "can_create_quiz" => 0
+            "can_create_quiz" => 0,
+            "group_code"      => $groupCode // Ajout ici
         ];
 
         $user = new Utilisateur($data);
         
         try {
             if($user->save()) {
-                // SUCCÈS : On redirige vers la page CONNEXION (mode login)
                 header("Location: index.php?route=connexion&success=1");
             } else {
-                // ERREUR : On reste sur INSCRIPTION (mode register)
-                header("Location: index.php?route=inscription&error=1");
+                header("Location: index.php?route=inscription&error=Erreur technique");
             }
         } catch (\Exception $e) {
-            header("Location: index.php?route=inscription&error=" . urlencode($e->getMessage()));
+            // Gestion erreur duplication email
+            if ($e->getCode() == 23000) {
+                $msg = "Cet email est déjà utilisé.";
+            } else {
+                $msg = "Erreur : " . $e->getMessage();
+            }
+            header("Location: index.php?route=inscription&error=" . urlencode($msg));
         }
         exit;
     }
@@ -73,8 +74,13 @@ class UtilisateurController {
         $user = Utilisateur::findByEmail($email);
 
         if (!$user || !$user->verifyPassword($password)) {
-            // ERREUR : On reste sur CONNEXION
             header("Location: index.php?route=connexion&error=login_failed");
+            exit;
+        }
+
+        // Si l'utilisateur est désactivé
+        if (!$user->isActive()) {
+            header("Location: index.php?route=connexion&error=account_disabled");
             exit;
         }
 
@@ -92,7 +98,6 @@ class UtilisateurController {
 
     public function deconnexion(){
         session_destroy();
-        // Après déconnexion, on retourne sur la page de connexion
         header("Location: index.php?route=connexion");
         exit;
     }

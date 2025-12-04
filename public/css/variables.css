@@ -32,25 +32,32 @@
   --table-row-hover: #f4f1e8;
 }
 
-/* --- PALETTE RÉTRO (Mode Sombre) --- */
+/* --- PALETTE "MIDNIGHT VINTAGE" (Mode Sombre - Bleu Nuit) --- */
 body.dark-mode {
-  --bg-body: #2c2622;       /* Marron très foncé */
-  --bg-container: #3a322e;  /* Marron foncé */
-  --input-bg: #4a3f38;      /* Taupe foncé */
+  /* Fond : Bleu Nuit Profond / Ardoise (élégant et reposant pour les yeux) */
+  --bg-body: #0f172a;       /* Bleu très sombre, presque noir */
+  --bg-container: #1e293b;  /* Bleu ardoise foncé pour les cartes */
+  --input-bg: #334155;      /* Gris-bleu pour les champs */
 
-  --text-main: #e8dcc8;     /* Beige clair */
-  --text-muted: #b5a192;    /* Beige moyen */
+  /* Texte : On garde le Crème du mode clair pour conserver l'esprit "Rétro" */
+  --text-main: #f4f1e8;     
+  --text-muted: #94a3b8;    /* Gris clair bleuté */
 
-  --primary-color: #d46a67; /* Rouge plus vif pour le contraste */
-  --primary-hover: #e88d8a;
-  --accent-color: #8d9eb0;  /* Bleu gris plus clair */
+  /* Les accents : On éclaircit le rouge brique pour qu'il ressorte sur le bleu */
+  --primary-color: #f87171; /* Rouge corail plus lumineux */
+  --primary-hover: #fca5a5; /* Rouge pastel au survol */
+  --accent-color: #cbd5e1;  /* Bleu-gris très clair */
 
-  --border-color: #5a4a42;
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.4);
-  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.25);
+  /* Bordures subtiles */
+  --border-color: #334155;
+  
+  /* Ombres plus marquées pour la profondeur */
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-  --table-header-bg: #4a3f38;
-  --table-row-hover: #423833;
+  /* Tableaux */
+  --table-header-bg: #334155;
+  --table-row-hover: #334155; /* Identique au header pour un effet "liste" propre */
 }
 
 /* RESET GLOBAL & BASE */

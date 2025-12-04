@@ -12,13 +12,12 @@ class Utilisateur {
     private $password;
     protected $role;
     private $status;
-    
-    // NOUVELLE PROPRIÉTÉ
     private $can_create_quiz;
+    
+    // NOUVEAU : Code de groupe (pour lier des élèves à une école/entreprise)
+    private $group_code;
 
-    // INITIALISATION DES DONNÉES
     public function __construct(array $data) {
-        // Gestion des alias pour supporter les noms de colonnes BDD (user_*) ou les noms simples
         $this->id = $data['user_id'] ?? $data['id'] ?? null;
         $this->firstname = $data['user_firstname'] ?? $data['firstname'] ?? '';
         $this->lastname = $data['user_lastname'] ?? $data['lastname'] ?? '';
@@ -28,6 +27,9 @@ class Utilisateur {
         $this->role = $data['role'] ?? "utilisateur";
         $this->status = $data['status'] ?? "active";
         $this->can_create_quiz = $data['can_create_quiz'] ?? 0;
+        
+        // Initialisation du code groupe
+        $this->group_code = $data['group_code'] ?? null;
     }
 
     // --- GETTERS ---
@@ -37,15 +39,11 @@ class Utilisateur {
     public function getEmail() { return $this->email; }
     public function getPassword() { return $this->password; }
     public function getRole() { return $this->role; }
+    public function isActive() { return $this->status === 'active'; }
+    public function canCreateQuiz() { return $this->can_create_quiz == 1; }
     
-    public function isActive() { 
-        return $this->status === 'active'; 
-    }
-
-    // NOUVEAU GETTER POUR LA PERMISSION
-    public function canCreateQuiz() { 
-        return $this->can_create_quiz == 1; 
-    }
+    // Getter pour le groupe
+    public function getGroupCode() { return $this->group_code; }
 
     // --- VÉRIFICATION MOT DE PASSE ---
     public function verifyPassword($password){
@@ -56,9 +54,9 @@ class Utilisateur {
     public function save(){
         $pdo = Database::getPDO();
         
-        // Ajout de la colonne 'can_create_quiz' dans la requête
-        $sql = "INSERT INTO users (user_firstname, user_lastname, user_email, user_age, password_hash, role, status, can_create_quiz) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // Ajout de 'group_code' dans la requête
+        $sql = "INSERT INTO users (user_firstname, user_lastname, user_email, user_age, password_hash, role, status, can_create_quiz, group_code) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $pdo->prepare($sql);
         
@@ -70,7 +68,8 @@ class Utilisateur {
             $this->password,
             $this->role,
             $this->status,
-            $this->can_create_quiz // Insertion de la valeur (0 ou 1)
+            $this->can_create_quiz,
+            $this->group_code // Insertion du code groupe
         ]);
     }
 
@@ -84,7 +83,6 @@ class Utilisateur {
 
         if (!$data) return null;
 
-        // Retourne la bonne classe enfant selon le rôle
         switch ($data['role']) {
             case 'ecole':
                 return new Ecole($data);

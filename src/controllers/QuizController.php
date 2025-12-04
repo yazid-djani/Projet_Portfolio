@@ -4,8 +4,6 @@
     use App\Models\Quiz;
     use App\Models\Ecole;
     use App\Models\Entreprise;
-    use App\Models\Question;
-    use App\Models\Choix;
     use App\Lib\Database;
 
     class QuizController {
@@ -21,7 +19,6 @@
             $stats = [];
             $resultats = [];
 
-            // Récupération des stats selon le type d'utilisateur
             if ($user instanceof Ecole) {
                 $stats['total_reponses'] = $user->voirNombreReponse();
                 $resultats = $user->visualiserResultatsEleves();
@@ -31,14 +28,13 @@
                 $resultats = $user->visualiserResultatsEntreprise();
             }
 
-            // Récupération des quiz de l'utilisateur
+            // Récupération des quiz créés par l'utilisateur
             $userId = $_SESSION['user_id'];
             $quizzes = Quiz::quizByUser($userId);
 
             require __DIR__ . '/../views/dashboard.php';            
         }
 
-        // MODIFIÉ : Vérification des droits avant d'afficher le formulaire
         public function creerQuizForm() {
             if (!isset($_SESSION['user_id'])) {
                 header('Location: index.php?route=connexion');
@@ -47,13 +43,11 @@
 
             $user = Utilisateur::findByEmail($_SESSION['user_email']);
 
-            // Si ce n'est pas un admin ET qu'il n'a pas le droit explicite
             if ($_SESSION['role'] !== 'admin' && !$user->canCreateQuiz()) {
-                // Affichage d'un message d'erreur simple
                 echo "<div class='app-container' style='text-align:center; margin-top:50px;'>";
                 echo "<h2 style='color:#721c24'>Accès refusé</h2>";
                 echo "<p>Votre compte n'a pas encore l'autorisation de créer des quiz.</p>";
-                echo "<p>Veuillez contacter l'administrateur pour valider votre compte École ou Entreprise.</p>";
+                echo "<p>Veuillez contacter l'administrateur pour valider votre compte.</p>";
                 echo "<a href='index.php?route=dashboard' class='btn'>Retour au tableau de bord</a>";
                 echo "</div>";
                 return;
@@ -68,7 +62,6 @@
                 exit;
             }
             
-            // Double vérification de sécurité (optionnelle mais recommandée)
             $user = Utilisateur::findByEmail($_SESSION['user_email']);
             if ($_SESSION['role'] !== 'admin' && !$user->canCreateQuiz()) {
                 header('Location: index.php?route=dashboard');
@@ -79,9 +72,10 @@
                 'user_id' => $_SESSION['user_id'],
                 'titre' => $_POST['titre'],
                 'description' => $_POST['description'],
-                'proprietaire' => $_SESSION['role'] === 'admin' ? 'ecole' : $_SESSION['role'], // Par défaut pour l'admin
+                'proprietaire' => $_SESSION['role'] === 'admin' ? 'ecole' : $_SESSION['role'],
                 'date_lancement' => !empty($_POST['date_lancement']) ? $_POST['date_lancement'] : null,
-                'date_cloture' => !empty($_POST['date_cloture']) ? $_POST['date_cloture'] : null
+                'date_cloture' => !empty($_POST['date_cloture']) ? $_POST['date_cloture'] : null,
+                'visibility' => $_POST['visibility'] ?? 'public' // Récupération visibilité
             ];
 
             $quiz = new Quiz($data);
@@ -94,12 +88,10 @@
         }
 
         public function ajouterQuestionForm($id_quiz) {
-            // Idéalement : vérifier que le quiz appartient bien à l'utilisateur connecté
             if (!isset($_SESSION['user_id'])) {
                 header('Location: index.php');
                 exit;
             }
-            
             require __DIR__ . '/../views/add_question.php';
         }
 
@@ -122,7 +114,6 @@
             if(isset($_POST['choix']) && is_array($_POST['choix'])) {
                 foreach($_POST['choix'] as $index => $texteChoix) {
                     if(!empty($texteChoix)) {
-                        // Le bouton radio renvoie l'index du choix correct (0, 1, 2, 3...)
                         $estCorrect = (isset($_POST['correct']) && $_POST['correct'] == $index) ? 1 : 0;
                         
                         $choix = new \App\Models\Choix([
@@ -139,7 +130,6 @@
             if (isset($_POST['finish'])) {
                 header("Location: index.php?route=dashboard");
             } else {
-                // On boucle pour ajouter une autre question
                 header("Location: index.php?route=ajouter_question&id_quiz=" . $idQuiz);
             }
         }

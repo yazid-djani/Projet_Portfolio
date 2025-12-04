@@ -81,3 +81,10 @@ Schema de presentation :
 Uml
 Code 
 difficulté / avancement par jours et par taches
+
+
+
+.env
+composer.json
+composer.lock
+vendor/

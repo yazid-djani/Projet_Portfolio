@@ -16,12 +16,28 @@ class Administrateur extends Utilisateur
     // ============================================================
 
     /**
-     * Récupère la liste de tous les utilisateurs inscrits (sauf l'admin lui-même si besoin)
+     * Récupère la liste des utilisateurs inscrits (sauf l'admin).
+     * MODIFIÉ : Accepte un filtre optionnel pour le rôle.
+     * * @param string|null $roleFilter 'ecole', 'entreprise' ou 'utilisateur'
      */
-    public function voirListeUtilisateurs() {
+    public function voirListeUtilisateurs(?string $roleFilter = null) {
         $pdo = Database::getPDO();
-        $sql = "SELECT * FROM users WHERE role != 'admin' ORDER BY created_at DESC";
-        $stmt = $pdo->query($sql);
+        
+        // Requête de base : on exclut toujours les admins
+        $sql = "SELECT * FROM users WHERE role != 'admin'";
+        $params = [];
+
+        // Si un filtre est fourni, on ajoute la condition à la requête
+        if ($roleFilter) {
+            $sql .= " AND role = ?";
+            $params[] = $roleFilter;
+        }
+
+        // On termine par le tri
+        $sql .= " ORDER BY created_at DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
         return $stmt->fetchAll();
     }
 

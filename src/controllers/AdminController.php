@@ -32,24 +32,37 @@ class AdminController {
     public function dashboard() {
         $this->isAdmin();
         
-        // Vous pourrez ici récupérer des statistiques globales via le modèle si besoin
-        // $admin = $this->getAdminModel();
-        // $stats = $admin->getGlobalStats();
-
-        // Pour l'instant, on affiche une vue simple ou un menu
-        require __DIR__ . '/../views/dashboard.php'; // Ou une vue spécifique admin_dashboard.php
+        // Pour l'instant, on affiche le dashboard standard
+        require __DIR__ . '/../views/dashboard.php'; 
     }
 
     /**
      * GESTION DES UTILISATEURS
-     * Récupère la liste via le modèle et l'envoie à la vue.
+     * MODIFIÉ : Gère le filtrage par rôle via l'URL
      */
     public function gererUtilisateurs() {
         $this->isAdmin();
         $admin = $this->getAdminModel();
         
-        // Appel de la méthode du modèle (logique SQL déportée)
-        $users = $admin->voirListeUtilisateurs();
+        // 1. Récupération du filtre depuis l'URL (ex: &type=ecole)
+        $filter = $_GET['type'] ?? null;
+        
+        // Sécurité : on vérifie que le filtre est un rôle valide
+        $allowedFilters = ['utilisateur', 'ecole', 'entreprise'];
+        if ($filter && !in_array($filter, $allowedFilters)) {
+            $filter = null;
+        }
+
+        // 2. Appel du modèle avec le filtre
+        $users = $admin->voirListeUtilisateurs($filter);
+
+        // 3. Définition du titre de la page selon le filtre actif
+        $pageTitle = match($filter) {
+            'ecole' => 'Liste des Écoles',
+            'entreprise' => 'Liste des Entreprises',
+            'utilisateur' => 'Liste des Joueurs',
+            default => 'Gestion de tous les Utilisateurs'
+        };
 
         require __DIR__ . '/../views/admin_users.php';
     }
@@ -63,6 +76,7 @@ class AdminController {
         
         $admin->toggleStatutUtilisateur($userId);
         
+        // On redirige vers la liste, en gardant le filtre s'il y en avait un (optionnel, ici retour simple)
         header('Location: index.php?route=admin_users');
         exit;
     }
@@ -91,8 +105,10 @@ class AdminController {
         // Récupération de tous les quiz
         $quizzes = $admin->voirListeQuiz();
 
-        // Vous devrez créer cette vue (sur le modèle de admin_users.php)
-        require __DIR__ . '/../views/admin_quizzes.php'; 
+        // Si vous avez créé la vue spécifique, utilisez admin_quizzes.php
+        // Sinon, dashboard.php peut faire l'affaire temporairement
+        // require __DIR__ . '/../views/admin_quizzes.php'; 
+        require __DIR__ . '/../views/dashboard.php'; 
     }
 
     /**

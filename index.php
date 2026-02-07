@@ -1,41 +1,38 @@
 <?php
-declare(strict_types=1); // Cette ligne DOIT être la toute première instruction PHP
+    declare(strict_types=1);
 
-// 1. Démarrage de la session (indispensable pour la partie Admin et la Navbar)
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// 2. Chargement de l'autoloader de Composer pour gérer les classes automatiquement
-require_once __DIR__ . '/vendor/autoload.php';
-
-// 3. Chargement des variables d'environnement (fichier .env)
-use Dotenv\Dotenv;
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-// 4. Récupération de la route demandée (par défaut 'home')
-$route = $_GET['route'] ?? 'home';
-
-try {
-    // 5. Système de routage simple
-    switch ($route) {
-        case 'admin':
-            // Si l'utilisateur demande l'administration (le contrôleur sera créé bientôt)
-            // (new \App\Controllers\AdminController())->index();
-            echo "<h1>Page Admin en construction</h1>";
-            break;
-
-        case 'home':
-        default:
-            // Par défaut, on appelle la méthode index du ProjetController
-            // Note l'utilisation de la majuscule "Controllers" pour correspondre au dossier Linux
-            \App\Controllers\ProjetController::index();
-            break;
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
-} catch (Exception $e) {
-    // Gestion des erreurs critiques
-    http_response_code(500);
-    echo "<h1>Erreur Interne du Serveur</h1>";
-    echo "Détail de l'erreur : " . htmlspecialchars($e->getMessage());
-}
+
+    require_once __DIR__ . '/vendor/autoload.php';
+
+    use Dotenv\Dotenv;
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+
+    // --- LOGIQUE DE ROUTAGE ---
+    $host = $_SERVER['HTTP_HOST'];              // 1. On récupère le domaine actuel (ex: admin.yazid-djani.dev ou yazid-djani.dev)
+
+    if (str_starts_with($host, 'admin.')) {     // 2. Si on est sur le sous-domaine "admin", on force la route admin
+        $route = 'admin';
+    } else {
+        $route = $_GET['route'] ?? 'home';      // Sinon, on garde le comportement classique
+    }
+
+    try {
+        switch ($route) {
+            case 'admin':
+                // \App\Controllers\AdminController())->index();
+                echo "<h1>Bienvenue sur le Panel Admin Sécurisé</h1>";
+                break;
+
+            case 'home':
+            default:
+                \App\Controllers\ProjetController::index();
+                break;
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo "<h1>Erreur Interne</h1>" . htmlspecialchars($e->getMessage());
+    }

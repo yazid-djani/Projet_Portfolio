@@ -1,0 +1,43 @@
+portfolio/html/
+├── public/
+│   ├── css/
+│   │   ├── couleur.css     # La palette de couleur du portfolio
+│   │   ├── styleViewer.css # style de la page vue par les visiteurs
+│   │   ├── styleAdmin.css  # style de la page d'administration (panel privé)
+│   │   ├── styleNavbarAdmin.css # style Navbar pour la page d'administration
+│   │   └── styleNavbar.css # style Navbar
+│   ├── scriptJS/
+│   │   ├── openProjet.js   # animations qui ouvre une fenetre qui survolent le contenue principal pour detailler un projet
+│   │   └── ResDevPanel.js  # animations pour passer des projets developpement au projet reseau (sans quitter la page)
+│   └── images/             # les captures d'écran et GIFs de projets
+│
+├── src/
+│   ├── controllers/        # La logique du site
+│   │   ├── ProjetController.php  # Gère l'affichage des projets
+│   │   └── AdminController.php   # Gère les actions d'administration (ajout/suppression de projets)
+│   │
+│   ├── models/             # La gestion des données (SQL)
+│   │   ├── Projet.php      # Pour récupérer les projets de la BDD
+│   │   └── Admin.php       #
+│   │
+│   ├── views/              # fichiers HTML/PHP d'affichage
+│   │   ├── ViewerPage.php  # page principale du portfolio, visible par tous les visiteurs
+│   │   ├── layout/
+│   │   │   ├── navbarViewer.php  # toujours visble et qui permet de naviguer entre les panneaux (toujours sur la page principal)
+│   │   │   └── navbarAdmin.php   # identique à la navbarViewer mais avec des liens vers les panneaux d'administration
+│   │   └── admin/
+│   │       ├── AdminPage.php  # page d'administration, visible uniquement par l'administrateur
+│   │       ├── CreateProjet.php # page pour ajouter un projet à la BDD (accessible depuis AdminPage.php)
+│   │       ├── CheckProjet.php  # page pour supprimer modifier un projet de la BDD (accessible depuis AdminPage.php)
+│   │       └── TraficPanel.php  # page pour afficher les statistiques de trafic du portfolio
+│   │
+│   └── lib/                # Bibliothèques utiles
+│       └── Database.php    # pour la connexion à la base de données
+│
+├── vendor/                 # Dossier géré par Composer (Autoload)
+├── .env                    # accès DB
+├── index.php               # Le routeur principal du site a refaire totalement pour le portfolio
+└── composer.json           # dépendances PHP (verifier si necessaire
+
+
+

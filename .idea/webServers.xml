@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c41f3d79-10ce-4b0f-9d05-4a7ef59f5ba5" name="Oracle-VPN">
+        <fileTransfer accessType="SFTP" host="100.110.51.24" port="22" sshConfigId="dcc9aac4-0295-4642-8ecb-d80db74e5d8f" sshConfig="ubuntu@100.110.51.24:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

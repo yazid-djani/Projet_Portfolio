@@ -1,0 +1,32 @@
+/* ============================================
+   PALETTE DE COULEURS — Portfolio
+   Fichier centralisé : modifier ici = modifier partout
+   ============================================ */
+
+:root {
+    /* --- Fond --- */
+    --bg-primary:       #18191B;    /* Fond principal du site */
+    --bg-card:          #16161a;    /* Fond des cartes / sections */
+    --bg-navbar:        #151519;    /* Fond de la barre de navigation */
+
+    /* --- Texte --- */
+    --text-headline:    #ECDFCC;    /* Titres principaux (h1, h2) */
+    --text-subheadline: #DCC6A3;    /* Sous-titres (h3, h4) */
+    --text-paragraph:   #CEAF7E;    /* Texte courant / paragraphes */
+    --text-main:        #ECDFCC;    /* Texte principal générique */
+    --text-secondary:   #E3D1B5;    /* Texte secondaire */
+    --text-tertiary:    #C8B9F9;    /* Texte tertiaire / labels */
+
+    /* --- Accent / Action --- */
+    --color-highlight:  #815CF0;    /* Couleur d'accent (liens, hover, actif) */
+    --color-button:     #A58AF4;    /* Fond des boutons */
+    --color-button-text:#dad0fb;    /* Texte des boutons */
+
+    /* --- Bordures --- */
+    --color-stroke:     #010101;    /* Bordures / séparations */
+
+    /* --- Utilitaires (dérivées) --- */
+    --color-button-hover:   #5a35cc;    /* Bouton au survol (violet plus foncé) */
+    --bg-card-hover:        #1e1e24;    /* Carte au survol (légèrement plus clair) */
+    --color-highlight-soft: rgba(111, 68, 238, 0.15); /* Highlight transparent (glow, ombres) */
+}

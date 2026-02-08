@@ -1,4 +1,5 @@
 .env
+arborescence.txt
 composer.lock
 vendor/
 

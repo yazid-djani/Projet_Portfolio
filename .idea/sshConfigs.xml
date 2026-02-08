@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig host="100.110.51.24" id="dcc9aac4-0295-4642-8ecb-d80db74e5d8f" keyPath="C:\Users\Yzd\Proton Drive\yDjani\My files\+\Recovery Code\ssh-key-2026-02-03_Oracle_Serveur_Portfolio.key" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" useOpenSSHConfig="true" />
-    </configs>
-  </component>
-</project>

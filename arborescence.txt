@@ -41,3 +41,72 @@ portfolio/html/
 
 
 
+CREATE DATABASE IF NOT EXISTS portfolio_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE portfolio_db;
+
+-- Table administrateur (tu insères manuellement ton compte)
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table des infos du portfolio (Hero, À propos, etc.)
+CREATE TABLE site_content (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section_key VARCHAR(50) NOT NULL UNIQUE,  -- 'hero', 'about', 'skills', 'contact', 'cv', 'footer'
+    title VARCHAR(255),
+    content TEXT,
+    extra_data JSON,  -- Pour stocker des données supplémentaires (liens, listes, etc.)
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Table des projets
+CREATE TABLE projets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(255) NOT NULL,
+    description TEXT,
+    detail TEXT,           -- description longue pour le panneau coulissant
+    categorie ENUM('developpement', 'reseau') NOT NULL,
+    technologies VARCHAR(255),  -- ex: "PHP, MySQL, Docker"
+    image_url VARCHAR(255),     -- chemin vers screenshot/GIF
+    lien_github VARCHAR(255),
+    lien_demo VARCHAR(255),
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ordre INT DEFAULT 0
+);
+
+-- Table des compétences/outils
+CREATE TABLE competences (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    categorie VARCHAR(50),  -- 'langage', 'framework', 'outil', 'reseau'
+    niveau INT DEFAULT 0,   -- 0-100 pourcentage
+    icone VARCHAR(255),     -- URL ou classe d'icône
+    ordre INT DEFAULT 0
+);
+
+-- Table pour les messages de contact
+CREATE TABLE messages_contact (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    sujet VARCHAR(255),
+    message TEXT NOT NULL,
+    lu TINYINT(1) DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table statistiques de visites (pour TraficPanel)
+CREATE TABLE visites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    page VARCHAR(100),
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    visited_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insertion manuelle de ton compte admin (change le mot de passe !)
+-- Génère le hash avec PHP : echo password_hash('ton_mot_de_passe', PASSWORD_DEFAULT);
+INSERT INTO admins (username, password_hash) VALUES ('yazid', '$2y$10$XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');

@@ -113,64 +113,86 @@
         <div class="section-line"></div>
     </div>
 
-    <!-- Filtres Dev / Réseau -->
     <div class="projets-filter">
-        <button class="filter-btn active" data-filter="all">Tous</button>
-        <button class="filter-btn" data-filter="developpement">Développement</button>
-        <button class="filter-btn" data-filter="reseau">Réseau</button>
+        <button class="filter-btn active" id="btn-dev" data-target="dev">Développement</button>
+        <button class="filter-btn" id="btn-reseau" data-target="reseau">Réseau</button>
     </div>
 
-    <div class="projet-grid">
-        <?php if (empty($projetsDev) && empty($projetsReseau)): ?>
-            <p class="no-projets">Aucun projet pour le moment. Revenez bientôt !</p>
-        <?php endif; ?>
+    <div class="projects-viewport">
+        <div class="projects-slider" id="projectsSlider">
 
-        <?php foreach ($projetsDev as $projet): ?>
-            <div class="projet-card" data-category="developpement">
-                <div class="card-icon">
-                    <i class="fas fa-code"></i>
-                </div>
-                <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
-                <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-                <?php if (!empty($projet['technologies'])): ?>
-                    <div class="card-tags">
-                        <?php foreach (explode(',', $projet['technologies']) as $tech): ?>
-                            <span class="tag"><?= htmlspecialchars(trim($tech)) ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($projet['lien_github'])): ?>
-                    <a href="<?= htmlspecialchars($projet['lien_github']) ?>" target="_blank" class="card-link">
-                        <i class="fab fa-github"></i> Voir sur GitHub
-                    </a>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
+            <div class="projects-panel panel-dev">
+                <div class="projet-grid">
+                    <?php if (empty($projetsDev)): ?>
+                        <p class="no-projets">Aucun projet dev.</p>
+                    <?php else: ?>
+                        <?php foreach ($projetsDev as $projet): ?>
+                            <div class="projet-card"
+                                 data-titre="<?= htmlspecialchars($projet['titre']) ?>"
+                                 data-desc="<?= htmlspecialchars($projet['description']) ?>"
+                                 data-detail="<?= htmlspecialchars($projet['detail'] ?? $projet['description']) ?>"
+                                 data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
+                                 data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
+                                 data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
 
-        <?php foreach ($projetsReseau as $projet): ?>
-            <div class="projet-card" data-category="reseau">
-                <div class="card-icon">
-                    <i class="fas fa-network-wired"></i>
-                </div>
-                <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
-                <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-                <?php if (!empty($projet['technologies'])): ?>
-                    <div class="card-tags">
-                        <?php foreach (explode(',', $projet['technologies']) as $tech): ?>
-                            <span class="tag"><?= htmlspecialchars(trim($tech)) ?></span>
+                                <div class="card-icon"><i class="fas fa-code"></i></div>
+                                <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
+                                <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
+
+                                <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
+                            </div>
                         <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (!empty($projet['lien_github'])): ?>
-                    <a href="<?= htmlspecialchars($projet['lien_github']) ?>" target="_blank" class="card-link">
-                        <i class="fab fa-github"></i> Voir sur GitHub
-                    </a>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
-        <?php endforeach; ?>
+
+            <div class="projects-panel panel-reseau">
+                <div class="projet-grid">
+                    <?php if (empty($projetsReseau)): ?>
+                        <p class="no-projets">Aucun projet réseau.</p>
+                    <?php else: ?>
+                        <?php foreach ($projetsReseau as $projet): ?>
+                            <div class="projet-card"
+                                 data-titre="<?= htmlspecialchars($projet['titre']) ?>"
+                                 data-desc="<?= htmlspecialchars($projet['description']) ?>"
+                                 data-detail="<?= htmlspecialchars($projet['detail'] ?? $projet['description']) ?>"
+                                 data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
+                                 data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
+                                 data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
+
+                                <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+                                <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
+                                <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
+
+                                <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+        </div>
     </div>
 </section>
 
+<div id="projectModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-content">
+            <div class="modal-media">
+                <img src="" alt="Aperçu du projet" id="modalImg">
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle">Titre du projet</h3>
+                <div class="modal-tags" id="modalTags"></div>
+                <p id="modalDesc">Description détaillée...</p>
+                <a href="#" target="_blank" class="btn-primary" id="modalLink">
+                    <i class="fab fa-github"></i> Voir le code
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- ============================================
      SECTION COMPÉTENCES
      ============================================ -->
@@ -370,5 +392,8 @@
 <script src="public/scriptJS/navbar.js"></script>
 <script src="public/scriptJS/viewer.js"></script>
 <script src="public/scriptJS/trafic.js"></script>
+<script src="public/scriptJS/ResDevPanel.js"></script>
+<script src="public/scriptJS/openProjet.js"></script>
+
 </body>
 </html>

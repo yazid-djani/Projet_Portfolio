@@ -779,3 +779,149 @@ body {
     .projets-filter { flex-wrap: wrap; }
     .site-footer { padding: 30px 20px 15px; }
 }
+
+/* ============================================
+   SLIDER PANELS (ResDevPanel)
+   ============================================ */
+.projects-viewport {
+    width: 100%;
+    overflow: hidden; /* Cache ce qui dépasse */
+    position: relative;
+}
+
+.projects-slider {
+    display: flex;
+    width: 200%; /* Car on a 2 panneaux de 100% */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Animation fluide */
+}
+
+.projects-panel {
+    width: 50%; /* Chaque panneau prend la moitié du slider (donc 100% de l'écran) */
+    padding: 10px;
+}
+
+/* Bouton "En savoir plus" dans la carte */
+.btn-details {
+    margin-top: 15px;
+    background: none;
+    border: none;
+    color: var(--color-highlight);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+.btn-details:hover {
+    color: var(--color-button);
+}
+
+/* ============================================
+   MODALE PROJET (openProjet)
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-container {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 900px;
+    border-radius: 16px;
+    border: 1px solid var(--color-stroke);
+    position: relative;
+    transform: translateY(50px);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.modal-overlay.active .modal-container {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: var(--text-paragraph);
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.3s;
+}
+.modal-close:hover { color: var(--color-highlight); }
+
+.modal-content {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Gauche : Image/GIF */
+.modal-media {
+    flex: 1.2;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+}
+
+.modal-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Droite : Texte */
+.modal-info {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-info h3 {
+    font-size: 28px;
+    color: var(--text-headline);
+    margin-bottom: 15px;
+}
+
+.modal-tags {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#modalDesc {
+    color: var(--text-paragraph);
+    margin-bottom: 30px;
+    white-space: pre-wrap; /* Garde les sauts de ligne */
+}
+
+/* Responsive Mobile pour la modale */
+@media (max-width: 768px) {
+    .modal-content { flex-direction: column; }
+    .modal-media { height: 200px; }
+    .modal-info { padding: 25px; }
+}

@@ -1,82 +1,107 @@
 <?php
-    declare(strict_types=1);
+declare(strict_types=1);
 
-    // --- Démarrage de la session ---
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+// --- 1. Démarrage de la session (si pas déjà active) ---
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-    // --- Autoload Composer + .env ---
-    require_once __DIR__ . '/vendor/autoload.php';
-    use Dotenv\Dotenv;
+// --- 2. Chargement des dépendances ---
+require_once __DIR__ . '/vendor/autoload.php';
+use Dotenv\Dotenv;
 
-    $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
+// Chargement du fichier .env
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-    // --- Détection du sous-domaine admin ---
-    $host = $_SERVER['HTTP_HOST'];                      // RÉCUPÈRE le nom de domaine
-    $route = 'home';                                    // Met la route par DÉFAUT à "home"
-    if (str_starts_with($host, 'admin.')) {             // TESTE si ça commence par "admin."
-        $route = 'admin';                               // Si oui, change la route en "admin"
-    }
+// --- 3. Détection du sous-domaine (Routing) ---
+$host = $_SERVER['HTTP_HOST'];
 
-    // --- Routeur principal ---
-    try {
-        switch ($route) {
-            // ============================================================
-            //  CÔTÉ ADMIN (sous-domaine admin.xxxxx)
-            // ============================================================
-            case 'admin':
-                $page   = $_GET['page']   ?? 'dashboard';
-                $action = $_GET['action'] ?? null;
+// Par défaut, on est sur la partie "home" (visiteur)
+$route = 'home';
 
-                // --- Actions spéciales (logout, login POST) ---
-                switch ($action) {
-                    case 'logout':
-                        \App\Controllers\AdminController::logout();
-                        exit;
+// Si l'URL commence par "admin.", on bascule sur la route admin
+if (str_starts_with($host, 'admin.')) {
+    $route = 'admin';
+}
 
-                    case 'login':
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                            \App\Controllers\AdminController::login();
-                            exit;
-                        }
-                        break;
-                }
+// --- 4. Routeur Principal ---
+try {
+    switch ($route) {
 
-                // --- Si pas connecté → page de connexion ---
-                if (!isset($_SESSION['admin_id'])) {
-                    \App\Controllers\AdminController::showLogin();
+        // ============================================================
+        //  PARTIE ADMIN (admin.yazid-djani.dev)
+        // ============================================================
+        case 'admin':
+            $page   = $_GET['page']   ?? 'dashboard';
+            $action = $_GET['action'] ?? null;
+
+            // Actions qui ne nécessitent pas forcément d'être connecté ou qui gèrent la session
+            switch ($action) {
+                case 'logout':
+                    \App\Controllers\AdminController::logout();
                     exit;
-                }
 
-                // --- Admin connecté → routage des pages ---
-                switch ($page) {
-                    case 'projets':
-                        \App\Controllers\AdminController::projets();
-                        break;
+                case 'login':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        \App\Controllers\AdminController::login();
+                        exit;
+                    }
+                    break;
+            }
 
-                    case 'statistiques':
-                        \App\Controllers\AdminController::statistiques();
-                        break;
+            // Vérification : Est-ce que l'admin est connecté ?
+            if (!isset($_SESSION['admin_id'])) {
+                // Si non, on affiche le formulaire de login
+                \App\Controllers\AdminController::showLogin();
+                exit;
+            }
 
-                    case 'dashboard':
-                    default:
-                        \App\Controllers\AdminController::dashboard();
-                        break;
-                }
-                break;
+            // Si connecté, on affiche la page demandée
+            switch ($page) {
+                case 'projets':
+                    \App\Controllers\AdminController::projets();
+                    break;
 
-            // ============================================================
-            //  CÔTÉ VISITEUR (domaine principal)
-            // ============================================================
-            case 'home':
-            default:
+                case 'statistiques':
+                    \App\Controllers\AdminController::statistiques();
+                    break;
+
+                case 'dashboard':
+                default:
+                    \App\Controllers\AdminController::dashboard();
+                    break;
+            }
+            break;
+
+        // ============================================================
+        //  PARTIE VISITEUR (yazid-djani.dev)
+        // ============================================================
+        case 'home':
+        default:
+            $action = $_GET['action'] ?? null;
+
+            // 1. Action : Tracking des visites (appelé par trafic.js)
+            if ($action === 'track_visit' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                \App\Controllers\ProjetController::trackVisit();
+                exit;
+            }
+
+            // 2. Action : Formulaire de contact (POST)
+            elseif ($action === 'contact' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+                \App\Controllers\ProjetController::handleContact();
+                exit;
+            }
+
+            // 3. Affichage standard de la page d'accueil
+            else {
                 \App\Controllers\ProjetController::index();
-                break;
-        }
-
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo "<h1>Erreur Interne</h1><p>" . htmlspecialchars($e->getMessage()) . "</p>";
+            }
+            break;
     }
+
+} catch (Exception $e) {
+    // Gestion basique des erreurs serveur (500)
+    http_response_code(500);
+    echo "<h1>Erreur Interne</h1><p>" . htmlspecialchars($e->getMessage()) . "</p>";
+}

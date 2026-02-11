@@ -1,26 +1,45 @@
 <?php
-    namespace App\Controllers;  // Espace de nom
-    use App\Models\Projet;      // On va utiliser le modèle Projet
+namespace App\Controllers;
+use App\Models\Projet;
+use App\Models\Visite; // N'oublie pas d'importer le modèle Visite
 
-    class ProjetController
-    {   /**
-         * Méthode principale qui affiche la page d'accueil (ViewerPage)
-         */
-        public static function index() {
-            $projets = Projet::findAll();       // 1. On demande au modèle de nous donner tous les projets
-            $projetsDev = [];                   // 2. On sépare les projets en deux tableaux pour l'affichage (Dev vs Réseau)
-            $projetsReseau = [];
+class ProjetController
+{
+    public static function index() {
+        $projets = Projet::findAll();
+        $projetsDev = [];
+        $projetsReseau = [];
 
-            foreach ($projets as $p) {
-                if ($p['categorie'] === 'developpement') {
-                    $projetsDev[] = $p;
-                } elseif ($p['categorie'] === 'reseau') {
-                    $projetsReseau[] = $p;
-                }
+        foreach ($projets as $p) {
+            // Sécurisation des données manquantes pour éviter les bugs d'affichage
+            if (!isset($p['detail'])) $p['detail'] = $p['description'];
+            if (!isset($p['image_url'])) $p['image_url'] = 'default.jpg';
+
+            if ($p['categorie'] === 'developpement') {
+                $projetsDev[] = $p;
+            } elseif ($p['categorie'] === 'reseau') {
+                $projetsReseau[] = $p;
             }
+        }
+        require_once __DIR__ . '/../views/ViewerPage.php';
+    }
 
-            // 3. On charge la vue (le fichier HTML/PHP)
-            // Les variables $projetsDev et $projetsReseau seront accessibles dans la vue
-            require_once __DIR__ . '/../views/ViewerPage.php';
+    // --- NOUVELLE MÉTHODE POUR LE TRACKING ---
+    public static function trackVisit() {
+        // On lit les données JSON envoyées par trafic.js
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if ($data) {
+            $page = $data['page'] ?? '/';
+            $ua   = $data['userAgent'] ?? 'Unknown';
+
+            // On enregistre via le Modèle
+            Visite::record($page, $ua);
+
+            // On répond au JS que c'est ok
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success']);
+            exit;
         }
     }
+}

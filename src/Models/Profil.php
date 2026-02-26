@@ -1,22 +1,19 @@
 <?php
 namespace App\Models;
-
 use App\Lib\Database;
-
-require_once __DIR__ . '/../Lib/Database.php';
 
 class Profil {
     private $db;
 
     public function __construct() {
-        // Maintenant, PHP sait qu'il doit utiliser App\Lib\Database
-        $this->db = Database::getInstance()->getConnection();
+        // On utilise ici la bonne méthode de ta classe Database
+        $this->db = Database::getPDO();
     }
 
     // Récupérer les informations du profil
     public function getProfil() {
         $stmt = $this->db->query("SELECT * FROM profil LIMIT 1");
-        return $stmt->fetch(\PDO::FETCH_ASSOC); // Ajout d'un antislash devant PDO pour le même problème de namespace
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     // Mettre à jour les informations du profil
@@ -36,16 +33,16 @@ class Profil {
 
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
-            ':nom' => $data['nom'],
-            ':prenom' => $data['prenom'],
-            ':titre_poste' => $data['titre_poste'],
-            ':description_hero' => $data['description_hero'],
-            ':description_about' => $data['description_about'],
-            ':email_contact' => $data['email_contact'],
-            ':lien_github' => $data['lien_github'],
-            ':lien_linkedin' => $data['lien_linkedin'],
-            ':localisation' => $data['localisation'],
-            ':lien_cv' => $data['lien_cv']
+            ':nom' => $data['nom'] ?? '',
+            ':prenom' => $data['prenom'] ?? '',
+            ':titre_poste' => $data['titre_poste'] ?? '',
+            ':description_hero' => $data['description_hero'] ?? '',
+            ':description_about' => $data['description_about'] ?? '',
+            ':email_contact' => $data['email_contact'] ?? '',
+            ':lien_github' => $data['lien_github'] ?? '',
+            ':lien_linkedin' => $data['lien_linkedin'] ?? '',
+            ':localisation' => $data['localisation'] ?? '',
+            ':lien_cv' => $data['lien_cv'] ?? ''
         ]);
     }
 }

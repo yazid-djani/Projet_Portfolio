@@ -1,11 +1,18 @@
 <?php
 namespace App\Controllers;
+
 use App\Models\Projet;
-use App\Models\Visite; // N'oublie pas d'importer le modèle Visite
+use App\Models\Visite;
+use App\Models\Profil; // <-- 1. Ajout de l'import du modèle Profil
 
 class ProjetController
 {
     public static function index() {
+        // --- NOUVEAUTÉ : Récupération des données dynamiques du profil ---
+        $profilModel = new Profil();
+        $profil = $profilModel->getProfil();
+
+        // --- GESTION DES PROJETS (inchangée) ---
         $projets = Projet::findAll();
         $projetsDev = [];
         $projetsReseau = [];
@@ -21,10 +28,13 @@ class ProjetController
                 $projetsReseau[] = $p;
             }
         }
+
+        // --- AFFICHAGE DE LA VUE ---
+        // Les variables $profil, $projetsDev et $projetsReseau seront transmises à ViewerPage.php
         require_once __DIR__ . '/../views/ViewerPage.php';
     }
 
-    // --- NOUVELLE MÉTHODE POUR LE TRACKING ---
+    // --- MÉTHODE POUR LE TRACKING ---
     public static function trackVisit() {
         // On lit les données JSON envoyées par trafic.js
         $data = json_decode(file_get_contents('php://input'), true);

@@ -1,0 +1,113 @@
+/* ============================================
+   STYLE DE LA PAGE DE CONNEXION ADMIN
+   ============================================ */
+
+/* Enlève les marges par défaut du navigateur */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Gère le fond de l'écran et centre la boîte */
+.login-body {
+    display: flex; /* Active le mode flexbox pour centrer facilement */
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement */
+    min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    background-color: var(--bg-primary); /* Fond bleu nuit */
+    background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%); /* Ajoute les taches de lumière */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police du texte */
+    color: var(--text-headline); /* Couleur blanche pour le texte */
+}
+
+/* La boîte principale (effet verre) */
+.login-container {
+    width: 100%; /* Prend toute la largeur possible... */
+    max-width: 400px; /* ...mais s'arrête à 400 pixels maximum */
+    padding: 40px; /* Espace intérieur de la boîte */
+    background: var(--bg-glass); /* Rend le fond transparent */
+    backdrop-filter: var(--glass-blur); /* Applique le flou derrière la boîte */
+    -webkit-backdrop-filter: var(--glass-blur); /* Compatibilité pour les navigateurs Apple */
+    border: 1px solid var(--border-glass); /* Ajoute une bordure blanche très fine */
+    border-radius: 16px; /* Arrondit les angles */
+    box-shadow: var(--glass-shadow); /* Ajoute une ombre pour détacher la boîte du fond */
+    text-align: center; /* Centre le texte à l'intérieur */
+}
+
+/* Titre principal dans la boîte */
+.login-header h2 {
+    font-size: 24px; /* Taille du texte */
+    margin-bottom: 5px; /* Espace en bas */
+}
+
+/* Petit texte explicatif sous le titre */
+.login-header p {
+    font-size: 14px; /* Taille plus petite */
+    color: var(--text-paragraph); /* Couleur grise bleutée */
+    margin-bottom: 25px; /* Espace avant le formulaire */
+}
+
+/* Message d'erreur (si mauvais mot de passe) */
+.login-error {
+    background: rgba(255, 95, 87, 0.2); /* Fond rouge transparent */
+    color: #ff5f57; /* Texte rouge */
+    padding: 10px; /* Espace intérieur */
+    border-radius: 8px; /* Coins arrondis */
+    margin-bottom: 20px; /* Espace en bas */
+    font-size: 14px; /* Taille du texte */
+    border: 1px solid rgba(255, 95, 87, 0.5); /* Bordure rouge fine */
+}
+
+/* Espace entre chaque champ du formulaire */
+.form-group {
+    margin-bottom: 20px; /* Ajoute de l'espace en dessous */
+    text-align: left; /* Aligne le texte à gauche */
+}
+
+/* Étiquette au-dessus des champs */
+.form-group label {
+    display: block; /* Force l'étiquette à prendre toute la ligne (au-dessus du champ) */
+    font-size: 13px; /* Petite taille */
+    margin-bottom: 8px; /* Espace avant le champ */
+    color: var(--text-paragraph); /* Couleur grise */
+}
+
+/* Les champs de saisie (texte et mot de passe) */
+.login-form input {
+    width: 100%; /* Prend toute la largeur de la boîte */
+    padding: 12px; /* Espace à l'intérieur du champ */
+    background: rgba(255, 255, 255, 0.05); /* Fond très légèrement blanc */
+    border: 1px solid var(--border-glass); /* Bordure transparente */
+    border-radius: 8px; /* Coins arrondis */
+    color: #fff; /* Texte tapé en blanc */
+    font-family: inherit; /* Utilise la même police que la page */
+    outline: none; /* Enlève la bordure par défaut du navigateur quand on clique */
+    transition: border-color 0.3s ease; /* Animation fluide quand la bordure change de couleur */
+}
+
+/* Quand on clique dans le champ de saisie */
+.login-form input:focus {
+    border-color: var(--color-highlight); /* La bordure devient bleue */
+    background: rgba(255, 255, 255, 0.1); /* Le fond devient un peu plus clair */
+}
+
+/* Le bouton de connexion */
+.login-btn {
+    width: 100%; /* Prend toute la largeur */
+    padding: 12px; /* Espace à l'intérieur */
+    background-color: var(--color-highlight); /* Fond bleu */
+    color: #fff; /* Texte blanc */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Coins arrondis */
+    font-size: 16px; /* Taille du texte */
+    font-weight: bold; /* Texte en gras */
+    cursor: pointer; /* Change la souris en main au survol */
+    transition: all 0.3s ease; /* Animation fluide au survol */
+}
+
+/* Quand la souris survole le bouton */
+.login-btn:hover {
+    background-color: var(--color-button-hover); /* Change la couleur du fond */
+    transform: translateY(-2px); /* Fait monter le bouton légèrement */
+}

@@ -4,29 +4,32 @@
    ============================================ */
 
 :root {
-    /* --- Fond --- */
-    --bg-primary:       #18191B;    /* Fond principal du site */
-    --bg-card:          #16161a;    /* Fond des cartes / sections */
-    --bg-navbar:        #151519;    /* Fond de la barre de navigation */
+    /* --- Fond de la page --- */
+    --bg-primary: #0f172a; /* Un fond bleu très foncé, presque noir, épuré */
 
-    /* --- Texte --- */
-    --text-headline:    #ECDFCC;    /* Titres principaux (h1, h2) */
-    --text-subheadline: #DCC6A3;    /* Sous-titres (h3, h4) */
-    --text-paragraph:   #CEAF7E;    /* Texte courant / paragraphes */
-    --text-main:        #ECDFCC;    /* Texte principal générique */
-    --text-secondary:   #E3D1B5;    /* Texte secondaire */
-    --text-tertiary:    #C8B9F9;    /* Texte tertiaire / labels */
+    /* --- Glassmorphism (Effet Verre) --- */
+    --bg-glass: rgba(255, 255, 255, 0.05); /* Un fond blanc très transparent pour les cartes */
+    --bg-glass-hover: rgba(255, 255, 255, 0.1); /* Un peu plus visible au survol */
+    --border-glass: rgba(255, 255, 255, 0.1); /* Bordure très fine et transparente */
+    --glass-blur: blur(12px); /* La puissance du flou derrière la carte */
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Ombre douce pour la profondeur */
 
-    /* --- Accent / Action --- */
-    --color-highlight:  #815CF0;    /* Couleur d'accent (liens, hover, actif) */
-    --color-button:     #A58AF4;    /* Fond des boutons */
-    --color-button-text:#dad0fb;    /* Texte des boutons */
+    /* --- Textes --- */
+    --text-headline: #ffffff; /* Titres en blanc pur pour le contraste */
+    --text-paragraph: #94a3b8; /* Paragraphes en gris bleuté doux */
 
-    /* --- Bordures --- */
-    --color-stroke:     #010101;    /* Bordures / séparations */
+    /* --- Accent (Boutons et Liens) --- */
+    --color-highlight: #3b82f6; /* Bleu électrique moderne */
+    --color-button: rgba(59, 130, 246, 0.2); /* Bouton transparent bleuté */
+    --color-button-hover: rgba(59, 130, 246, 0.4); /* Bouton plus opaque au survol */
+}
 
-    /* --- Utilitaires (dérivées) --- */
-    --color-button-hover:   #5a35cc;    /* Bouton au survol (violet plus foncé) */
-    --bg-card-hover:        #1e1e24;    /* Carte au survol (légèrement plus clair) */
-    --color-highlight-soft: rgba(111, 68, 238, 0.15); /* Highlight transparent (glow, ombres) */
+/* On ajoute un dégradé subtil en arrière-plan global pour que le flou soit visible */
+body {
+    background-color: var(--bg-primary);
+    background-image:
+            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+    background-attachment: fixed; /* Le fond ne bouge pas quand on scrolle */
+    color: var(--text-paragraph);
 }

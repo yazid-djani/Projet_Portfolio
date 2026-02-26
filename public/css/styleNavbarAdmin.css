@@ -1,0 +1,46 @@
+/* Barre de navigation fixée en haut avec effet verre */
+.navbar {
+    position: fixed; /* Reste toujours en haut */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--bg-glass); /* Fond transparent */
+    backdrop-filter: var(--glass-blur); /* Floute ce qu'il y a derrière la navbar */
+    -webkit-backdrop-filter: var(--glass-blur); /* Compatibilité Safari */
+    border-bottom: 1px solid var(--border-glass); /* Ligne subtile en bas */
+    z-index: 1000; /* Toujours au-dessus du reste du site */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    box-shadow: var(--glass-shadow);
+}
+
+/* Logo / Nom à gauche */
+.navbar-brand {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-headline);
+    text-decoration: none;
+}
+
+/* Conteneur des liens */
+.navbar-links {
+    display: flex;
+    gap: 25px;
+}
+
+/* Les liens de la navbar */
+.navbar-links a {
+    color: var(--text-paragraph);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Effet au survol des liens */
+.navbar-links a:hover {
+    color: var(--color-highlight);
+}

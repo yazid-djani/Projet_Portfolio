@@ -19,28 +19,31 @@
     </div>
 
     <div class="dashboard-grid">
-        <!-- Carte : Projets -->
+
+        <a href="?page=profil" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-user-edit"></i></div>
+            <h3>Profil</h3>
+            <p>Modifier les textes et informations du site public.</p>
+        </a>
+
         <a href="?page=projets" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-folder-open"></i></div>
             <h3>Projets</h3>
             <p>Créer, modifier ou supprimer vos projets.</p>
         </a>
 
-        <!-- Carte : Statistiques -->
         <a href="?page=statistiques" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-chart-bar"></i></div>
             <h3>Statistiques</h3>
             <p>Voir le trafic et les visiteurs du site.</p>
         </a>
 
-        <!-- Carte : Voir le site -->
         <a href="/" class="dashboard-card" target="_blank">
             <div class="card-icon-admin"><i class="fas fa-external-link-alt"></i></div>
             <h3>Voir le site</h3>
             <p>Ouvrir le portfolio dans un nouvel onglet.</p>
         </a>
 
-        <!-- Carte : Déconnexion -->
         <a href="?action=logout" class="dashboard-card card-danger">
             <div class="card-icon-admin"><i class="fas fa-sign-out-alt"></i></div>
             <h3>Déconnexion</h3>

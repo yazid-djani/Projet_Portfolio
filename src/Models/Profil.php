@@ -1,19 +1,22 @@
 <?php
 namespace App\Models;
 
-require_once __DIR__ . '/../Lib/Database.php';
+use App\Lib\Database;
+
+//require_once __DIR__ . '/../Lib/Database.php';
 
 class Profil {
     private $db;
 
     public function __construct() {
+        // Maintenant, PHP sait qu'il doit utiliser App\Lib\Database
         $this->db = Database::getInstance()->getConnection();
     }
 
-    // Récupérer les informations du profil (la première ligne)
+    // Récupérer les informations du profil
     public function getProfil() {
         $stmt = $this->db->query("SELECT * FROM profil LIMIT 1");
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC); // Ajout d'un antislash devant PDO pour le même problème de namespace
     }
 
     // Mettre à jour les informations du profil

@@ -3,7 +3,7 @@ namespace App\Models;
 
 use App\Lib\Database;
 
-//require_once __DIR__ . '/../Lib/Database.php';
+require_once __DIR__ . '/../Lib/Database.php';
 
 class Profil {
     private $db;

@@ -22,7 +22,7 @@ try {
     switch ($route) {
 
         // ============================================================
-        //  PARTIE ADMIN (admin.tondomaine.com)
+        //  PARTIE ADMIN
         // ============================================================
         case 'admin':
             $page   = $_GET['page']   ?? 'dashboard';
@@ -48,12 +48,19 @@ try {
 
             switch ($page) {
                 case 'profil':
-                    // Appelle la fonction profil() qu'on a créée dans AdminController
                     \App\Controllers\AdminController::profil();
-                    break; // Arrête l'exécution du switch pour cette requête
+                    break;
 
                 case 'projets':
                     \App\Controllers\AdminController::projets();
+                    break;
+
+                case 'competences':
+                    \App\Controllers\AdminController::competences();
+                    break;
+
+                case 'outils':
+                    \App\Controllers\AdminController::outils();
                     break;
 
                 case 'statistiques':
@@ -68,7 +75,7 @@ try {
             break;
 
         // ============================================================
-        //  PARTIE VISITEUR (yazid-djani.dev)
+        //  PARTIE VISITEUR
         // ============================================================
         case 'home':
         default:

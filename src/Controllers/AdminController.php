@@ -3,6 +3,8 @@ namespace App\Controllers;
 
 use App\Models\Admin;
 use App\Models\Profil;
+use App\Models\Competence;
+use App\Models\Outil;
 use App\Lib\Database;
 
 class AdminController
@@ -42,13 +44,10 @@ class AdminController
         require_once __DIR__ . '/../views/admin/AdminPage.php';
     }
 
-    /**
-     * Fonction utilitaire pour gérer l'upload des images/vidéos
-     */
     private static function handleUpload($fileInputName, $defaultName) {
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION);
-            $filename = uniqid() . '.' . $ext; // Crée un nom unique
+            $filename = uniqid() . '.' . $ext;
             $dest = __DIR__ . '/../../public/images/' . $filename;
             if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
                 return $filename;
@@ -70,7 +69,6 @@ class AdminController
             $technologies = $_POST['technologies'] ?? '';
             $lien_github = $_POST['lien_github'] ?? '';
 
-            // Gestion de l'upload du média
             $image_url = self::handleUpload('media_projet', 'default.jpg');
 
             try {
@@ -98,16 +96,52 @@ class AdminController
         $profilActuel = $profilModel->getProfil();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Upload de la nouvelle photo de profil
             $ancienneImage = $profilActuel['image_profil'] ?? 'default_profil.png';
             $_POST['image_profil'] = self::handleUpload('photo_profil', $ancienneImage);
 
             $profilModel->updateProfil($_POST);
             $message = "Profil et photo mis à jour avec succès !";
-            $profilActuel = $profilModel->getProfil(); // Recharger pour la vue
+            $profilActuel = $profilModel->getProfil();
         }
 
         $profil = $profilActuel;
         require_once __DIR__ . '/../views/admin/ParametresProfil.php';
+    }
+
+    public static function competences(): void
+    {
+        $message = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            Competence::add($_POST['nom'], $_POST['pourcentage'], $_POST['categorie']);
+            $message = "Compétence ajoutée !";
+        }
+
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            Competence::delete($_GET['id']);
+            header('Location: ?page=competences'); exit;
+        }
+
+        $competences = Competence::findAll();
+        require_once __DIR__ . '/../views/admin/AdminCompetences.php';
+    }
+
+    public static function outils(): void
+    {
+        $message = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $image_url = self::handleUpload('image_outil', 'default_outil.png');
+            Outil::add($_POST['nom'] ?? '', $image_url);
+            $message = "Outil ajouté !";
+        }
+
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            Outil::delete($_GET['id']);
+            header('Location: ?page=outils'); exit;
+        }
+
+        $outils = Outil::findAll();
+        require_once __DIR__ . '/../views/admin/AdminOutils.php';
     }
 }

@@ -20,7 +20,6 @@
     </div>
 
     <div class="dashboard-grid">
-
         <a href="?page=profil" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-user-edit"></i></div>
             <h3>Profil</h3>
@@ -31,6 +30,18 @@
             <div class="card-icon-admin"><i class="fas fa-folder-open"></i></div>
             <h3>Projets</h3>
             <p>Créer, modifier ou supprimer vos projets.</p>
+        </a>
+
+        <a href="?page=competences" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-layer-group"></i></div>
+            <h3>Compétences</h3>
+            <p>Gérer les langages et pourcentages.</p>
+        </a>
+
+        <a href="?page=outils" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-toolbox"></i></div>
+            <h3>Outils</h3>
+            <p>Ajouter des icônes d'outils / logiciels.</p>
         </a>
 
         <a href="?page=statistiques" class="dashboard-card">
@@ -44,7 +55,6 @@
             <h3>Déconnexion</h3>
             <p>Se déconnecter du panel admin.</p>
         </a>
-
     </div>
 </main>
 

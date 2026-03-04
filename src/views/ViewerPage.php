@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?> | Portfolio</title>
-
     <meta name="description" content="Portfolio de <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?> — <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>. Découvrez mes projets, compétences et parcours.">
-
     <link rel="stylesheet" href="public/css/couleur.css">
     <link rel="stylesheet" href="public/css/styleNavbar.css">
     <link rel="stylesheet" href="public/css/styleViewer.css">
@@ -22,7 +20,6 @@
         <div class="hero-profile-container animate-fade-up">
             <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" class="hero-profile-pic">
         </div>
-
         <p class="hero-greeting animate-fade-up delay-1">Bonjour, je suis</p>
         <h1 class="hero-title animate-fade-up delay-2">
             <?= htmlspecialchars($profil['prenom'] ?? '') ?> <span class="highlight"><?= htmlspecialchars($profil['nom'] ?? '') ?></span>
@@ -89,15 +86,12 @@
         <h2 class="section-title">Mes <span class="highlight">Projets</span></h2>
         <div class="section-line"></div>
     </div>
-
     <div class="projets-filter">
         <button class="filter-btn active" id="btn-dev" data-target="dev">Développement</button>
         <button class="filter-btn" id="btn-reseau" data-target="reseau">Réseau</button>
     </div>
-
     <div class="projects-viewport">
         <div class="projects-slider" id="projectsSlider">
-
             <div class="projects-panel panel-dev">
                 <div class="projet-grid">
                     <?php if (empty($projetsDev)): ?>
@@ -111,18 +105,15 @@
                                  data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
                                  data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
                                  data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
-
                                 <div class="card-icon"><i class="fas fa-code"></i></div>
                                 <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
                                 <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-
                                 <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
             </div>
-
             <div class="projects-panel panel-reseau">
                 <div class="projet-grid">
                     <?php if (empty($projetsReseau)): ?>
@@ -136,18 +127,15 @@
                                  data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
                                  data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
                                  data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
-
                                 <div class="card-icon"><i class="fas fa-network-wired"></i></div>
                                 <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
                                 <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-
                                 <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -156,8 +144,7 @@
     <div class="modal-container">
         <button class="modal-close" id="modalClose">&times;</button>
         <div class="modal-content">
-            <div class="modal-media">
-            </div>
+            <div class="modal-media"></div>
             <div class="modal-info">
                 <h3 id="modalTitle">Titre du projet</h3>
                 <div class="modal-tags" id="modalTags"></div>
@@ -179,47 +166,48 @@
         <div class="competence-category">
             <h3><i class="fas fa-code"></i> Développement</h3>
             <div class="skills-list">
-                <div class="skill-item">
-                    <div class="skill-info"><span>PHP</span><span>80%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="80"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>JavaScript</span><span>70%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="70"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>HTML / CSS</span><span>90%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="90"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>SQL</span><span>75%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
-                </div>
+                <?php if(empty($competencesDev)) echo "<p>Aucune compétence.</p>"; ?>
+                <?php foreach ($competencesDev as $c): ?>
+                    <div class="skill-item">
+                        <div class="skill-info"><span><?= htmlspecialchars($c['nom']) ?></span><span><?= $c['pourcentage'] ?>%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-width="<?= $c['pourcentage'] ?>"></div></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="competence-category">
             <h3><i class="fas fa-network-wired"></i> Réseau & Système</h3>
             <div class="skills-list">
-                <div class="skill-item">
-                    <div class="skill-info"><span>Cisco</span><span>75%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>Linux</span><span>70%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="70"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>Docker</span><span>60%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="60"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-info"><span>Windows Server</span><span>65%</span></div>
-                    <div class="skill-bar"><div class="skill-progress" data-width="65"></div></div>
-                </div>
+                <?php if(empty($competencesReseau)) echo "<p>Aucune compétence.</p>"; ?>
+                <?php foreach ($competencesReseau as $c): ?>
+                    <div class="skill-item">
+                        <div class="skill-info"><span><?= htmlspecialchars($c['nom']) ?></span><span><?= $c['pourcentage'] ?>%</span></div>
+                        <div class="skill-bar"><div class="skill-progress" data-width="<?= $c['pourcentage'] ?>"></div></div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 </section>
+
+<?php if(!empty($outils)): ?>
+    <section id="outils" class="outils-section">
+        <div class="section-header">
+            <h2 class="section-title">Mes <span class="highlight">Outils</span></h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="outils-grid">
+            <?php foreach ($outils as $outil): ?>
+                <div class="outil-card">
+                    <img src="/public/images/<?= htmlspecialchars($outil['image_url']) ?>" alt="Outil" class="outil-img">
+                    <?php if (!empty($outil['nom'])): ?>
+                        <span class="outil-name"><?= htmlspecialchars($outil['nom']) ?></span>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
 
 <section id="contact" class="contact-section">
     <div class="section-header">
@@ -237,7 +225,6 @@
                     </div>
                 </div>
             <?php endif; ?>
-
             <?php if (!empty($profil['lien_github'])): ?>
                 <div class="contact-item">
                     <i class="fab fa-github"></i>
@@ -247,7 +234,6 @@
                     </div>
                 </div>
             <?php endif; ?>
-
             <?php if (!empty($profil['lien_linkedin'])): ?>
                 <div class="contact-item">
                     <i class="fab fa-linkedin"></i>
@@ -257,7 +243,6 @@
                     </div>
                 </div>
             <?php endif; ?>
-
             <?php if (!empty($profil['localisation'])): ?>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
@@ -268,7 +253,6 @@
                 </div>
             <?php endif; ?>
         </div>
-
         <form class="contact-form" method="POST" action="?action=contact">
             <div class="form-row">
                 <div class="form-group">

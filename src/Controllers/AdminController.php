@@ -1,8 +1,9 @@
 <?php
 namespace App\Controllers;
+
 use App\Models\Admin;
 use App\Models\Profil;
-use App\Lib\Database; // Ajout pour insérer les projets en base de données
+use App\Lib\Database;
 
 class AdminController
 {
@@ -41,13 +42,26 @@ class AdminController
         require_once __DIR__ . '/../views/admin/AdminPage.php';
     }
 
-    // MISE À JOUR : Gestion de l'affichage ET de la sauvegarde des projets
+    /**
+     * Fonction utilitaire pour gérer l'upload des images/vidéos
+     */
+    private static function handleUpload($fileInputName, $defaultName) {
+        if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
+            $ext = pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION);
+            $filename = uniqid() . '.' . $ext; // Crée un nom unique
+            $dest = __DIR__ . '/../../public/images/' . $filename;
+            if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
+                return $filename;
+            }
+        }
+        return $defaultName;
+    }
+
     public static function projets(): void
     {
         $message = null;
         $error = null;
 
-        // Si l'URL contient action=create et qu'on reçoit le formulaire
         if (isset($_GET['action']) && $_GET['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $titre = $_POST['titre'] ?? '';
             $description = $_POST['description'] ?? '';
@@ -56,11 +70,14 @@ class AdminController
             $technologies = $_POST['technologies'] ?? '';
             $lien_github = $_POST['lien_github'] ?? '';
 
+            // Gestion de l'upload du média
+            $image_url = self::handleUpload('media_projet', 'default.jpg');
+
             try {
                 $db = Database::getPDO();
-                $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, lien_github) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $lien_github]);
-                $message = "Le projet a été ajouté avec succès !";
+                $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, image_url, lien_github) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $image_url, $lien_github]);
+                $message = "Le projet et son média ont été ajoutés avec succès !";
             } catch (\Exception $e) {
                 $error = "Erreur lors de l'ajout du projet : " . $e->getMessage();
             }
@@ -78,13 +95,19 @@ class AdminController
     {
         $profilModel = new Profil();
         $message = null;
+        $profilActuel = $profilModel->getProfil();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Upload de la nouvelle photo de profil
+            $ancienneImage = $profilActuel['image_profil'] ?? 'default_profil.png';
+            $_POST['image_profil'] = self::handleUpload('photo_profil', $ancienneImage);
+
             $profilModel->updateProfil($_POST);
-            $message = "Profil mis à jour avec succès !";
+            $message = "Profil et photo mis à jour avec succès !";
+            $profilActuel = $profilModel->getProfil(); // Recharger pour la vue
         }
 
-        $profil = $profilModel->getProfil();
+        $profil = $profilActuel;
         require_once __DIR__ . '/../views/admin/ParametresProfil.php';
     }
 }

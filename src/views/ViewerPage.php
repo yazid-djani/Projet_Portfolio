@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="public/css/styleViewer.css">
     <link rel="stylesheet" href="public/css/styleResDev.css">
     <link rel="stylesheet" href="public/css/styleOpenProject.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -20,14 +19,18 @@
 
 <section id="hero" class="hero-section">
     <div class="hero-content">
-        <p class="hero-greeting animate-fade-up">Bonjour, je suis</p>
-        <h1 class="hero-title animate-fade-up delay-1">
+        <div class="hero-profile-container animate-fade-up">
+            <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" class="hero-profile-pic">
+        </div>
+
+        <p class="hero-greeting animate-fade-up delay-1">Bonjour, je suis</p>
+        <h1 class="hero-title animate-fade-up delay-2">
             <?= htmlspecialchars($profil['prenom'] ?? '') ?> <span class="highlight"><?= htmlspecialchars($profil['nom'] ?? '') ?></span>
         </h1>
-        <p class="hero-subtitle animate-fade-up delay-2">
+        <p class="hero-subtitle animate-fade-up delay-3">
             <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>
         </p>
-        <p class="hero-description animate-fade-up delay-3">
+        <p class="hero-description animate-fade-up delay-4">
             <?= nl2br(htmlspecialchars($profil['description_hero'] ?? '')) ?>
         </p>
         <div class="hero-buttons animate-fade-up delay-4">
@@ -71,6 +74,13 @@
                 </div>
             </div>
         </div>
+        <div class="about-image">
+            <div class="about-card">
+                <i class="fas fa-user-graduate about-icon"></i>
+                <h3>Parcours</h3>
+                <p>Mon parcours professionnel</p>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -101,9 +111,11 @@
                                  data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
                                  data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
                                  data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
+
                                 <div class="card-icon"><i class="fas fa-code"></i></div>
                                 <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
                                 <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
+
                                 <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
                             </div>
                         <?php endforeach; ?>
@@ -112,16 +124,100 @@
             </div>
 
             <div class="projects-panel panel-reseau">
+                <div class="projet-grid">
+                    <?php if (empty($projetsReseau)): ?>
+                        <p class="no-projets">Aucun projet réseau.</p>
+                    <?php else: ?>
+                        <?php foreach ($projetsReseau as $projet): ?>
+                            <div class="projet-card"
+                                 data-titre="<?= htmlspecialchars($projet['titre']) ?>"
+                                 data-desc="<?= htmlspecialchars($projet['description']) ?>"
+                                 data-detail="<?= htmlspecialchars($projet['detail'] ?? $projet['description']) ?>"
+                                 data-image="<?= htmlspecialchars($projet['image_url'] ?? 'default.jpg') ?>"
+                                 data-github="<?= htmlspecialchars($projet['lien_github'] ?? '') ?>"
+                                 data-tags="<?= htmlspecialchars($projet['technologies'] ?? '') ?>">
+
+                                <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+                                <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
+                                <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
+
+                                <button class="btn-details">En savoir plus <i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
 
         </div>
     </div>
 </section>
 
+<div id="projectModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <div class="modal-content">
+            <div class="modal-media">
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle">Titre du projet</h3>
+                <div class="modal-tags" id="modalTags"></div>
+                <p id="modalDesc">Description détaillée...</p>
+                <a href="#" target="_blank" class="btn-primary" id="modalLink">
+                    <i class="fab fa-github"></i> Voir le code
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section id="competences" class="competences-section">
     <div class="section-header">
         <h2 class="section-title">Mes <span class="highlight">Compétences</span></h2>
         <div class="section-line"></div>
+    </div>
+    <div class="competences-grid">
+        <div class="competence-category">
+            <h3><i class="fas fa-code"></i> Développement</h3>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <div class="skill-info"><span>PHP</span><span>80%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="80"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>JavaScript</span><span>70%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="70"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>HTML / CSS</span><span>90%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="90"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>SQL</span><span>75%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
+                </div>
+            </div>
+        </div>
+        <div class="competence-category">
+            <h3><i class="fas fa-network-wired"></i> Réseau & Système</h3>
+            <div class="skills-list">
+                <div class="skill-item">
+                    <div class="skill-info"><span>Cisco</span><span>75%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Linux</span><span>70%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="70"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Docker</span><span>60%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="60"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Windows Server</span><span>65%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="65"></div></div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -174,6 +270,27 @@
         </div>
 
         <form class="contact-form" method="POST" action="?action=contact">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="contact-name">Nom</label>
+                    <input type="text" id="contact-name" name="name" required placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" name="email" required placeholder="votre@email.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="contact-subject">Sujet</label>
+                <input type="text" id="contact-subject" name="subject" required placeholder="Sujet de votre message">
+            </div>
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" name="message" rows="6" required placeholder="Votre message..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-paper-plane"></i> Envoyer
+            </button>
         </form>
     </div>
 </section>

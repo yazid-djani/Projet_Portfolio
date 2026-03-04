@@ -21,7 +21,15 @@
     <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
 
     <div class="dashboard-card admin-form-container" style="text-align: left; transform: none;">
-        <form action="?page=profil" method="POST" class="admin-form">
+        <form action="?page=profil" method="POST" enctype="multipart/form-data" class="admin-form">
+
+            <div class="form-group">
+                <label>Photo de profil :</label>
+                <div style="margin-bottom: 10px;">
+                    <img src="/public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Actuelle" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-highlight);">
+                </div>
+                <input type="file" name="photo_profil" accept="image/*">
+            </div>
 
             <div class="form-group">
                 <label>Prénom:</label>

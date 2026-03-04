@@ -1,89 +1,62 @@
-/* ============================================
-   openProjet.js
-   Ouvre une modale avec les détails du projet
-   ============================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Éléments de la modale
-    const modal       = document.getElementById('projectModal');
-    const modalClose  = document.getElementById('modalClose');
-    const modalImg    = document.getElementById('modalImg');
-    const modalTitle  = document.getElementById('modalTitle');
-    const modalDesc   = document.getElementById('modalDesc');
-    const modalTags   = document.getElementById('modalTags');
-    const modalLink   = document.getElementById('modalLink');
+    const detailButtons = document.querySelectorAll('.btn-details');
+    const modalOverlay = document.getElementById('projectModal');
+    const modalClose = document.getElementById('modalClose');
 
-    // Toutes les cartes projet
-    const cards = document.querySelectorAll('.projet-card');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalTags = document.getElementById('modalTags');
+    const modalLink = document.getElementById('modalLink');
+    const mediaContainer = document.querySelector('.modal-media');
 
-    // 1. Ouvrir la modale au clic sur une carte
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Récupérer les données via les attributs data-
-            const titre   = card.getAttribute('data-titre');
-            const details = card.getAttribute('data-detail'); // Description longue
-            const image   = card.getAttribute('data-image');
-            const github  = card.getAttribute('data-github');
-            const tags    = card.getAttribute('data-tags');
+    detailButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.projet-card');
 
-            // Remplir la modale
-            modalTitle.textContent = titre;
-            modalDesc.textContent  = details;
+            modalTitle.textContent = card.dataset.titre;
+            modalDesc.textContent = card.dataset.detail;
 
-            // Gestion de l'image (si pas d'image, mettre une par défaut)
-            if (image && image !== 'default.jpg') {
-                // Adapter le chemin si tes images sont dans public/images/
-                modalImg.src = 'public/images/' + image;
+            // Gestion de l'image ou de la vidéo
+            const mediaSrc = card.dataset.image;
+            if (mediaSrc.toLowerCase().endsWith('.mp4') || mediaSrc.toLowerCase().endsWith('.webm')) {
+                mediaContainer.innerHTML = `<video src="public/images/${mediaSrc}" autoplay loop muted playsinline style="width: 100%; border-radius: 10px;"></video>`;
             } else {
-                // Placeholder si pas d'image
-                modalImg.src = 'https://via.placeholder.com/800x600/16161a/815CF0?text=' + encodeURIComponent(titre);
+                mediaContainer.innerHTML = `<img src="public/images/${mediaSrc}" alt="Aperçu du projet" style="width: 100%; border-radius: 10px; object-fit: cover;">`;
             }
 
-            // Gestion du bouton GitHub
-            if (github) {
-                modalLink.href = github;
+            // Gestion des tags
+            modalTags.innerHTML = '';
+            const tags = card.dataset.tags.split(',').map(t => t.trim()).filter(t => t);
+            tags.forEach(t => {
+                const span = document.createElement('span');
+                span.textContent = t;
+                modalTags.appendChild(span);
+            });
+
+            // Lien GitHub
+            if (card.dataset.github) {
+                modalLink.href = card.dataset.github;
                 modalLink.style.display = 'inline-flex';
             } else {
                 modalLink.style.display = 'none';
             }
 
-            // Gestion des tags
-            modalTags.innerHTML = ''; // Reset
-            if (tags) {
-                const tagsArray = tags.split(',');
-                tagsArray.forEach(tag => {
-                    const span = document.createElement('span');
-                    span.className = 'tag';
-                    span.textContent = tag.trim();
-                    modalTags.appendChild(span);
-                });
-            }
-
-            // Afficher la modale
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Bloquer le scroll du site
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
     });
 
-    // 2. Fermer la modale
-    const closeModal = () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = ''; // Réactiver le scroll
-    };
-
-    modalClose.addEventListener('click', closeModal);
-
-    // Fermer si on clique en dehors du contenu (sur le fond gris)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
+    // Fermeture de la modale
+    modalClose.addEventListener('click', () => {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        mediaContainer.innerHTML = ''; // Arrête la vidéo quand on ferme
     });
 
-    // Fermer avec la touche Échap
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+    // Fermeture en cliquant en dehors
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalClose.click();
         }
     });
 });

@@ -1,46 +1,94 @@
-/* Barre de navigation fixée en haut avec effet verre */
+/* ============================================
+   STYLE DE LA NAVBAR ADMIN (Glassmorphism)
+   ============================================ */
+
 .navbar {
-    position: fixed; /* Reste toujours en haut */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 70px;
-    background: var(--bg-glass); /* Fond transparent */
-    backdrop-filter: var(--glass-blur); /* Floute ce qu'il y a derrière la navbar */
-    -webkit-backdrop-filter: var(--glass-blur); /* Compatibilité Safari */
-    border-bottom: 1px solid var(--border-glass); /* Ligne subtile en bas */
-    z-index: 1000; /* Toujours au-dessus du reste du site */
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--border-glass);
+    box-shadow: var(--glass-shadow);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 5%;
-    box-shadow: var(--glass-shadow);
+    z-index: 1000;
 }
 
-/* Logo / Nom à gauche */
+/* Zone du Logo */
 .navbar-brand {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text-headline);
+    display: flex;
+    align-items: center;
     text-decoration: none;
 }
 
-/* Conteneur des liens */
+.navbar-logo {
+    height: 40px; /* Taille ajustable selon ton image */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+}
+
+/* Liens de navigation */
 .navbar-links {
     display: flex;
     gap: 25px;
+    align-items: center;
 }
 
-/* Les liens de la navbar */
 .navbar-links a {
     color: var(--text-paragraph);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-/* Effet au survol des liens */
 .navbar-links a:hover {
-    color: var(--color-highlight);
+    color: var(--text-headline);
+}
+
+/* Barre d'accentuation sous les liens (sauf déconnexion) */
+.navbar-links a:not([style*="color"])::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--color-highlight);
+    transition: width 0.3s ease;
+}
+
+.navbar-links a:hover::after {
+    width: 100%;
+}
+
+/* Style spécial pour le bouton Déconnexion */
+.navbar-links a[style*="color: #ff5f57"] {
+    padding: 8px 15px;
+    border: 1px solid rgba(255, 95, 87, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 95, 87, 0.1);
+}
+
+.navbar-links a[style*="color: #ff5f57"]:hover {
+    background: rgba(255, 95, 87, 0.2);
+    border-color: #ff5f57;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .navbar-links { gap: 15px; }
+    .navbar-links a { font-size: 12px; }
 }

@@ -1,5 +1,8 @@
 <nav class="navbar">
-    <a href="?page=dashboard" class="navbar-brand">Admin YD</a>
+    <a href="?page=dashboard" class="navbar-brand">
+        <img src="public/images/logo.png" alt="Logo Admin" class="navbar-logo">
+    </a>
+
     <div class="navbar-links">
         <a href="?page=dashboard">Dashboard</a>
         <a href="?page=profil">Profil</a>

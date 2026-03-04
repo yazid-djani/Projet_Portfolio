@@ -1,5 +1,7 @@
 <nav class="navbar">
-    <a href="#hero" class="navbar-brand">YD</a>
+    <a href="#hero" class="navbar-brand">
+        <img src="/public/images/logo.png" alt="Logo YD" class="navbar-logo">
+    </a>
 
     <div class="navbar-links">
         <a href="#hero">Accueil</a>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Gestion des Projets</title>
     <link rel="stylesheet" href="/public/css/couleur.css">
-    <link rel="stylesheet" href="/public/css/styleNavbar.css">
+    <link rel="stylesheet" href="/public/css/styleNavbarAdmin.css">
     <link rel="stylesheet" href="/public/css/styleAdmin.css">
     <link rel="stylesheet" href="/public/css/styleAdminForm.css">
 </head>
@@ -19,7 +19,6 @@
     </div>
 
     <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
-    <?php if (!empty($error)) echo "<div class='admin-error' style='color: #ff5f57; background: rgba(255, 95, 87, 0.2); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 95, 87, 0.5); margin-bottom: 20px; text-align: center;'>$error</div>"; ?>
 
     <div class="dashboard-card admin-form-container" style="text-align: left; transform: none;">
         <form action="?page=projets&action=create" method="POST" enctype="multipart/form-data" class="admin-form">
@@ -36,7 +35,7 @@
 
             <div class="form-group">
                 <label>Détail long :</label>
-                <textarea name="detail" rows="5" placeholder="Sera affiché quand on clique sur 'En savoir plus'"></textarea>
+                <textarea name="detail" rows="5" placeholder="Sera affiché dans la modale"></textarea>
             </div>
 
             <div class="form-group">
@@ -48,8 +47,13 @@
             </div>
 
             <div class="form-group">
-                <label>Technologies (séparées par des virgules) :</label>
-                <input type="text" name="technologies" placeholder="Ex: PHP, JavaScript, Docker">
+                <label>Technologies :</label>
+                <input type="text" name="technologies" placeholder="Ex: PHP, CSS, Docker">
+            </div>
+
+            <div class="form-group">
+                <label>Média du projet (Image ou Vidéo) :</label>
+                <input type="file" name="media_projet" accept="image/*,video/mp4">
             </div>
 
             <div class="form-group">

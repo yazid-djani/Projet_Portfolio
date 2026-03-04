@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Modifier le Profil</title>
     <link rel="stylesheet" href="/public/css/couleur.css">
-    <link rel="stylesheet" href="/public/css/styleNavbar.css">
+    <link rel="stylesheet" href="/public/css/styleNavbarAdmin.css">
     <link rel="stylesheet" href="/public/css/styleAdmin.css">
     <link rel="stylesheet" href="/public/css/styleAdminForm.css">
 </head>

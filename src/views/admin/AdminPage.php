@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Dashboard</title>
     <link rel="stylesheet" href="/public/css/couleur.css">
-    <link rel="stylesheet" href="/public/css/styleNavbarAdmin.css">
+    <link rel="stylesheet" href="/public/css/styleNavbar.css">
     <link rel="stylesheet" href="/public/css/styleAdmin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="admin-body">
+
 <?php require_once __DIR__ . '/../layout/navbarAdmin.php'; ?>
 
 <main class="admin-main">
@@ -38,18 +39,14 @@
             <p>Voir le trafic et les visiteurs du site.</p>
         </a>
 
-        <a href="/" class="dashboard-card" target="_blank">
-            <div class="card-icon-admin"><i class="fas fa-external-link-alt"></i></div>
-            <h3>Voir le site</h3>
-            <p>Ouvrir le portfolio dans un nouvel onglet.</p>
-        </a>
-
         <a href="?action=logout" class="dashboard-card card-danger">
             <div class="card-icon-admin"><i class="fas fa-sign-out-alt"></i></div>
             <h3>Déconnexion</h3>
             <p>Se déconnecter du panel admin.</p>
         </a>
+
     </div>
 </main>
+
 </body>
 </html>

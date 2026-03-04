@@ -1,7 +1,8 @@
 <?php
 namespace App\Controllers;
 use App\Models\Admin;
-use App\Models\Profil; // <-- ON AJOUTE ÇA : Permet d'utiliser notre modèle Profil
+use App\Models\Profil;
+use App\Lib\Database; // Ajout pour insérer les projets en base de données
 
 class AdminController
 {
@@ -40,8 +41,31 @@ class AdminController
         require_once __DIR__ . '/../views/admin/AdminPage.php';
     }
 
+    // MISE À JOUR : Gestion de l'affichage ET de la sauvegarde des projets
     public static function projets(): void
     {
+        $message = null;
+        $error = null;
+
+        // Si l'URL contient action=create et qu'on reçoit le formulaire
+        if (isset($_GET['action']) && $_GET['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            $titre = $_POST['titre'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $detail = $_POST['detail'] ?? '';
+            $categorie = $_POST['categorie'] ?? '';
+            $technologies = $_POST['technologies'] ?? '';
+            $lien_github = $_POST['lien_github'] ?? '';
+
+            try {
+                $db = Database::getPDO();
+                $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, lien_github) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $lien_github]);
+                $message = "Le projet a été ajouté avec succès !";
+            } catch (\Exception $e) {
+                $error = "Erreur lors de l'ajout du projet : " . $e->getMessage();
+            }
+        }
+
         require_once __DIR__ . '/../views/admin/CreateProjet.php';
     }
 
@@ -50,21 +74,17 @@ class AdminController
         require_once __DIR__ . '/../views/admin/TraficPanel.php';
     }
 
-    // ==========================================
-    // NOUVELLE MÉTHODE : GESTION DU PROFIL
-    // ==========================================
     public static function profil(): void
     {
-        $profilModel = new Profil(); // Instancie le modèle pour parler à la base de données
-        $message = null;             // Prépare une variable vide pour un message de succès
+        $profilModel = new Profil();
+        $message = null;
 
-        // Si le formulaire a été envoyé (clic sur Sauvegarder)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $profilModel->updateProfil($_POST);       // Met à jour la BDD avec les données du formulaire
-            $message = "Profil mis à jour !";         // Crée le message de réussite
+            $profilModel->updateProfil($_POST);
+            $message = "Profil mis à jour avec succès !";
         }
 
-        $profil = $profilModel->getProfil();          // Récupère les données actuelles pour pré-remplir le formulaire
-        require_once __DIR__ . '/../views/admin/ParametresProfil.php'; // Affiche la page HTML du formulaire
+        $profil = $profilModel->getProfil();
+        require_once __DIR__ . '/../views/admin/ParametresProfil.php';
     }
 }

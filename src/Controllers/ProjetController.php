@@ -3,22 +3,20 @@ namespace App\Controllers;
 
 use App\Models\Projet;
 use App\Models\Visite;
-use App\Models\Profil; // <-- 1. Ajout de l'import du modèle Profil
+use App\Models\Profil;
+use App\Lib\Database; // Ajout de l'import pour la base de données
 
 class ProjetController
 {
     public static function index() {
-        // --- NOUVEAUTÉ : Récupération des données dynamiques du profil ---
         $profilModel = new Profil();
         $profil = $profilModel->getProfil();
 
-        // --- GESTION DES PROJETS (inchangée) ---
         $projets = Projet::findAll();
         $projetsDev = [];
         $projetsReseau = [];
 
         foreach ($projets as $p) {
-            // Sécurisation des données manquantes pour éviter les bugs d'affichage
             if (!isset($p['detail'])) $p['detail'] = $p['description'];
             if (!isset($p['image_url'])) $p['image_url'] = 'default.jpg';
 
@@ -29,26 +27,43 @@ class ProjetController
             }
         }
 
-        // --- AFFICHAGE DE LA VUE ---
-        // Les variables $profil, $projetsDev et $projetsReseau seront transmises à ViewerPage.php
         require_once __DIR__ . '/../views/ViewerPage.php';
     }
 
-    // --- MÉTHODE POUR LE TRACKING ---
     public static function trackVisit() {
-        // On lit les données JSON envoyées par trafic.js
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($data) {
             $page = $data['page'] ?? '/';
             $ua   = $data['userAgent'] ?? 'Unknown';
 
-            // On enregistre via le Modèle
             Visite::record($page, $ua);
 
-            // On répond au JS que c'est ok
             header('Content-Type: application/json');
             echo json_encode(['status' => 'success']);
+            exit;
+        }
+    }
+
+    // NOUVELLE MÉTHODE : Traitement du formulaire de contact public
+    public static function handleContact() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Récupération sécurisée des données du formulaire
+            $nom = htmlspecialchars($_POST['name'] ?? '');
+            $email = htmlspecialchars($_POST['email'] ?? '');
+            $sujet = htmlspecialchars($_POST['subject'] ?? '');
+            $message = htmlspecialchars($_POST['message'] ?? '');
+
+            // Si les champs obligatoires ne sont pas vides
+            if (!empty($nom) && !empty($email) && !empty($message)) {
+                $db = Database::getPDO();
+                // Insertion dans la base de données
+                $stmt = $db->prepare("INSERT INTO messages_contact (nom, email, sujet, message) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$nom, $email, $sujet, $message]);
+            }
+
+            // On redirige l'utilisateur vers la page d'accueil (au niveau du contact)
+            header('Location: /#contact');
             exit;
         }
     }

@@ -18,6 +18,9 @@
         <a href="?page=dashboard" class="btn-secondary" style="margin-top: 15px;">Retour au Dashboard</a>
     </div>
 
+    <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
+    <?php if (!empty($error)) echo "<div class='admin-error' style='color: #ff5f57; background: rgba(255, 95, 87, 0.2); padding: 15px; border-radius: 8px; border: 1px solid rgba(255, 95, 87, 0.5); margin-bottom: 20px; text-align: center;'>$error</div>"; ?>
+
     <div class="dashboard-card admin-form-container" style="text-align: left; transform: none;">
         <form action="?page=projets&action=create" method="POST" enctype="multipart/form-data" class="admin-form">
 

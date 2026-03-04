@@ -11,17 +11,29 @@ class Profil {
 
     public function getProfil() {
         $stmt = $this->db->query("SELECT * FROM profil LIMIT 1");
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        // CORRECTION : Si la base est vide, on renvoie un tableau vide plutôt que "false" pour éviter les bugs
+        return $result ?: [];
     }
 
     public function updateProfil($data) {
-        $sql = "UPDATE profil SET 
-                nom = :nom, prenom = :prenom, titre_poste = :titre_poste, 
-                description_hero = :description_hero, description_about = :description_about, 
-                email_contact = :email_contact, lien_github = :lien_github, 
-                lien_linkedin = :lien_linkedin, localisation = :localisation, 
-                lien_cv = :lien_cv, image_profil = :image_profil
-                WHERE id = 1";
+        // Vérifie si une ligne existe déjà
+        $check = $this->db->query("SELECT COUNT(*) FROM profil")->fetchColumn();
+
+        if ($check == 0) {
+            // Si la table est vide, on l'insère au lieu de la mettre à jour
+            $sql = "INSERT INTO profil (nom, prenom, titre_poste, description_hero, description_about, email_contact, lien_github, lien_linkedin, localisation, lien_cv, image_profil) 
+                    VALUES (:nom, :prenom, :titre_poste, :description_hero, :description_about, :email_contact, :lien_github, :lien_linkedin, :localisation, :lien_cv, :image_profil)";
+        } else {
+            $sql = "UPDATE profil SET 
+                    nom = :nom, prenom = :prenom, titre_poste = :titre_poste, 
+                    description_hero = :description_hero, description_about = :description_about, 
+                    email_contact = :email_contact, lien_github = :lien_github, 
+                    lien_linkedin = :lien_linkedin, localisation = :localisation, 
+                    lien_cv = :lien_cv, image_profil = :image_profil
+                    WHERE id = 1";
+        }
 
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([

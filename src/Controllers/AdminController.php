@@ -44,11 +44,20 @@ class AdminController
         require_once __DIR__ . '/../views/admin/AdminPage.php';
     }
 
+    // --- CORRECTION DE L'UPLOAD ---
     private static function handleUpload($fileInputName, $defaultName) {
+        $dir = __DIR__ . '/../../public/images/';
+
+        // Force la création du dossier avec les permissions maximales s'il n'existe pas
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION);
             $filename = uniqid() . '.' . $ext;
-            $dest = __DIR__ . '/../../public/images/' . $filename;
+            $dest = $dir . $filename;
+
             if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
                 return $filename;
             }

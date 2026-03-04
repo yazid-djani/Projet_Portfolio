@@ -20,7 +20,7 @@
         <form action="?page=outils" method="POST" enctype="multipart/form-data" class="admin-form" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
 
             <div class="form-group" style="flex: 1; margin-bottom: 0;">
-                <label>Image/Icône (Transparente de pref) :</label>
+                <label>Image/Icône :</label>
                 <input type="file" name="image_outil" accept="image/*" required onchange="previewImg(event)">
             </div>
 
@@ -37,7 +37,7 @@
     <div class="dashboard-grid">
         <?php foreach ($outils as $o): ?>
             <div class="dashboard-card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <img src="/public/images/<?= htmlspecialchars($o['image_url']) ?>" style="width: 50px; height: 50px; object-fit: contain;">
+                <img src="public/images/<?= htmlspecialchars($o['image_url']) ?>" style="width: 50px; height: 50px; object-fit: contain;">
                 <h4 style="color:#fff; font-size:14px;"><?= htmlspecialchars($o['nom']) ?></h4>
                 <a href="?page=outils&action=delete&id=<?= $o['id'] ?>" class="btn-secondary" style="border-color:#ff5f57; color:#ff5f57; width: 100%; text-align: center;" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i></a>
             </div>

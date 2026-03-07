@@ -13,7 +13,6 @@ class Visite {
 
     public static function findAllGroupedByIP() {
         $db = Database::getPDO();
-        // Récupère les visites groupées par IP pour voir le "parcours" de chaque utilisateur
         return $db->query("SELECT ip_address, GROUP_CONCAT(CONCAT(page, ' (', type, ')') SEPARATOR ' > ') as parcours, 
                            MAX(visited_at) as derniere_activite, COUNT(*) as total_actions 
                            FROM visites 
@@ -24,5 +23,11 @@ class Visite {
     public static function getStatsSummary() {
         $db = Database::getPDO();
         return $db->query("SELECT page, COUNT(*) as total FROM visites GROUP BY page ORDER BY total DESC")->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // NOUVEAU : Fonction pour vider toute la table
+    public static function clearAll() {
+        $db = Database::getPDO();
+        return $db->query("TRUNCATE TABLE visites");
     }
 }

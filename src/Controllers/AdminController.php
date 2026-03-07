@@ -95,6 +95,14 @@ class AdminController
 
     public static function statistiques(): void
     {
+        $message = null;
+
+        // NOUVEAU : Si on clique sur le bouton "Vider les stats"
+        if (isset($_GET['action']) && $_GET['action'] === 'clear') {
+            \App\Models\Visite::clearAll();
+            $message = "Toutes les statistiques ont été effacées avec succès !";
+        }
+
         // On récupère les données traitées par le modèle
         $parcoursUtilisateurs = \App\Models\Visite::findAllGroupedByIP();
         $resumeStats = \App\Models\Visite::getStatsSummary();

@@ -95,6 +95,10 @@ class AdminController
 
     public static function statistiques(): void
     {
+        // On récupère les données traitées par le modèle
+        $parcoursUtilisateurs = \App\Models\Visite::findAllGroupedByIP();
+        $resumeStats = \App\Models\Visite::getStatsSummary();
+
         require_once __DIR__ . '/../views/admin/TraficPanel.php';
     }
 

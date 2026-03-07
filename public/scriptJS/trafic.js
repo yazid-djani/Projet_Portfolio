@@ -1,38 +1,33 @@
-/* ============================================
-   TRAFIC.JS — Enregistrement des visites
-   ============================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Fonction pour envoyer les infos de visite au serveur
-    const trackVisit = async () => {
-        try {
-            // On prépare les données minimales
-            const visitData = {
-                page: window.location.pathname, // La page actuelle (ex: /)
-                referrer: document.referrer || 'Direct', // D'où vient le visiteur
-                userAgent: navigator.userAgent // Le navigateur utilisé
-            };
-
-            // On envoie les données via une requête POST légère
-            // On suppose que tu créeras une route '?action=track_visit' dans ton routeur PHP
-            await fetch('index.php?action=track_visit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(visitData)
-            });
-
-            // (Optionnel) Log pour le débug
-            // console.log('Visite enregistrée');
-
-        } catch (error) {
-            // En cas d'erreur (ex: adblocker), on ne fait rien pour ne pas gêner l'utilisateur
-            console.warn('Tracking indisponible');
-        }
+    // 1. Enregistrer la visite de la page
+    const trackAction = (name, type = 'vue') => {
+        fetch('?action=track_visit', {
+            method: 'POST',
+            headers: { 'Content-Type: application/json'},
+            body: JSON.stringify({
+                page: name,
+                type: type,
+                userAgent: navigator.userAgent
+            })
+        });
     };
 
-    // On lance le tracking une fois la page chargée
-    trackVisit();
+    // Enregistre l'arrivée sur le site
+    trackAction('accueil', 'vue');
+
+    // 2. Écouter les clics sur les éléments importants
+    const linksToTrack = [
+        { selector: 'a[href*="linkedin"]', name: 'clic_linkedin' },
+        { selector: 'a[href*="github"]', name: 'clic_github' },
+        { selector: 'a[href$=".pdf"]', name: 'clic_cv' }, // Détecte les liens vers des PDF (ton CV)
+        { selector: '.btn-details', name: 'clic_projet_detail' }
+    ];
+
+    linksToTrack.forEach(item => {
+        document.querySelectorAll(item.selector).forEach(el => {
+            el.addEventListener('click', () => {
+                trackAction(item.name, 'clic');
+            });
+        });
+    });
 });

@@ -20,19 +20,12 @@ if (str_starts_with($host, 'admin.')) {
 
 try {
     switch ($route) {
-
-        // ============================================================
-        //  PARTIE ADMIN
-        // ============================================================
         case 'admin':
             $page   = $_GET['page']   ?? 'dashboard';
             $action = $_GET['action'] ?? null;
 
             switch ($action) {
-                case 'logout':
-                    \App\Controllers\AdminController::logout();
-                    exit;
-
+                case 'logout': \App\Controllers\AdminController::logout(); exit;
                 case 'login':
                     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         \App\Controllers\AdminController::login();
@@ -47,26 +40,12 @@ try {
             }
 
             switch ($page) {
-                case 'profil':
-                    \App\Controllers\AdminController::profil();
-                    break;
-
-                case 'projets':
-                    \App\Controllers\AdminController::projets();
-                    break;
-
-                case 'competences':
-                    \App\Controllers\AdminController::competences();
-                    break;
-
-                case 'outils':
-                    \App\Controllers\AdminController::outils();
-                    break;
-
-                case 'statistiques':
-                    \App\Controllers\AdminController::statistiques();
-                    break;
-
+                case 'profil': \App\Controllers\AdminController::profil(); break;
+                case 'projets': \App\Controllers\AdminController::projets(); break;
+                case 'competences': \App\Controllers\AdminController::competences(); break;
+                case 'outils': \App\Controllers\AdminController::outils(); break;
+                case 'certifications': \App\Controllers\AdminController::certifications(); break; // NOUVELLE ROUTE
+                case 'statistiques': \App\Controllers\AdminController::statistiques(); break;
                 case 'dashboard':
                 default:
                     \App\Controllers\AdminController::dashboard();
@@ -74,9 +53,6 @@ try {
             }
             break;
 
-        // ============================================================
-        //  PARTIE VISITEUR
-        // ============================================================
         case 'home':
         default:
             $action = $_GET['action'] ?? null;

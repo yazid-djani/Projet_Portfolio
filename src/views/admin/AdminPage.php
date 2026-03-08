@@ -14,12 +14,14 @@
 <?php require_once __DIR__ . '/../layout/navbarAdmin.php'; ?>
 
 <main class="admin-main">
+
     <div class="admin-header">
         <h1>Bienvenue, <span class="highlight"><?= htmlspecialchars($_SESSION['admin_username'] ?? 'Admin') ?></span></h1>
         <p>Tableau de bord — gérez votre portfolio depuis ici.</p>
     </div>
 
     <div class="dashboard-grid">
+
         <a href="?page=profil" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-user-edit"></i></div>
             <h3>Profil</h3>
@@ -44,6 +46,11 @@
             <p>Ajouter des icônes d'outils / logiciels.</p>
         </a>
 
+        <a href="?page=certifications" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-award"></i></div> <h3>Certifications</h3>
+            <p>Ajouter des diplômes ou certifications.</p>
+        </a>
+
         <a href="?page=statistiques" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-chart-bar"></i></div>
             <h3>Statistiques</h3>
@@ -55,6 +62,7 @@
             <h3>Déconnexion</h3>
             <p>Se déconnecter du panel admin.</p>
         </a>
+
     </div>
 </main>
 

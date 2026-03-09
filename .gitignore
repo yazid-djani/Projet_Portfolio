@@ -1,5 +1,6 @@
 .env
 arborescence.txt
+generator_hash_password.txt
 composer.lock
 vendor/
 

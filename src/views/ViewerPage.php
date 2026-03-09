@@ -16,41 +16,38 @@
 <?php require_once __DIR__ . '/layout/navbarViewer.php'; ?>
 
 <section id="hero" class="hero-section">
-    <div class="hero-content">
-        <div class="hero-profile-container animate-fade-up">
-            <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" class="hero-profile-pic">
+    <div class="hero-main-card hero-code-block animate-fade-up">
+
+        <div class="code-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="code-filename">profil.php</span>
         </div>
-        <p class="hero-greeting animate-fade-up delay-1">Bonjour, je suis</p>
-        <h1 class="hero-title animate-fade-up delay-2">
-            <?= htmlspecialchars($profil['prenom'] ?? '') ?> <span class="highlight"><?= htmlspecialchars($profil['nom'] ?? '') ?></span>
-        </h1>
-        <p class="hero-subtitle animate-fade-up delay-3">
-            <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>
-        </p>
-        <p class="hero-description animate-fade-up delay-4">
-            <?= nl2br(htmlspecialchars($profil['description_hero'] ?? '')) ?>
-        </p>
-        <div class="hero-buttons animate-fade-up delay-4">
-            <a href="#projets" class="btn-primary">Voir mes projets</a>
-            <a href="#contact" class="btn-secondary">Me contacter</a>
-        </div>
-    </div>
-    <div class="hero-visual animate-fade-up delay-3">
-        <div class="hero-code-block">
-            <div class="code-header">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-                <span class="code-filename">profil.php</span>
+
+        <div class="hero-card-body">
+            <div class="hero-profile-wrapper">
+                <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" class="hero-profile-pic-large">
             </div>
-            <pre class="code-content"><code><span class="code-keyword">&lt;?php</span>
-<span class="code-variable">$profil</span> = [
-    <span class="code-string">'nom'</span>     => <span class="code-string">'<?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>'</span>,
-    <span class="code-string">'poste'</span>   => <span class="code-string">'<?= htmlspecialchars($profil['titre_poste'] ?? '') ?>'</span>,
-    <span class="code-string">'passion'</span> => <span class="code-keyword">true</span>,
-];
-<span class="code-keyword">echo</span> <span class="code-string">"Let's build something!"</span>;</code></pre>
+
+            <div class="hero-text-content">
+                <p class="hero-greeting animate-fade-up delay-1">Bonjour, je suis</p>
+                <h1 class="hero-title animate-fade-up delay-2">
+                    <?= htmlspecialchars($profil['prenom'] ?? '') ?> <span class="highlight"><?= htmlspecialchars($profil['nom'] ?? '') ?></span>
+                </h1>
+                <p class="hero-subtitle animate-fade-up delay-3">
+                    <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>
+                </p>
+                <p class="hero-description animate-fade-up delay-4">
+                    <?= nl2br(htmlspecialchars($profil['description_hero'] ?? '')) ?>
+                </p>
+                <div class="hero-buttons animate-fade-up delay-4">
+                    <a href="#projets" class="btn-primary">Voir mes projets</a>
+                    <a href="#contact" class="btn-secondary">Me contacter</a>
+                </div>
+            </div>
         </div>
+
     </div>
 </section>
 

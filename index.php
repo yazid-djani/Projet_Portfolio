@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 require_once __DIR__ . '/vendor/autoload.php';
 use Dotenv\Dotenv;
@@ -14,9 +12,27 @@ $dotenv->load();
 $host = $_SERVER['HTTP_HOST'];
 $route = 'home';
 
+// ==========================================
+// ROUTAGE : ACCÈS AU PANEL ADMINISTRATEUR
+// ==========================================
+// Par défaut, le panel s'ouvre via un sous-domaine (ex: admin.votre-site.com)
 if (str_starts_with($host, 'admin.')) {
     $route = 'admin';
 }
+
+/* * -------------------------------------------------------------------
+ * ASTUCE POUR LE DÉVELOPPEMENT LOCAL / UTILISATEURS GITHUB :
+ * -------------------------------------------------------------------
+ * Si vous n'avez pas de sous-domaine configuré (ex: en local avec XAMPP/WAMP),
+ * vous pouvez commenter le bloc 'if' ci-dessus et décommenter
+ * celui ci-dessous.
+ * Vous accéderez alors à l'admin via l'URL : http://localhost/?admin
+ */
+/*
+if (isset($_GET['admin'])) {
+    $route = 'admin';
+}
+*/
 
 try {
     switch ($route) {

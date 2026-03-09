@@ -59,9 +59,6 @@ CREATE TABLE IF NOT EXISTS profil (
     image_profil VARCHAR(255) DEFAULT 'default_profil.png'
     );
 
-INSERT INTO profil (nom, prenom, titre_poste, description_hero, description_about, email_contact, lien_github, lien_linkedin, localisation, lien_cv, image_profil)
-VALUES ('', '', '', '', '', '', '', '', '', '', 'default_profil.png');
-
 -- 6. Table Compétences : Alimente dynamiquement les barres de progression de la section Compétences.
 CREATE TABLE IF NOT EXISTS competences (
     id INT AUTO_INCREMENT PRIMARY KEY,

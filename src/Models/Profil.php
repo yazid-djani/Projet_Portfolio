@@ -13,27 +13,19 @@ class Profil {
         $stmt = $this->db->query("SELECT * FROM profil LIMIT 1");
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        // CORRECTION : Si la base est vide, on renvoie un tableau vide plutôt que "false" pour éviter les bugs
+        // Si la base est vide, on renvoie un tableau vide plutôt que "false" pour éviter les bugs
         return $result ?: [];
     }
 
     public function updateProfil($data) {
-        // Vérifie si une ligne existe déjà
-        $check = $this->db->query("SELECT COUNT(*) FROM profil")->fetchColumn();
+        // CORRECTION DE SÉCURITÉ :
+        // Au lieu de mettre à jour l'ID 1 (qui pourrait avoir été supprimé accidentellement),
+        // on vide complètement la table et on réinsère la nouvelle ligne.
+        // Cela garantit qu'il n'y aura toujours qu'un seul et unique profil actif.
+        $this->db->query("TRUNCATE TABLE profil");
 
-        if ($check == 0) {
-            // Si la table est vide, on l'insère au lieu de la mettre à jour
-            $sql = "INSERT INTO profil (nom, prenom, titre_poste, description_hero, description_about, email_contact, lien_github, lien_linkedin, localisation, lien_cv, image_profil) 
-                    VALUES (:nom, :prenom, :titre_poste, :description_hero, :description_about, :email_contact, :lien_github, :lien_linkedin, :localisation, :lien_cv, :image_profil)";
-        } else {
-            $sql = "UPDATE profil SET 
-                    nom = :nom, prenom = :prenom, titre_poste = :titre_poste, 
-                    description_hero = :description_hero, description_about = :description_about, 
-                    email_contact = :email_contact, lien_github = :lien_github, 
-                    lien_linkedin = :lien_linkedin, localisation = :localisation, 
-                    lien_cv = :lien_cv, image_profil = :image_profil
-                    WHERE id = 1";
-        }
+        $sql = "INSERT INTO profil (nom, prenom, titre_poste, description_hero, description_about, email_contact, lien_github, lien_linkedin, localisation, lien_cv, image_profil) 
+                VALUES (:nom, :prenom, :titre_poste, :description_hero, :description_about, :email_contact, :lien_github, :lien_linkedin, :localisation, :lien_cv, :image_profil)";
 
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([

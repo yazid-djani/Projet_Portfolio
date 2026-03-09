@@ -64,25 +64,29 @@ class AdminController
 
     // Cette fonction prend un fichier (photo, vidéo) et l'enregistre sur le serveur
     private static function handleUpload($fileInputName, $defaultName) {
-        $dir = __DIR__ . '/../../public/images/'; // Chemin du dossier où sauvegarder l'image
+        $dir = __DIR__ . '/../../public/images/';
 
-        // Si le dossier "images" n'existe pas, on le crée avec les permissions maximales (0777)
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            mkdir($dir, 0755, true); // CHANGER 0777 (dangereux) en 0755
         }
 
-        // Vérifie si un fichier a été envoyé et s'il n'y a pas d'erreur
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
-            $ext = pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION); // Récupère l'extension (.jpg, .png...)
-            $filename = uniqid() . '.' . $ext; // Crée un nom unique (ex: 64a8b.png) pour éviter d'écraser un autre fichier
-            $dest = $dir . $filename; // Chemin final complet
+            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION));
 
-            // Déplace le fichier temporaire vers son dossier final
+            // SÉCURITÉ : Liste des extensions autorisées
+            $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm'];
+            if (!in_array($ext, $allowedExts)) {
+                return $defaultName; // Rejette le fichier si ce n'est pas une image/vidéo
+            }
+
+            $filename = uniqid() . '.' . $ext;
+            $dest = $dir . $filename;
+
             if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
-                return $filename; // Retourne le nouveau nom pour le sauvegarder dans la BDD
+                return $filename;
             }
         }
-        return $defaultName; // Si pas de fichier envoyé, on garde l'image par défaut
+        return $defaultName;
     }
 
     // ==========================================

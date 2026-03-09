@@ -39,9 +39,6 @@
                 <p class="hero-subtitle">
                     <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>
                 </p>
-                <p class="hero-description">
-                    <?= nl2br(htmlspecialchars($profil['description_hero'] ?? '')) ?>
-                </p>
                 <div class="hero-buttons">
                     <a href="#projets" class="btn-primary">Voir mes projets</a>
                     <a href="#contact" class="btn-secondary">Me contacter</a>
@@ -53,16 +50,18 @@
 
     <div class="hero-right-col animate-fade-up delay-2">
         <div class="hero-window hero-code-block">
-            <div class="code-header">
+            <div class="code-header code-header-large">
                 <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
                 <span class="code-filename">profil.php</span>
             </div>
-            <pre class="code-content"><code><span class="code-keyword">&lt;?php</span>
+            <pre class="code-content code-content-large"><code><span class="code-keyword">&lt;?php</span>
+
 <span class="code-variable">$profil</span> = [
     <span class="code-string">'nom'</span>     => <span class="code-string">'<?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>'</span>,
     <span class="code-string">'poste'</span>   => <span class="code-string">'<?= htmlspecialchars($profil['titre_poste'] ?? '') ?>'</span>,
     <span class="code-string">'passion'</span> => <span class="code-keyword">true</span>,
 ];
+
 <span class="code-keyword">echo</span> <span class="code-string">"Let's build something!"</span>;</code></pre>
         </div>
     </div>

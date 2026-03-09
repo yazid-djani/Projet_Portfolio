@@ -110,127 +110,140 @@ body {
 }
 
 /* ============================================
-   HERO (Fenêtres multiples "Style OS")
+   HERO (Style IDE / Fenêtres Multiples)
    ============================================ */
 .hero-section {
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 80px;
-    padding: 60px 80px 80px;
-    max-width: 1350px;
+    gap: 30px; /* Espace entre les deux colonnes */
+    padding: 60px 5%;
+    max-width: 1400px; /* On élargit un peu pour laisser respirer les fenêtres */
     margin: 0 auto;
 }
 
-/* Base "Glassmorphism" pour toutes les fenêtres du Hero */
+/* --- Base des fenêtres --- */
 .hero-window {
-    background: var(--bg-glass);
+    background: rgba(15, 23, 42, 0.6); /* Fond un peu plus sombre pour bien faire ressortir les fenêtres */
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border-glass);
-    box-shadow: var(--glass-shadow);
-    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border-radius: 14px;
     overflow: hidden;
 }
 
-/* --- Colonne Gauche (Photo + Texte) --- */
-.hero-left-col {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 1. Fenêtre Photo */
-.hero-pic-window {
-    width: 300px;
-    z-index: 1; /* En arrière-plan */
-}
-
-.hero-profile-pic-full {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    display: block;
-}
-
-/* 2. Fenêtre Texte (superposée) */
-.hero-text-window {
-    width: 420px;
-    z-index: 2; /* Au premier plan */
-    margin-top: -60px; /* Fait remonter la fenêtre sur la photo */
-    margin-left: 60px; /* Décale la fenêtre vers la droite */
-}
-
-.hero-text-content {
-    padding: 30px;
-}
-
-/* Textes adaptés à la petite fenêtre */
-.hero-greeting { font-size: 15px; color: var(--color-highlight); font-weight: 600; margin-bottom: 5px; }
-.hero-title { font-size: 38px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 10px; }
-.hero-subtitle { font-size: 18px; color: var(--text-headline); opacity: 0.9; margin-bottom: 15px; }
-.hero-description { font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
-
-/* Boutons plus compacts pour rentrer dans la fenêtre */
-.hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero-buttons .btn-primary, .hero-buttons .btn-secondary {
-    padding: 10px 18px;
-    font-size: 13px;
-}
-
-/* --- Colonne Droite (Code PHP) --- */
-.hero-right-col {
-    flex: 1;
-    max-width: 500px;
-}
-
-.hero-code-block {
-    width: 100%;
-}
-
-/* --- En-têtes de fenêtres (Boutons OS) --- */
-.code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-glass); }
+/* En-têtes classiques */
+.code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-glass); }
 .dot { width: 12px; height: 12px; border-radius: 50%; }
 .dot.red { background-color: #ff5f57; }
 .dot.yellow { background-color: #febc2e; }
 .dot.green { background-color: #28c840; }
 .code-filename { margin-left: 10px; font-size: 13px; color: var(--text-paragraph); font-family: monospace; }
-.code-content { padding: 20px; font-family: 'Fira Code', 'Courier New', monospace; font-size: 14px; line-height: 1.8; color: var(--text-paragraph); overflow-x: auto; }
+
+/* ============================================
+   COLONNE GAUCHE (Photo + Présentation)
+   ============================================ */
+.hero-left-col {
+    display: flex;
+    flex-direction: column;
+    width: 40%; /* Prend 40% de l'espace total */
+    max-width: 450px;
+}
+
+/* 1. Fenêtre Photo (Large et écrasée) */
+.hero-pic-window {
+    width: 100%;
+    z-index: 1;
+}
+
+.hero-profile-pic-full {
+    width: 100%;
+    aspect-ratio: 16 / 10; /* Donne cet effet rectangulaire horizontal (paysage) */
+    object-fit: cover;
+    display: block;
+}
+
+/* 2. Fenêtre Présentation (Légèrement en retrait) */
+.hero-text-window {
+    width: 95%; /* Un peu moins large que la photo, comme sur ton screen */
+    z-index: 2;
+    margin-top: -15px; /* Chevauche légèrement la photo par le bas */
+}
+
+.hero-text-content {
+    padding: 30px 25px;
+}
+
+/* Ajustement des textes de gauche */
+.hero-greeting { font-size: 14px; color: var(--color-highlight); font-weight: 600; margin-bottom: 5px; }
+.hero-title { font-size: 32px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 10px; }
+.hero-subtitle { font-size: 16px; color: var(--text-paragraph); margin-bottom: 25px; }
+
+.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-buttons .btn-primary, .hero-buttons .btn-secondary {
+    padding: 12px 20px;
+    font-size: 13px;
+}
+
+/* ============================================
+   COLONNE DROITE (Grand Code PHP)
+   ============================================ */
+.hero-right-col {
+    flex: 1; /* Prend tout l'espace restant (environ 60%) */
+    max-width: 800px;
+    display: flex;
+}
+
+.hero-code-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Rendre l'en-tête de droite plus "massive" */
+.code-header-large {
+    padding: 16px 20px;
+}
+.code-header-large .dot { width: 14px; height: 14px; }
+.code-header-large .code-filename { font-size: 16px; }
+
+/* Rendre le texte du code plus imposant */
+.code-content-large {
+    flex: 1;
+    padding: 40px 50px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 18px; /* Texte plus grand ! */
+    line-height: 2.2; /* Lignes très espacées pour remplir la grande fenêtre */
+    color: var(--text-paragraph);
+    overflow-x: auto;
+}
+
 .code-keyword { color: var(--color-highlight); }
 .code-variable { color: var(--text-headline); }
 .code-string { color: #28c840; }
 
 /* ============================================
-   RESPONSIVE HERO (Mobile & Tablette)
+   RESPONSIVE HERO (Tablette & Mobile)
    ============================================ */
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
     .hero-section {
         flex-direction: column;
         padding: 40px 20px;
-        gap: 60px;
+        gap: 40px;
     }
-
-    .hero-left-col {
-        align-items: center; /* Centre le groupe sur mobile */
+    .hero-left-col, .hero-right-col {
         width: 100%;
+        max-width: 600px;
     }
-
-    .hero-pic-window {
-        width: 100%;
-        max-width: 350px;
-    }
-
     .hero-text-window {
-        margin-left: 0;
-        margin-top: -30px; /* Chevauchement plus léger sur mobile */
-        width: 95%;
-        max-width: 440px;
-    }
-
-    .hero-right-col {
         width: 100%;
-        max-width: 500px;
+        margin-top: -10px;
+    }
+    .code-content-large {
+        font-size: 15px; /* On réduit un peu sur mobile */
+        padding: 25px;
     }
 }
 /* ============================================

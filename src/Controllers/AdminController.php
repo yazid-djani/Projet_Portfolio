@@ -58,27 +58,47 @@ class AdminController
     private static function handleUpload($fileInputName, $defaultName) {
         $dir = __DIR__ . '/../../public/images/';
 
+        // 1. Vérifie si le dossier existe
         if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
+            throw new \Exception("Le dossier d'upload n'existe pas : " . $dir);
         }
 
-        if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
-            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION));
-
-            // SÉCURITÉ : Liste des extensions autorisées (ajout du pdf pour le CV)
-            $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'pdf'];
-            if (!in_array($ext, $allowedExts)) {
-                return $defaultName;
-            }
-
-            $filename = uniqid() . '.' . $ext;
-            $dest = $dir . $filename;
-
-            if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
-                return $filename;
-            }
+        // 2. Vérifie si un fichier a bien été soumis dans le formulaire
+        if (!isset($_FILES[$fileInputName]) || $_FILES[$fileInputName]['error'] === UPLOAD_ERR_NO_FILE) {
+            return $defaultName; // Aucun fichier envoyé, on garde l'image par défaut
         }
-        return $defaultName;
+
+        // 3. Gestion précise des erreurs d'upload PHP
+        if ($_FILES[$fileInputName]['error'] !== UPLOAD_ERR_OK) {
+            $erreurs = [
+                UPLOAD_ERR_INI_SIZE   => "Le fichier dépasse la limite 'upload_max_filesize' de ton serveur (php.ini).",
+                UPLOAD_ERR_FORM_SIZE  => "Le fichier dépasse la limite MAX_FILE_SIZE du formulaire HTML.",
+                UPLOAD_ERR_PARTIAL    => "Le fichier n'a été que partiellement téléchargé (micro-coupure réseau).",
+                UPLOAD_ERR_NO_TMP_DIR => "Le dossier temporaire est manquant sur le serveur.",
+                UPLOAD_ERR_CANT_WRITE => "Échec de l'écriture sur le disque. Problème de permissions strictes !",
+                UPLOAD_ERR_EXTENSION  => "Une extension PHP a bloqué l'envoi du fichier."
+            ];
+            $msg = $erreurs[$_FILES[$fileInputName]['error']] ?? "Erreur d'upload inconnue.";
+            throw new \Exception("Erreur lors de l'envoi de l'image : " . $msg);
+        }
+
+        // 4. Vérification de l'extension
+        $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION));
+        $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'pdf'];
+
+        if (!in_array($ext, $allowedExts)) {
+            throw new \Exception("Format non autorisé. Seules ces extensions sont acceptées : " . implode(', ', $allowedExts));
+        }
+
+        // 5. Création du nom unique et déplacement
+        $filename = uniqid() . '.' . $ext;
+        $dest = $dir . $filename;
+
+        if (!move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
+            throw new \Exception("Impossible de sauvegarder l'image. Le dossier public/images/ refuse l'écriture à PHP.");
+        }
+
+        return $filename;
     }
 
     // ==========================================

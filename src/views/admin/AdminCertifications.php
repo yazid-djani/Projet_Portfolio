@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><title>Certifications</title>
-    <link rel="stylesheet" href="/public/css/couleur.css"><link rel="stylesheet" href="/public/css/styleNavbarAdmin.css"><link rel="stylesheet" href="/public/css/styleAdmin.css"><link rel="stylesheet" href="/public/css/styleAdminForm.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script>
-        function previewImg(event) {
-            document.getElementById('img-preview').src = URL.createObjectURL(event.target.files[0]);
-            document.getElementById('img-preview').style.display = 'block';
-        }
-    </script>
+    <title>Certification</title>
+    <?php require_once __DIR__ . '/../layout/headerAdmin.php'; ?>
 </head>
 <body class="admin-body">
 <?php require_once __DIR__ . '/../layout/navbarAdmin.php'; ?>

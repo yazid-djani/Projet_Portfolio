@@ -1,16 +1,14 @@
 <?php
-// On déclare dans quel "dossier virtuel" (namespace) se trouve ce fichier pour bien l'organiser
 namespace App\Controllers;
 
-// On importe les "Modèles" pour pouvoir interagir avec les différentes tables de la base de données
 use App\Models\Admin;
 use App\Models\Profil;
-use App\Models\Projet; // Ajouté pour gérer les projets
+use App\Models\Projet;
 use App\Models\Competence;
 use App\Models\Outil;
 use App\Models\Certification;
-use App\Models\Visite; // Nécessaire pour les statistiques
-use App\Lib\Database; // Outil de connexion à la base de données
+use App\Models\Visite;
+use App\Lib\Database;
 
 class AdminController
 {
@@ -18,97 +16,106 @@ class AdminController
     // GESTION DE LA CONNEXION / DÉCONNEXION
     // ==========================================
 
-    // Affiche simplement la page de connexion
     public static function showLogin(): void
     {
-        $error = null; // Prépare une variable d'erreur vide
-        require_once __DIR__ . '/../views/admin/AdminConnexion.php'; // Charge le fichier HTML de connexion
+        $error = null;
+        require_once __DIR__ . '/../views/admin/AdminConnexion.php';
     }
 
-    // Traite le formulaire quand tu cliques sur "Se connecter"
     public static function login(): void
     {
-        $username = trim($_POST['username'] ?? ''); // Récupère le nom d'utilisateur saisi (sans les espaces)
-        $password = $_POST['password'] ?? ''; // Récupère le mot de passe saisi
-        $admin = Admin::findByUsername($username); // Cherche l'utilisateur dans la base de données
+        $username = trim($_POST['username'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $admin = Admin::findByUsername($username);
 
-        // Vérifie si l'admin existe ET si le mot de passe correspond au hash (Bcrypt) de la BDD
         if ($admin && password_verify($password, $admin['password_hash'])) {
-            $_SESSION['admin_id'] = $admin['id']; // Sauvegarde ton ID dans la session
-            $_SESSION['admin_username'] = $admin['username']; // Sauvegarde ton nom dans la session
-            header('Location: ?page=dashboard'); // Te redirige vers le tableau de bord
-            exit; // Stoppe l'exécution du script
+            $_SESSION['admin_id'] = $admin['id'];
+            $_SESSION['admin_username'] = $admin['username'];
+            header('Location: ?page=dashboard');
+            exit;
         }
 
-        // Si le mot de passe est faux, on prépare un message d'erreur et on réaffiche la page
         $error = "Nom d'utilisateur ou mot de passe incorrect.";
         require_once __DIR__ . '/../views/admin/AdminConnexion.php';
     }
 
-    // Déconnecte l'utilisateur
     public static function logout(): void
     {
-        session_destroy(); // Détruit toutes les données de ta session (te déconnecte)
-        header('Location: /'); // Te renvoie sur la page d'accueil du site public
+        session_destroy();
+        header('Location: /');
         exit;
     }
 
-    // Affiche la page d'accueil de l'administration (les gros carrés)
     public static function dashboard(): void
     {
         require_once __DIR__ . '/../views/admin/AdminPage.php';
     }
 
     // ==========================================
-    // FONCTION UTILITAIRE (UPLOAD D'IMAGES/MÉDIAS)
+    // FONCTION UTILITAIRE (UPLOAD D'IMAGES/MÉDIAS/PDF)
     // ==========================================
 
-    // Cette fonction prend un fichier (photo, vidéo) et l'enregistre sur le serveur de façon sécurisée
     private static function handleUpload($fileInputName, $defaultName) {
-        $dir = __DIR__ . '/../../public/images/'; // Chemin du dossier où sauvegarder l'image
+        $dir = __DIR__ . '/../../public/images/';
 
-        // Si le dossier "images" n'existe pas, on le crée avec les permissions 0755 (sécurisé)
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
-        // Vérifie si un fichier a été envoyé et s'il n'y a pas d'erreur
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
-            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION)); // Récupère l'extension (.jpg, .png...)
+            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION));
 
-            // CORRECTION DE SÉCURITÉ : Liste des extensions autorisées pour éviter l'upload de fichiers PHP malveillants
-            $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm'];
+            // SÉCURITÉ : Liste des extensions autorisées (ajout du pdf pour le CV)
+            $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'pdf'];
             if (!in_array($ext, $allowedExts)) {
-                return $defaultName; // Rejette le fichier si ce n'est pas une image/vidéo
+                return $defaultName;
             }
 
-            $filename = uniqid() . '.' . $ext; // Crée un nom unique (ex: 64a8b.png) pour éviter d'écraser un autre fichier
-            $dest = $dir . $filename; // Chemin final complet
+            $filename = uniqid() . '.' . $ext;
+            $dest = $dir . $filename;
 
-            // Déplace le fichier temporaire vers son dossier final
             if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
-                return $filename; // Retourne le nouveau nom pour le sauvegarder dans la BDD
+                return $filename;
             }
         }
-        return $defaultName; // Si pas de fichier envoyé, on garde l'image par défaut
+        return $defaultName;
+    }
+
+    // ==========================================
+    // GESTION DES FICHIERS ORPHELINS
+    // ==========================================
+
+    private static function deleteOldFile($filename) {
+        // Liste des fichiers par défaut à ne jamais supprimer
+        $defaults = ['default_profil.png', 'default.jpg', 'default_certif.png', 'default_outil.png'];
+
+        if ($filename && !in_array($filename, $defaults)) {
+            $path = __DIR__ . '/../../public/images/' . $filename;
+            if (file_exists($path)) {
+                @unlink($path); // Supprime le fichier du serveur
+            }
+        }
     }
 
     // ==========================================
     // GESTION DES PAGES DU PANEL
     // ==========================================
 
-    // Gère la page "Projets" (Liste, Ajout, Suppression)
     public static function projets(): void
     {
-        $message = null; // Variable pour le message de succès
-        $error = null; // Variable pour le message d'erreur
-        $action = $_GET['action'] ?? 'list'; // Par défaut, on affiche la liste
+        $message = null;
+        $error = null;
+        $action = $_GET['action'] ?? 'list';
 
         // 1. SUPPRESSION D'UN PROJET
         if ($action === 'delete' && isset($_GET['id'])) {
-            $db = Database::getPDO();
-            $stmt = $db->prepare("DELETE FROM projets WHERE id = ?");
-            $stmt->execute([$_GET['id']]);
+            // Optionnel : Récupère l'image du projet avant de le supprimer pour nettoyer le serveur
+            $projet = Projet::findById((int)$_GET['id']);
+            if ($projet && !empty($projet['image_url'])) {
+                self::deleteOldFile($projet['image_url']);
+            }
+
+            Projet::delete($_GET['id']); // Utilisation de la méthode héritée du Model
             header('Location: ?page=projets&success=deleted');
             exit;
         }
@@ -123,22 +130,17 @@ class AdminController
                 $technologies = $_POST['technologies'] ?? '';
                 $lien_github = $_POST['lien_github'] ?? '';
 
-                // Utilise notre fonction sécurisée pour sauvegarder l'image/vidéo du projet
                 $image_url = self::handleUpload('media_projet', 'default.jpg');
 
                 try {
-                    $db = Database::getPDO(); // Connexion BDD
-                    $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, image_url, lien_github) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $image_url, $lien_github]);
-
-                    // Redirige vers la liste avec un message de succès
+                    // Utilisation de la méthode create du modèle Projet
+                    Projet::create($titre, $description, $detail, $categorie, $technologies, $image_url, $lien_github);
                     header('Location: ?page=projets&success=created');
                     exit;
                 } catch (\Exception $e) {
-                    $error = "Erreur lors de l'ajout du projet : " . $e->getMessage();
+                    $error = "Erreur : " . $e->getMessage();
                 }
             }
-            // Affiche la page HTML pour créer un projet
             require_once __DIR__ . '/../views/admin/CreateProjet.php';
             return;
         }
@@ -153,108 +155,108 @@ class AdminController
         require_once __DIR__ . '/../views/admin/ListProjets.php';
     }
 
-    // Gère la page "Trafic Panel" (Statistiques)
     public static function statistiques(): void
     {
         $message = null;
 
-        // Si on a cliqué sur le bouton rouge "Vider les stats"
         if (isset($_GET['action']) && $_GET['action'] === 'clear') {
-            \App\Models\Visite::clearAll(); // Appelle le modèle pour vider la table
+            Visite::clearAll();
             $message = "Toutes les statistiques ont été effacées avec succès !";
         }
 
-        // Récupère les données depuis la base pour les afficher dans le tableau
-        $parcoursUtilisateurs = \App\Models\Visite::findAllGroupedByIP();
-        $resumeStats = \App\Models\Visite::getStatsSummary();
+        $parcoursUtilisateurs = Visite::findAllGroupedByIP();
+        $resumeStats = Visite::getStatsSummary();
 
-        require_once __DIR__ . '/../views/admin/TraficPanel.php'; // Affiche la page HTML
+        require_once __DIR__ . '/../views/admin/TraficPanel.php';
     }
 
-    // Gère la page "Profil"
     public static function profil(): void
     {
         $profilModel = new Profil();
         $message = null;
-        $profilActuel = $profilModel->getProfil(); // Charge les données actuelles pour pré-remplir le formulaire
+        $profilActuel = $profilModel->getProfil();
 
-        // Si le formulaire de mise à jour est envoyé
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Sauvegarde de l'ancienne image pour ne pas la perdre si on n'envoie pas de nouvelle photo
+            // Gestion de l'image de profil
             $ancienneImage = $profilActuel['image_profil'] ?? 'default_profil.png';
             $_POST['image_profil'] = self::handleUpload('photo_profil', $ancienneImage);
 
-            // Met à jour la BDD avec les nouvelles données
+            // Si une nouvelle photo a été envoyée, on supprime l'ancienne pour faire de la place
+            if ($_POST['image_profil'] !== $ancienneImage) {
+                self::deleteOldFile($ancienneImage);
+            }
+
+            // Gestion du fichier CV (PDF)
+            $ancienCv = $profilActuel['lien_cv'] ?? '';
+            $_POST['lien_cv'] = self::handleUpload('fichier_cv', $ancienCv);
+
+            // Si un nouveau CV a été envoyé, on supprime l'ancien PDF
+            if ($_POST['lien_cv'] !== $ancienCv) {
+                self::deleteOldFile($ancienCv);
+            }
+
             $profilModel->updateProfil($_POST);
-            $message = "Profil et photo mis à jour avec succès !";
-            $profilActuel = $profilModel->getProfil(); // Recharge les données fraîches pour l'affichage
+            $message = "Profil et fichiers mis à jour avec succès !";
+            $profilActuel = $profilModel->getProfil();
         }
 
         $profil = $profilActuel;
-        require_once __DIR__ . '/../views/admin/ParametresProfil.php'; // Affiche la page HTML
+        require_once __DIR__ . '/../views/admin/ParametresProfil.php';
     }
 
-    // Gère la page "Compétences" (Ajout / Suppression)
     public static function competences(): void
     {
         $message = null;
 
-        // Si on soumet le formulaire pour ajouter une compétence
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Competence::add($_POST['nom'], $_POST['pourcentage'], $_POST['categorie']);
             $message = "Compétence ajoutée !";
         }
 
-        // Si on clique sur le bouton "Supprimer" (action=delete avec l'ID)
         if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
             Competence::delete($_GET['id']);
-            header('Location: ?page=competences'); // Recharge la page pour mettre à jour la liste
+            header('Location: ?page=competences');
             exit;
         }
 
-        // Récupère toutes les compétences pour les afficher
         $competences = Competence::findAll();
         require_once __DIR__ . '/../views/admin/AdminCompetences.php';
     }
 
-    // Gère la page "Outils" (Ajout / Suppression avec image)
     public static function outils(): void
     {
         $message = null;
 
-        // Si on ajoute un outil
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $image_url = self::handleUpload('image_outil', 'default_outil.png'); // Gère l'image de l'outil
+            $image_url = self::handleUpload('image_outil', 'default_outil.png');
             Outil::add($_POST['nom'] ?? '', $image_url);
             $message = "Outil ajouté !";
         }
 
-        // Si on supprime un outil
         if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
             Outil::delete($_GET['id']);
-            header('Location: ?page=outils'); exit;
+            header('Location: ?page=outils');
+            exit;
         }
 
         $outils = Outil::findAll();
         require_once __DIR__ . '/../views/admin/AdminOutils.php';
     }
 
-    // Gère la page "Certifications" (Ajout / Suppression avec image)
     public static function certifications(): void
     {
         $message = null;
 
-        // Si on ajoute une certification
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $image_url = self::handleUpload('image_certif', 'default_certif.png'); // Gère l'image du diplôme
+            $image_url = self::handleUpload('image_certif', 'default_certif.png');
             Certification::add($_POST['nom'] ?? '', $_POST['description'] ?? '', $image_url);
             $message = "Certification ajoutée avec succès !";
         }
 
-        // Si on supprime une certification
         if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
             Certification::delete($_GET['id']);
-            header('Location: ?page=certifications'); exit;
+            header('Location: ?page=certifications');
+            exit;
         }
 
         $certifications = Certification::findAll();

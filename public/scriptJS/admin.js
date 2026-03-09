@@ -34,3 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Fonction globale pour prévisualiser les images lors de l'upload
+window.previewImg = function(event) {
+    const preview = document.getElementById('img-preview');
+    if (preview && event.target.files[0]) {
+        preview.src = URL.createObjectURL(event.target.files[0]);
+        preview.style.display = 'block';
+    }
+};

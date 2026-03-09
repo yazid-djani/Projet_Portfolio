@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
     <title>Compétences</title>
-    <link rel="stylesheet" href="/public/css/couleur.css">
-    <link rel="stylesheet" href="/public/css/styleNavbarAdmin.css">
-    <link rel="stylesheet" href="/public/css/styleAdmin.css">
-    <link rel="stylesheet" href="/public/css/styleAdminForm.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <?php require_once __DIR__ . '/../layout/headerAdmin.php'; ?>
 </head>
 <body class="admin-body">
 

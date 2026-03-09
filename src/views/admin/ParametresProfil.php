@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Modification Profil</title>
+    <title>Modifier le Profil</title>
     <?php require_once __DIR__ . '/../layout/headerAdmin.php'; ?>
 </head>
 <body class="admin-body">
@@ -22,9 +22,9 @@
             <div class="form-group">
                 <label>Photo de profil :</label>
                 <div style="margin-bottom: 10px;">
-                    <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Actuelle" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-highlight);">
+                    <img id="img-preview" src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Actuelle" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-highlight);">
                 </div>
-                <input type="file" name="photo_profil" accept="image/*">
+                <input type="file" name="photo_profil" accept="image/*" onchange="previewImg(event)">
             </div>
 
             <div class="form-group">
@@ -73,8 +73,12 @@
             </div>
 
             <div class="form-group">
-                <label>Lien vers le CV (PDF) :</label>
-                <input type="url" name="lien_cv" value="<?= htmlspecialchars($profil['lien_cv'] ?? '') ?>" placeholder="https://lien-vers-mon-cv.pdf">
+                <label>Uploader votre CV (Format PDF uniquement) :</label>
+                <?php if(!empty($profil['lien_cv'])): ?>
+                    <p style="font-size: 13px; margin-bottom: 5px; color: #28c840;">✅ Un CV est actuellement en ligne (<a href="/?mon_cv" target="_blank" style="color: #3b82f6;">Le voir</a>)</p>
+                <?php endif; ?>
+                <input type="file" name="fichier_cv" accept="application/pdf">
+                <small style="color: var(--text-paragraph); margin-top: 5px;">Laissez vide pour conserver le CV actuel.</small>
             </div>
 
             <button type="submit" class="btn-primary">Sauvegarder les modifications</button>

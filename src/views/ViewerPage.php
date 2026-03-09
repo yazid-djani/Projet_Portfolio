@@ -287,8 +287,8 @@
     <div class="cv-content">
         <?php if (!empty($profil['lien_cv'])): ?>
             <div class="cv-download">
-                <a href="<?= htmlspecialchars($profil['lien_cv']) ?>" target="_blank" class="btn-primary">
-                    <i class="fas fa-download"></i> Télécharger mon CV (PDF)
+                <a href="/?mon_cv" target="_blank" class="btn-primary">
+                    <i class="fas fa-download"></i> Consulter / Télécharger mon CV
                 </a>
             </div>
         <?php endif; ?>

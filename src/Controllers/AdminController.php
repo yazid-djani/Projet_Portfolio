@@ -5,6 +5,7 @@ namespace App\Controllers;
 // On importe les "Modèles" pour pouvoir interagir avec les différentes tables de la base de données
 use App\Models\Admin;
 use App\Models\Profil;
+use App\Models\Projet; // Ajouté pour gérer les projets
 use App\Models\Competence;
 use App\Models\Outil;
 use App\Models\Certification;
@@ -62,68 +63,94 @@ class AdminController
     // FONCTION UTILITAIRE (UPLOAD D'IMAGES/MÉDIAS)
     // ==========================================
 
-    // Cette fonction prend un fichier (photo, vidéo) et l'enregistre sur le serveur
+    // Cette fonction prend un fichier (photo, vidéo) et l'enregistre sur le serveur de façon sécurisée
     private static function handleUpload($fileInputName, $defaultName) {
-        $dir = __DIR__ . '/../../public/images/';
+        $dir = __DIR__ . '/../../public/images/'; // Chemin du dossier où sauvegarder l'image
 
+        // Si le dossier "images" n'existe pas, on le crée avec les permissions 0755 (sécurisé)
         if (!is_dir($dir)) {
-            mkdir($dir, 0755, true); // CHANGER 0777 (dangereux) en 0755
+            mkdir($dir, 0755, true);
         }
 
+        // Vérifie si un fichier a été envoyé et s'il n'y a pas d'erreur
         if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
-            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION));
+            $ext = strtolower(pathinfo($_FILES[$fileInputName]['name'], PATHINFO_EXTENSION)); // Récupère l'extension (.jpg, .png...)
 
-            // SÉCURITÉ : Liste des extensions autorisées
+            // CORRECTION DE SÉCURITÉ : Liste des extensions autorisées pour éviter l'upload de fichiers PHP malveillants
             $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm'];
             if (!in_array($ext, $allowedExts)) {
                 return $defaultName; // Rejette le fichier si ce n'est pas une image/vidéo
             }
 
-            $filename = uniqid() . '.' . $ext;
-            $dest = $dir . $filename;
+            $filename = uniqid() . '.' . $ext; // Crée un nom unique (ex: 64a8b.png) pour éviter d'écraser un autre fichier
+            $dest = $dir . $filename; // Chemin final complet
 
+            // Déplace le fichier temporaire vers son dossier final
             if (move_uploaded_file($_FILES[$fileInputName]['tmp_name'], $dest)) {
-                return $filename;
+                return $filename; // Retourne le nouveau nom pour le sauvegarder dans la BDD
             }
         }
-        return $defaultName;
+        return $defaultName; // Si pas de fichier envoyé, on garde l'image par défaut
     }
 
     // ==========================================
     // GESTION DES PAGES DU PANEL
     // ==========================================
 
-    // Gère la page "Projets" (Ajout d'un nouveau projet)
+    // Gère la page "Projets" (Liste, Ajout, Suppression)
     public static function projets(): void
     {
         $message = null; // Variable pour le message de succès
         $error = null; // Variable pour le message d'erreur
+        $action = $_GET['action'] ?? 'list'; // Par défaut, on affiche la liste
 
-        // Si le formulaire est soumis (action=create en méthode POST)
-        if (isset($_GET['action']) && $_GET['action'] === 'create' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupère toutes les données du formulaire
-            $titre = $_POST['titre'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $detail = $_POST['detail'] ?? '';
-            $categorie = $_POST['categorie'] ?? '';
-            $technologies = $_POST['technologies'] ?? '';
-            $lien_github = $_POST['lien_github'] ?? '';
-
-            // Utilise notre fonction magique pour sauvegarder l'image/vidéo du projet
-            $image_url = self::handleUpload('media_projet', 'default.jpg');
-
-            try {
-                $db = Database::getPDO(); // Connexion BDD
-                // Prépare la requête pour insérer le projet
-                $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, image_url, lien_github) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $image_url, $lien_github]);
-                $message = "Le projet et son média ont été ajoutés avec succès !";
-            } catch (\Exception $e) {
-                $error = "Erreur lors de l'ajout du projet : " . $e->getMessage();
-            }
+        // 1. SUPPRESSION D'UN PROJET
+        if ($action === 'delete' && isset($_GET['id'])) {
+            $db = Database::getPDO();
+            $stmt = $db->prepare("DELETE FROM projets WHERE id = ?");
+            $stmt->execute([$_GET['id']]);
+            header('Location: ?page=projets&success=deleted');
+            exit;
         }
 
-        require_once __DIR__ . '/../views/admin/CreateProjet.php'; // Affiche la page HTML
+        // 2. CRÉATION D'UN PROJET
+        if ($action === 'create') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $titre = $_POST['titre'] ?? '';
+                $description = $_POST['description'] ?? '';
+                $detail = $_POST['detail'] ?? '';
+                $categorie = $_POST['categorie'] ?? '';
+                $technologies = $_POST['technologies'] ?? '';
+                $lien_github = $_POST['lien_github'] ?? '';
+
+                // Utilise notre fonction sécurisée pour sauvegarder l'image/vidéo du projet
+                $image_url = self::handleUpload('media_projet', 'default.jpg');
+
+                try {
+                    $db = Database::getPDO(); // Connexion BDD
+                    $stmt = $db->prepare("INSERT INTO projets (titre, description, detail, categorie, technologies, image_url, lien_github) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$titre, $description, $detail, $categorie, $technologies, $image_url, $lien_github]);
+
+                    // Redirige vers la liste avec un message de succès
+                    header('Location: ?page=projets&success=created');
+                    exit;
+                } catch (\Exception $e) {
+                    $error = "Erreur lors de l'ajout du projet : " . $e->getMessage();
+                }
+            }
+            // Affiche la page HTML pour créer un projet
+            require_once __DIR__ . '/../views/admin/CreateProjet.php';
+            return;
+        }
+
+        // 3. AFFICHAGE DE LA LISTE DES PROJETS (Par défaut)
+        if (isset($_GET['success'])) {
+            if ($_GET['success'] === 'created') $message = "Le projet a été ajouté avec succès !";
+            if ($_GET['success'] === 'deleted') $message = "Le projet a été supprimé.";
+        }
+
+        $projets = Projet::findAll();
+        require_once __DIR__ . '/../views/admin/ListProjets.php';
     }
 
     // Gère la page "Trafic Panel" (Statistiques)

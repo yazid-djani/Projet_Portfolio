@@ -56,6 +56,31 @@
                 <textarea name="description_about" rows="6"><?= htmlspecialchars($profil['description_about'] ?? '') ?></textarea>
             </div>
 
+            <div class="form-group">
+                <label>Email de contact :</label>
+                <input type="email" name="email_contact" value="<?= htmlspecialchars($profil['email_contact'] ?? '') ?>" placeholder="contact@mon-site.com">
+            </div>
+
+            <div class="form-group">
+                <label>Lien GitHub :</label>
+                <input type="url" name="lien_github" value="<?= htmlspecialchars($profil['lien_github'] ?? '') ?>" placeholder="https://github.com/votre-profil">
+            </div>
+
+            <div class="form-group">
+                <label>Lien LinkedIn :</label>
+                <input type="url" name="lien_linkedin" value="<?= htmlspecialchars($profil['lien_linkedin'] ?? '') ?>" placeholder="https://linkedin.com/in/votre-profil">
+            </div>
+
+            <div class="form-group">
+                <label>Localisation :</label>
+                <input type="text" name="localisation" value="<?= htmlspecialchars($profil['localisation'] ?? '') ?>" placeholder="Ex: Paris, France">
+            </div>
+
+            <div class="form-group">
+                <label>Lien vers le CV (PDF) :</label>
+                <input type="url" name="lien_cv" value="<?= htmlspecialchars($profil['lien_cv'] ?? '') ?>" placeholder="https://lien-vers-mon-cv.pdf">
+            </div>
+
             <button type="submit" class="btn-primary">Sauvegarder les modifications</button>
         </form>
     </div>

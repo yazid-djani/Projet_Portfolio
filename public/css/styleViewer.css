@@ -110,93 +110,128 @@ body {
 }
 
 /* ============================================
-   HERO (Nouveau Style Centré avec débordement)
+   HERO (Fenêtres multiples "Style OS")
    ============================================ */
 .hero-section {
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 60px 40px;
+    gap: 80px;
+    padding: 60px 80px 80px;
+    max-width: 1350px;
+    margin: 0 auto;
 }
 
-/* Écrase l'ancienne largeur du bloc code pour prendre toute la place */
-.hero-main-card.hero-code-block {
-    width: 100%;
-    max-width: 950px;
-    margin-left: 80px; /* Laisse de l'espace à gauche pour l'image qui sort */
-    overflow: visible; /* Permet à l'image de dépasser des bordures */
+/* Base "Glassmorphism" pour toutes les fenêtres du Hero */
+.hero-window {
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--glass-shadow);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.hero-card-body {
+/* --- Colonne Gauche (Photo + Texte) --- */
+.hero-left-col {
+    position: relative;
     display: flex;
-    align-items: center;
-    padding: 50px 50px 50px 0; /* Pas de padding à gauche pour coller l'image */
-    gap: 50px;
+    flex-direction: column;
 }
 
-/* --- L'image qui chevauche la bordure --- */
-.hero-profile-wrapper {
-    flex-shrink: 0;
-    margin-left: -120px; /* C'est ICI que l'image sort de la carte vers la gauche ! */
-    z-index: 2;
+/* 1. Fenêtre Photo */
+.hero-pic-window {
+    width: 300px;
+    z-index: 1; /* En arrière-plan */
 }
 
-.hero-profile-pic-large {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%; /* Image ronde */
+.hero-profile-pic-full {
+    width: 100%;
+    height: 300px;
     object-fit: cover;
-    /* Grosse bordure de la couleur du fond du site pour l'effet "découpage" */
-    border: 8px solid var(--bg-primary);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    background-color: var(--bg-primary);
+    display: block;
 }
 
-/* --- Le contenu texte --- */
+/* 2. Fenêtre Texte (superposée) */
+.hero-text-window {
+    width: 420px;
+    z-index: 2; /* Au premier plan */
+    margin-top: -60px; /* Fait remonter la fenêtre sur la photo */
+    margin-left: 60px; /* Décale la fenêtre vers la droite */
+}
+
 .hero-text-content {
-    flex: 1;
-    text-align: left;
+    padding: 30px;
 }
 
-.hero-greeting { font-size: 18px; color: var(--color-highlight); font-weight: 600; margin-bottom: 10px; }
-.hero-title { font-size: 52px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 15px; }
-.hero-subtitle { font-size: 22px; color: var(--text-headline); opacity: 0.9; margin-bottom: 20px; }
-.hero-description { font-size: 16px; margin-bottom: 35px; line-height: 1.8; color: var(--text-paragraph); }
-.hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+/* Textes adaptés à la petite fenêtre */
+.hero-greeting { font-size: 15px; color: var(--color-highlight); font-weight: 600; margin-bottom: 5px; }
+.hero-title { font-size: 38px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 10px; }
+.hero-subtitle { font-size: 18px; color: var(--text-headline); opacity: 0.9; margin-bottom: 15px; }
+.hero-description { font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
+
+/* Boutons plus compacts pour rentrer dans la fenêtre */
+.hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-buttons .btn-primary, .hero-buttons .btn-secondary {
+    padding: 10px 18px;
+    font-size: 13px;
+}
+
+/* --- Colonne Droite (Code PHP) --- */
+.hero-right-col {
+    flex: 1;
+    max-width: 500px;
+}
+
+.hero-code-block {
+    width: 100%;
+}
+
+/* --- En-têtes de fenêtres (Boutons OS) --- */
+.code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border-glass); }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background-color: #ff5f57; }
+.dot.yellow { background-color: #febc2e; }
+.dot.green { background-color: #28c840; }
+.code-filename { margin-left: 10px; font-size: 13px; color: var(--text-paragraph); font-family: monospace; }
+.code-content { padding: 20px; font-family: 'Fira Code', 'Courier New', monospace; font-size: 14px; line-height: 1.8; color: var(--text-paragraph); overflow-x: auto; }
+.code-keyword { color: var(--color-highlight); }
+.code-variable { color: var(--text-headline); }
+.code-string { color: #28c840; }
 
 /* ============================================
-   RESPONSIVE HERO (Mobile)
+   RESPONSIVE HERO (Mobile & Tablette)
    ============================================ */
-@media (max-width: 900px) {
-    .hero-section { padding: 80px 20px 40px; }
-
-    .hero-main-card.hero-code-block {
-        margin-left: 0;
-        margin-top: 80px; /* On laisse de la place en haut pour l'image */
-    }
-
-    .hero-card-body {
+@media (max-width: 1100px) {
+    .hero-section {
         flex-direction: column;
-        padding: 30px;
-        text-align: center;
-        gap: 20px;
+        padding: 40px 20px;
+        gap: 60px;
     }
 
-    .hero-profile-wrapper {
+    .hero-left-col {
+        align-items: center; /* Centre le groupe sur mobile */
+        width: 100%;
+    }
+
+    .hero-pic-window {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .hero-text-window {
         margin-left: 0;
-        margin-top: -130px; /* L'image sort par le HAUT de la carte sur mobile (Style Gaël) */
+        margin-top: -30px; /* Chevauchement plus léger sur mobile */
+        width: 95%;
+        max-width: 440px;
     }
 
-    .hero-profile-pic-large {
-        width: 200px;
-        height: 200px;
-        border-width: 6px;
+    .hero-right-col {
+        width: 100%;
+        max-width: 500px;
     }
-
-    .hero-text-content { text-align: center; }
-    .hero-buttons { justify-content: center; }
-    .hero-title { font-size: 38px; }
 }
 /* ============================================
    À PROPOS

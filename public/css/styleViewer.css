@@ -1,6 +1,8 @@
 /* ============================================
-   STYLE VISITEUR — Portfolio (Design Glassmorphism)
+   STYLE VISITEUR — Portfolio (Design iOS/VisionOS)
    ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ---- Reset & Base ---- */
 * {
@@ -9,12 +11,31 @@
     box-sizing: border-box;
 }
 
+:root {
+    --primary-color: #256af4;
+    --bg-primary: #050505;
+    --text-headline: #f1f5f9;
+    --text-paragraph: #94a3b8;
+
+    /* Variables Glassmorphism & Safari */
+    --glass-bg: rgba(28, 28, 30, 0.7);
+    --bg-glass: rgba(255, 255, 255, 0.04);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(20px);
+    --radius-apple: 18px;
+
+    --color-highlight: #256af4;
+    --color-button: #256af4;
+    --color-button-hover: #1d4ed8;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-primary);
     background-image:
-            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, rgba(37, 106, 244, 0.12) 0px, transparent 40%),
+            radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 40%),
+            radial-gradient(at 50% 100%, rgba(37, 106, 244, 0.05) 0px, transparent 40%);
     background-attachment: fixed;
     color: var(--text-paragraph);
     line-height: 1.7;
@@ -28,16 +49,15 @@ body {
 .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 14px 32px;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     color: #fff;
     background-color: var(--color-button);
-    border: 1px solid var(--border-glass);
-    backdrop-filter: var(--glass-blur);
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -45,435 +65,194 @@ body {
 .btn-primary:hover {
     background-color: var(--color-button-hover);
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
 }
 
 .btn-secondary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 14px 32px;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
-    color: var(--color-highlight);
-    background-color: transparent;
-    border: 2px solid var(--color-highlight);
-    border-radius: 10px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: var(--color-highlight);
-    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-3px);
 }
 
 /* ---- Section Header ---- */
 .section-header {
-    text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
+    padding: 0 10px;
 }
 
 .section-title {
-    font-size: 36px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--text-headline);
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
-
-.section-line {
-    width: 60px;
-    height: 4px;
-    background-color: var(--color-highlight);
-    margin: 0 auto;
-    border-radius: 2px;
+.section-subtitle {
+    font-size: 14px;
+    color: var(--text-paragraph);
 }
 
 /* ============================================
-   GLASSMORPHISM - Classes Communes
+   FENETRES STYLE MACOS / SAFARI
    ============================================ */
-.hero-code-block,
-.about-card,
+.safari-window {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 0.5px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius-apple);
+    overflow: hidden;
+    width: 100%;
+}
+
+.safari-header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.traffic-lights { display: flex; gap: 8px; width: 33.333%; }
+.traffic-light { width: 12px; height: 12px; border-radius: 50%; }
+.tl-red { background-color: #ff5f57; }
+.tl-yellow { background-color: #ffbd2e; }
+.tl-green { background-color: #28c840; }
+
+.safari-title {
+    width: 33.333%;
+    display: flex;
+    justify-content: center;
+}
+.safari-title-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 24px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ============================================
+   GLASSMORPHISM - Cartes génériques (Projets, Outils, etc.)
+   ============================================ */
+.glass-card,
 .projet-card,
 .competence-category,
+.outil-card,
 .contact-form input,
 .contact-form textarea,
-.site-footer {
+.certif-card {
     background: var(--bg-glass);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border-glass);
-    box-shadow: var(--glass-shadow);
-    border-radius: 16px;
+    border-radius: var(--radius-apple);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-/*!* ============================================*/
-/*   HERO (Style IDE / Fenêtres Multiples)*/
-/*   ============================================ *!*/
-/*.hero-section {*/
-/*    min-height: calc(100vh - 80px);*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    gap: 30px; !* Espace entre les deux colonnes *!*/
-/*    padding: 60px 5%;*/
-/*    max-width: 1400px; !* On élargit un peu pour laisser respirer les fenêtres *!*/
-/*    margin: 0 auto;*/
-/*}*/
-
-/*!* --- Base des fenêtres --- *!*/
-/*.hero-window {*/
-/*    background: rgba(15, 23, 42, 0.6); !* Fond un peu plus sombre pour bien faire ressortir les fenêtres *!*/
-/*    backdrop-filter: var(--glass-blur);*/
-/*    -webkit-backdrop-filter: var(--glass-blur);*/
-/*    border: 1px solid var(--border-glass);*/
-/*    box-shadow: 0 15px 35px rgba(0,0,0,0.3);*/
-/*    border-radius: 14px;*/
-/*    overflow: hidden;*/
-/*}*/
-
-/*!* En-têtes classiques *!*/
-/*.code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-glass); }*/
-/*.dot { width: 12px; height: 12px; border-radius: 50%; }*/
-/*.dot.red { background-color: #ff5f57; }*/
-/*.dot.yellow { background-color: #febc2e; }*/
-/*.dot.green { background-color: #28c840; }*/
-/*.code-filename { margin-left: 10px; font-size: 13px; color: var(--text-paragraph); font-family: monospace; }*/
-
-/*!* ============================================*/
-/*   COLONNE GAUCHE (Photo + Présentation)*/
-/*   ============================================ *!*/
-/*.hero-left-col {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    width: 40%; !* Prend 40% de l'espace total *!*/
-/*    max-width: 450px;*/
-/*}*/
-
-/*!* 1. Fenêtre Photo (Large et écrasée) *!*/
-/*.hero-pic-window {*/
-/*    width: 100%;*/
-/*    z-index: 1;*/
-/*}*/
-
-/*.hero-profile-pic-full {*/
-/*    width: 100%;*/
-/*    aspect-ratio: 16 / 10; !* Donne cet effet rectangulaire horizontal (paysage) *!*/
-/*    object-fit: cover;*/
-/*    display: block;*/
-/*}*/
-
-/*!* 2. Fenêtre Présentation (Légèrement en retrait) *!*/
-/*.hero-text-window {*/
-/*    width: 95%; !* Un peu moins large que la photo, comme sur ton screen *!*/
-/*    z-index: 2;*/
-/*    margin-top: -15px; !* Chevauche légèrement la photo par le bas *!*/
-/*}*/
-
-/*.hero-text-content {*/
-/*    padding: 30px 25px;*/
-/*}*/
-
-/*!* Ajustement des textes de gauche *!*/
-/*.hero-greeting { font-size: 14px; color: var(--color-highlight); font-weight: 600; margin-bottom: 5px; }*/
-/*.hero-title { font-size: 32px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 10px; }*/
-/*.hero-subtitle { font-size: 16px; color: var(--text-paragraph); margin-bottom: 25px; }*/
-
-/*.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }*/
-/*.hero-buttons .btn-primary, .hero-buttons .btn-secondary {*/
-/*    padding: 12px 20px;*/
-/*    font-size: 13px;*/
-/*}*/
-
-/*!* ============================================*/
-/*   COLONNE DROITE (Grand Code PHP)*/
-/*   ============================================ *!*/
-/*.hero-right-col {*/
-/*    flex: 1; !* Prend tout l'espace restant (environ 60%) *!*/
-/*    max-width: 800px;*/
-/*    display: flex;*/
-/*}*/
-
-/*.hero-code-block {*/
-/*    width: 100%;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*!* Rendre l'en-tête de droite plus "massive" *!*/
-/*.code-header-large {*/
-/*    padding: 16px 20px;*/
-/*}*/
-/*.code-header-large .dot { width: 14px; height: 14px; }*/
-/*.code-header-large .code-filename { font-size: 16px; }*/
-
-/*!* Rendre le texte du code plus imposant *!*/
-/*.code-content-large {*/
-/*    flex: 1;*/
-/*    padding: 40px 50px;*/
-/*    font-family: 'Fira Code', 'Courier New', monospace;*/
-/*    font-size: 18px; !* Texte plus grand ! *!*/
-/*    line-height: 2.2; !* Lignes très espacées pour remplir la grande fenêtre *!*/
-/*    color: var(--text-paragraph);*/
-/*    overflow-x: auto;*/
-/*}*/
-
-/*.code-keyword { color: var(--color-highlight); }*/
-/*.code-variable { color: var(--text-headline); }*/
-/*.code-string { color: #28c840; }*/
-
-/*!* ============================================*/
-/*   RESPONSIVE HERO (Tablette & Mobile)*/
-/*   ============================================ *!*/
-/*@media (max-width: 1000px) {*/
-/*    .hero-section {*/
-/*        flex-direction: column;*/
-/*        padding: 40px 20px;*/
-/*        gap: 40px;*/
-/*    }*/
-/*    .hero-left-col, .hero-right-col {*/
-/*        width: 100%;*/
-/*        max-width: 600px;*/
-/*    }*/
-/*    .hero-text-window {*/
-/*        width: 100%;*/
-/*        margin-top: -10px;*/
-/*    }*/
-/*    .code-content-large {*/
-/*        font-size: 15px; !* On réduit un peu sur mobile *!*/
-/*        padding: 25px;*/
-/*    }*/
-/*}*/
-
 /* ============================================
-   HERO (Nouveau Design Asymétrique)
+   HERO & À PROPOS (Nouveau Layout fenêtré)
    ============================================ */
-.hero-section.hero-new-design {
-    min-height: calc(100vh - 80px);
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
-    align-items: center;
-    justify-content: center;
-    gap: 40px; /* Espace entre les deux colonnes */
-    padding: 60px 8%;
-    max-width: 1300px; /* On réduit un peu pour un rendu plus compact */
+.hero-wrapper {
+    max-width: 1100px;
     margin: 0 auto;
-}
-
-/* Base des fenêtres "Style OS" */
-.hero-window {
-    background: rgba(15, 23, 42, 0.4); /* Fond glassmorphism sombre */
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border-glass);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-/* En-têtes classiques */
-.code-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-glass); }
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.dot.red { background-color: #ff5f57; }
-.dot.yellow { background-color: #febc2e; }
-.dot.green { background-color: #28c840; }
-.code-filename { margin-left: 10px; font-size: 13px; color: var(--text-paragraph); font-family: monospace; }
-
-/* ============================================
-   COLONNE GAUCHE (Grande Image de Profil)
-   ============================================ */
-.hero-profile-container {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border-glass);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.hero-profile-pic-large {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 10 / 16; /* Format portrait allongé ! */
-    object-fit: cover;
-    display: block;
-}
-
-/* Texte de présentation superposé en bas de l'image */
-.hero-profile-text {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); /* Dégradé pour lisibilité */
-}
-
-/* Ajustement des textes */
-.hero-greeting { font-size: 14px; color: var(--color-highlight); font-weight: 600; margin-bottom: 5px; }
-.hero-title { font-size: 36px; font-weight: 900; color: var(--text-headline); line-height: 1.1; margin-bottom: 10px; }
-.hero-subtitle { font-size: 16px; color: var(--text-paragraph); margin-bottom: 25px; }
-
-.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero-buttons .btn-primary, .hero-buttons .btn-secondary {
-    padding: 12px 20px;
-    font-size: 13px;
-}
-
-/* ============================================
-   COLONNE DROITE (Blocs superposés)
-   ============================================ */
-.hero-right-col {
+    padding: 60px 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Espace entre les deux blocs de droite */
-    width: 100%;
-    max-width: 550px;
+    gap: 40px;
 }
-
-/* Bloc "À propos" */
-.about-block {
-    padding: 30px;
-}
-
-.about-content h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: var(--text-headline);
-}
-
-.about-content p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--text-paragraph);
-    opacity: 0.9;
-}
-
-/* Bloc "Code" */
-.code-block {
-    flex: 1; /* Remplit l'espace restant verticalement */
-}
-
-.code-content {
-    padding: 25px;
-    font-family: 'Fira Code', 'Courier New', monospace;
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--text-paragraph);
-    overflow-x: auto;
-}
-
-.code-keyword { color: var(--color-highlight); }
-.code-variable { color: var(--text-headline); }
-.code-string { color: #28c840; }
 
 /* ============================================
-   RESPONSIVE HERO (Tablette & Mobile)
+   PROJETS (Hérite du slider existant)
    ============================================ */
-@media (max-width: 900px) {
-    .hero-section.hero-new-design {
-        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
-        padding: 40px 20px;
-        gap: 40px;
-    }
-
-    .hero-profile-container {
-        width: 100%;
-        max-width: 450px;
-        margin: 0 auto;
-    }
-
-    .hero-profile-pic-large {
-        aspect-ratio: 16 / 10; /* Repasse en format paysage sur mobile pour ne pas être trop long */
-    }
-
-    .hero-right-col {
-        width: 100%;
-        max-width: 550px;
-        margin: 0 auto;
-    }
-}
-/* ============================================
-   À PROPOS
-   ============================================ */
-.about-section { padding: 100px 80px; }
-.about-content { display: flex; gap: 60px; align-items: flex-start; max-width: 1100px; margin: 0 auto; }
-.about-text { flex: 2; }
-.about-text p { font-size: 16px; margin-bottom: 18px; line-height: 1.8; }
-.about-text strong { color: var(--text-headline); }
-.about-stats { display: flex; gap: 40px; margin-top: 30px; }
-.stat-item { text-align: center; }
-.stat-number { font-size: 36px; font-weight: 900; color: var(--color-highlight); display: block; }
-.stat-label { font-size: 13px; color: var(--text-paragraph); display: block; margin-top: 5px; }
-.about-image { flex: 1; }
-.about-card { padding: 40px; text-align: center; transition: transform 0.3s ease; }
-.about-card:hover { transform: translateY(-5px); border-color: var(--color-highlight); }
-.about-icon { font-size: 48px; color: var(--color-highlight); margin-bottom: 20px; }
-.about-card h3 { font-size: 20px; color: var(--text-headline); margin-bottom: 8px; }
-.about-card p { font-size: 14px; color: var(--text-paragraph); }
+.projets-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+.projet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+.projet-card { padding: 25px; cursor: pointer; }
+.projet-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
+.card-icon { width: 45px; height: 45px; border-radius: 12px; background-color: rgba(37, 106, 244, 0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border: 1px solid rgba(37, 106, 244, 0.3); }
+.card-icon i { font-size: 20px; color: var(--color-highlight); }
+.card-title { font-size: 18px; font-weight: 700; color: var(--text-headline); margin-bottom: 8px; }
+.card-description { font-size: 14px; color: var(--text-paragraph); margin-bottom: 16px; line-height: 1.6; }
 
 /* ============================================
    COMPÉTENCES
    ============================================ */
-.competences-section { padding: 100px 80px; }
-.competences-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+.competences-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+.competences-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
 .competence-category { padding: 30px; }
-.competence-category h3 { font-size: 18px; font-weight: 700; color: var(--text-headline); margin-bottom: 24px; }
-.competence-category h3 i { color: var(--color-highlight); margin-right: 10px; }
+.competence-category h3 { font-size: 18px; font-weight: 700; color: var(--text-headline); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+.competence-category h3 i { color: var(--color-highlight); }
 .skills-list { display: flex; flex-direction: column; gap: 18px; }
 .skill-item { width: 100%; }
-.skill-info { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: var(--text-headline); opacity: 0.9; margin-bottom: 6px; }
-.skill-bar { width: 100%; height: 8px; background-color: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-.skill-progress { height: 100%; width: 0; background: linear-gradient(90deg, var(--color-highlight), #60a5fa); border-radius: 10px; transition: width 1.5s ease; }
+.skill-info { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--text-headline); margin-bottom: 8px; }
+.skill-bar { width: 100%; height: 6px; background-color: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+.skill-progress { height: 100%; width: 0; background: var(--color-highlight); border-radius: 10px; transition: width 1.5s ease; }
 
 /* ============================================
    CONTACT
    ============================================ */
-.contact-section { padding: 100px 80px; }
-.contact-content { display: flex; gap: 60px; max-width: 1100px; margin: 0 auto; }
+.contact-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+.contact-content { display: flex; gap: 60px; }
 .contact-info { flex: 1; display: flex; flex-direction: column; gap: 24px; }
 .contact-item { display: flex; align-items: center; gap: 16px; }
-.contact-item i { font-size: 24px; color: var(--color-highlight); width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; flex-shrink: 0; }
-.contact-item h4 { font-size: 15px; color: var(--text-headline); margin-bottom: 2px; }
-.contact-item a, .contact-item p { font-size: 14px; color: var(--text-paragraph); text-decoration: none; transition: color 0.3s ease; }
+.contact-item i { font-size: 20px; color: var(--color-highlight); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; }
+.contact-item h4 { font-size: 14px; font-weight: 600; color: var(--text-headline); margin-bottom: 2px; }
+.contact-item a, .contact-item p { font-size: 13px; color: var(--text-paragraph); text-decoration: none; }
 .contact-item a:hover { color: var(--color-highlight); }
+
 .contact-form { flex: 1.5; display: flex; flex-direction: column; gap: 18px; }
 .form-row { display: flex; gap: 18px; }
 .contact-form .form-group { display: flex; flex-direction: column; flex: 1; }
-.contact-form label { font-size: 14px; font-weight: 600; color: var(--text-headline); opacity: 0.9; margin-bottom: 6px; }
-.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; font-family: inherit; color: var(--text-headline); outline: none; transition: border-color 0.3s ease, background 0.3s ease; }
-.contact-form input:focus, .contact-form textarea:focus { border-color: var(--color-highlight); background: rgba(255,255,255,0.1); }
+.contact-form label { font-size: 13px; font-weight: 500; color: var(--text-headline); margin-bottom: 8px; }
+.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; font-family: inherit; color: var(--text-headline); outline: none; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.08); }
 .contact-form textarea { resize: vertical; }
 
 /* ============================================
-   CV / TIMELINE
+   CV
    ============================================ */
-.cv-section { padding: 100px 80px; }
-.cv-content { max-width: 700px; margin: 0 auto; }
-.cv-timeline { position: relative; padding-left: 30px; border-left: 2px solid var(--border-glass); }
-.timeline-item { position: relative; margin-bottom: 40px; padding-left: 25px; }
-.timeline-dot { position: absolute; left: -36px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background-color: var(--color-highlight); border: 3px solid var(--bg-primary); }
-.timeline-date { font-size: 13px; font-weight: 700; color: var(--color-highlight); text-transform: uppercase; }
-.timeline-content h3 { font-size: 18px; color: var(--text-headline); margin: 5px 0; }
-.timeline-content p { font-size: 14px; color: var(--text-paragraph); line-height: 1.7; }
-.cv-download { text-align: center; margin-top: 50px; }
+.cv-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+
+/* ============================================
+   OUTILS & CERTIFICATIONS
+   ============================================ */
+.outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
+.outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.outil-card { width: 120px; height: 120px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
+.outil-name { font-size: 12px; font-weight: 500; color: var(--text-headline); text-align: center; }
 
 /* ============================================
    FOOTER
    ============================================ */
-.site-footer { padding: 50px 80px 20px; margin: 60px 5% 20px; border-radius: 20px; }
-.footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid var(--border-glass); }
-.footer-logo { font-size: 32px; font-weight: 900; color: var(--color-highlight); }
-.footer-brand p { font-size: 14px; color: var(--text-paragraph); margin-top: 4px; }
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 14px; color: var(--text-paragraph); text-decoration: none; transition: color 0.3s ease; }
-.footer-links a:hover { color: var(--color-highlight); }
+.site-footer { max-width: 1100px; margin: 0 auto; padding: 40px 20px; border-top: 1px solid var(--border-glass); margin-top: 60px; }
+.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-brand { text-align: left; }
+.footer-logo { font-size: 20px; font-weight: 700; color: var(--text-headline); }
+.footer-brand p { font-size: 12px; color: var(--text-paragraph); margin-top: 4px; }
 .footer-socials { display: flex; gap: 16px; }
-.footer-socials a { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 10px; color: var(--color-highlight); font-size: 18px; text-decoration: none; transition: all 0.3s ease; }
-.footer-socials a:hover { background: var(--color-highlight); color: #fff; transform: translateY(-3px); border-color: transparent; }
-.footer-bottom { text-align: center; padding-top: 20px; }
-.footer-bottom p { font-size: 13px; color: var(--text-paragraph); opacity: 0.6; }
+.footer-socials a { font-size: 13px; font-weight: 500; color: var(--text-paragraph); text-decoration: none; transition: color 0.3s ease; }
+.footer-socials a:hover { color: var(--color-highlight); }
 
 /* ============================================
    ANIMATIONS
@@ -481,153 +260,16 @@ body {
 .animate-fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .animate-fade-up.visible { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
 
 /* ============================================
    RESPONSIVE GLOBAL
    ============================================ */
 @media (max-width: 900px) {
-    .hero-section { flex-direction: column; padding: 60px 30px; text-align: center; gap: 40px; }
-    .hero-title { font-size: 38px; }
-    .hero-buttons { justify-content: center; }
-    .hero-code-block { width: 100%; max-width: 400px; }
-    .about-content { flex-direction: column; }
-    .about-stats { justify-content: center; }
     .contact-content { flex-direction: column; }
     .form-row { flex-direction: column; }
-    .footer-content { flex-direction: column; gap: 24px; text-align: center; }
 }
-
 @media (max-width: 600px) {
-    .section-title { font-size: 28px; }
-    .hero-title { font-size: 30px; }
-    .hero-subtitle { font-size: 18px; }
-    .competences-section, .contact-section, .cv-section, .about-section { padding: 60px 20px; }
-    .competences-grid { grid-template-columns: 1fr; }
-    .site-footer { padding: 30px 20px 15px; margin: 30px 10px 10px; }
-}
-
-/* ============================================
-   OUTILS (Cartes adaptatives)
-   ============================================ */
-.outils-section {
-    padding: 60px 80px 100px;
-}
-
-.outils-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.outil-card {
-    background: var(--bg-glass);
-    backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 130px;
-    height: 130px;
-    box-shadow: var(--glass-shadow);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.outil-card:hover {
-    transform: translateY(-5px) scale(1.05);
-    border-color: var(--color-highlight);
-}
-
-.outil-img {
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
-    margin-bottom: 12px;
-}
-
-.outil-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-headline);
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    .outils-section { padding: 40px 20px; }
-    .outil-card { width: 110px; height: 110px; padding: 15px; }
-    .outil-img { width: 45px; height: 45px; margin-bottom: 8px; }
-    .outil-name { font-size: 12px; }
-}
-
-/* ============================================
-   CERTIFICATIONS (Cartes adaptatives)
-   ============================================ */
-.certifications-section {
-    padding: 40px 80px 100px;
-}
-
-.certifications-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.certif-card {
-    background: var(--bg-glass);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--glass-shadow);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.certif-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--color-highlight);
-}
-
-.certif-img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-bottom: 1px solid var(--border-glass);
-}
-
-.certif-info {
-    padding: 25px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.certif-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-headline);
-    margin-bottom: 12px;
-}
-
-.certif-desc {
-    font-size: 14px;
-    color: var(--text-paragraph);
-    line-height: 1.6;
-}
-
-@media (max-width: 600px) {
-    .certifications-section { padding: 40px 20px; }
-    .certif-img { height: 180px; }
+    .hero-buttons { flex-direction: column; width: 100%; }
+    .hero-buttons a { width: 100%; text-align: center; }
+    .section-title { font-size: 24px; }
 }

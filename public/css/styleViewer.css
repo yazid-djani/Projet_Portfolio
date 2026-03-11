@@ -1,8 +1,8 @@
 /* ============================================
-   STYLE VISITEUR — Portfolio (Design iOS/VisionOS)
+   STYLE VISITEUR — Portfolio (Design iOS/VisionOS + Space Grotesk)
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ---- Reset & Base ---- */
 * {
@@ -27,10 +27,14 @@
     --color-highlight: #256af4;
     --color-button: #256af4;
     --color-button-hover: #1d4ed8;
+
+    /* Typographies */
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     background-color: var(--bg-primary);
     background-image:
             radial-gradient(at 0% 0%, rgba(37, 106, 244, 0.12) 0px, transparent 40%),
@@ -41,6 +45,16 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     padding-top: 80px;
+}
+
+/* Application de Space Grotesk sur tous les éléments de Titre/Mise en avant */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.card-title,
+.stat-number,
+.footer-logo,
+.safari-title-badge {
+    font-family: var(--font-heading);
 }
 
 .highlight { color: var(--color-highlight); }
@@ -60,6 +74,7 @@ body {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: var(--font-body);
 }
 
 .btn-primary:hover {
@@ -82,6 +97,7 @@ body {
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: var(--font-body);
 }
 
 .btn-secondary:hover {
@@ -150,6 +166,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    letter-spacing: 0.5px;
 }
 
 /* ============================================
@@ -224,7 +241,7 @@ body {
 .form-row { display: flex; gap: 18px; }
 .contact-form .form-group { display: flex; flex-direction: column; flex: 1; }
 .contact-form label { font-size: 13px; font-weight: 500; color: var(--text-headline); margin-bottom: 8px; }
-.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; font-family: inherit; color: var(--text-headline); outline: none; }
+.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; font-family: var(--font-body); color: var(--text-headline); outline: none; }
 .contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.08); }
 .contact-form textarea { resize: vertical; }
 
@@ -240,7 +257,7 @@ body {
 .outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
 .outil-card { width: 120px; height: 120px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
-.outil-name { font-size: 12px; font-weight: 500; color: var(--text-headline); text-align: center; }
+.outil-name { font-size: 12px; font-weight: 500; color: var(--text-headline); text-align: center; font-family: var(--font-heading); }
 
 /* ============================================
    FOOTER
@@ -248,7 +265,7 @@ body {
 .site-footer { max-width: 1100px; margin: 0 auto; padding: 40px 20px; border-top: 1px solid var(--border-glass); margin-top: 60px; }
 .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 .footer-brand { text-align: left; }
-.footer-logo { font-size: 20px; font-weight: 700; color: var(--text-headline); }
+.footer-logo { font-size: 20px; font-weight: 700; color: var(--text-headline); letter-spacing: 1px; }
 .footer-brand p { font-size: 12px; color: var(--text-paragraph); margin-top: 4px; }
 .footer-socials { display: flex; gap: 16px; }
 .footer-socials a { font-size: 13px; font-weight: 500; color: var(--text-paragraph); text-decoration: none; transition: color 0.3s ease; }

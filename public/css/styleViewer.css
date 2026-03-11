@@ -9,9 +9,10 @@
     box-sizing: border-box;
 }
 
-/* Note : Les variables de couleurs et de polices (--text-headline, --color-highlight, etc.)
-   sont gérées globalement dans couleur.css
-*/
+/* Évite que la barre de navigation (70px) ne cache le haut du site */
+body {
+    padding-top: 100px;
+}
 
 /* Classes utilitaires */
 .text-transparent { color: transparent; }
@@ -166,7 +167,7 @@
 .hero-wrapper {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 40px 20px 60px; /* Ajout d'un peu d'espace */
     display: flex;
     flex-direction: column;
     gap: 40px;

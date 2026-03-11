@@ -16,6 +16,10 @@
     --glass-blur: blur(20px);
     --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 
+    /* --- Fenêtres Safari / Apple --- */
+    --glass-bg: rgba(28, 28, 30, 0.7);
+    --radius-apple: 18px;
+
     /* --- Textes --- */
     --text-headline: #f1f5f9;
     --text-paragraph: #94a3b8;

@@ -24,8 +24,8 @@
                     Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, <strong><?= htmlspecialchars($profil['titre_poste'] ?? '') ?></strong>.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn-primary btn-glow">Démarrer un projet</a>
-                    <a href="#projets" class="btn-secondary">Explorer le travail</a>
+                    <a href="#projets" class="btn-primary btn-glow">Voir mes projets</a>
+                    <a href="#contact" class="btn-secondary">Me contacter</a>
                 </div>
             </div>
             <div class="hero-img-container">

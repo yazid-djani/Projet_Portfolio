@@ -21,8 +21,8 @@
 <?php require_once __DIR__ . '/viewer/projets.php'; ?>
 <?php require_once __DIR__ . '/viewer/competences.php'; ?>
 <?php require_once __DIR__ . '/viewer/outils.php'; ?>
-<?php require_once __DIR__ . '/viewer/contact.php'; ?>
 <?php require_once __DIR__ . '/viewer/cv.php'; ?>
+<?php require_once __DIR__ . '/viewer/contact.php'; ?>
 
 <?php require_once __DIR__ . '/layout/footer.php'; ?>
 

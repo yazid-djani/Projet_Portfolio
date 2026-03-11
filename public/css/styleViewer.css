@@ -9,6 +9,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-padding-top: 100px; /* Aligne le défilement juste en dessous de la navbar */
+    scroll-behavior: smooth; /* Assure un défilement fluide */
+}
+
 /* Évite que la barre de navigation (70px) ne cache le haut du site */
 body {
     padding-top: 100px;

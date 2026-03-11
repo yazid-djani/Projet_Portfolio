@@ -3,33 +3,47 @@
    Fichier centralisé : modifier ici = modifier partout
    ============================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 :root {
     /* --- Fond de la page --- */
-    --bg-primary: #0f172a; /* Un fond bleu très foncé, presque noir, épuré */
+    --bg-primary: #050505;
 
     /* --- Glassmorphism (Effet Verre) --- */
-    --bg-glass: rgba(255, 255, 255, 0.05); /* Un fond blanc très transparent pour les cartes */
-    --bg-glass-hover: rgba(255, 255, 255, 0.1); /* Un peu plus visible au survol */
-    --border-glass: rgba(255, 255, 255, 0.1); /* Bordure très fine et transparente */
-    --glass-blur: blur(12px); /* La puissance du flou derrière la carte */
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Ombre douce pour la profondeur */
+    --bg-glass: rgba(255, 255, 255, 0.04);
+    --bg-glass-hover: rgba(255, 255, 255, 0.1);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --glass-blur: blur(20px);
+    --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 
     /* --- Textes --- */
-    --text-headline: #ffffff; /* Titres en blanc pur pour le contraste */
-    --text-paragraph: #94a3b8; /* Paragraphes en gris bleuté doux */
+    --text-headline: #f1f5f9;
+    --text-paragraph: #94a3b8;
 
     /* --- Accent (Boutons et Liens) --- */
-    --color-highlight: #3b82f6; /* Bleu électrique moderne */
-    --color-button: rgba(59, 130, 246, 0.2); /* Bouton transparent bleuté */
-    --color-button-hover: rgba(59, 130, 246, 0.4); /* Bouton plus opaque au survol */
+    --color-highlight: #256af4;
+    --color-button: #256af4;
+    --color-button-hover: #1d4ed8;
+
+    /* --- Typographies Globales --- */
+    --font-body: 'Inter', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
 }
 
-/* On ajoute un dégradé subtil en arrière-plan global pour que le flou soit visible */
 body {
     background-color: var(--bg-primary);
     background-image:
-            radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
-    background-attachment: fixed; /* Le fond ne bouge pas quand on scrolle */
+            radial-gradient(at 0% 0%, rgba(37, 106, 244, 0.12) 0px, transparent 40%),
+            radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 40%),
+            radial-gradient(at 50% 100%, rgba(37, 106, 244, 0.05) 0px, transparent 40%);
+    background-attachment: fixed;
     color: var(--text-paragraph);
+    font-family: var(--font-body);
+}
+
+/* Typographie globale pour tous les titres du site (Viewer + Admin) */
+h1, h2, h3, h4, h5, h6,
+.section-title, .card-title, .stat-number, .footer-logo, .safari-title-badge,
+.admin-header h1, .dashboard-card h3, .login-header h2 {
+    font-family: var(--font-heading);
 }

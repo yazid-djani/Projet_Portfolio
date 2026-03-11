@@ -3,30 +3,24 @@
    ============================================ */
 
 .navbar {
-    /* Fixe la barre en haut de l'écran */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 70px;
-
-    /* Effet Glassmorphism */
     background: var(--bg-glass);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border-bottom: 1px solid var(--border-glass);
-    box-shadow: var(--glass-shadow);
-
-    /* Alignement des éléments */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 8%;
-    z-index: 1000; /* Assure que la nav reste au-dessus du contenu */
+    z-index: 1000;
     transition: all 0.3s ease;
 }
 
-/* Zone du Logo à gauche */
 .navbar-brand {
     display: flex;
     align-items: center;
@@ -35,40 +29,37 @@
 }
 
 .navbar-logo {
-    height: 45px; /* Ajuste la taille de ton image ici */
+    height: 45px;
     width: auto;
     object-fit: contain;
     display: block;
 }
 
-/* Effet de zoom léger au survol du logo */
 .navbar-brand:hover .navbar-logo {
     transform: scale(1.05);
 }
 
-/* Conteneur des liens à droite */
 .navbar-links {
     display: flex;
     gap: 30px;
     align-items: center;
 }
 
-/* Style des liens individuels */
 .navbar-links a {
     color: var(--text-paragraph);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
+    font-family: var(--font-heading); /* Police Tech */
+    letter-spacing: 0.5px;
     position: relative;
     transition: color 0.3s ease;
 }
 
-/* Couleur au survol */
 .navbar-links a:hover {
     color: var(--text-headline);
 }
 
-/* Petite barre d'accentuation sous le lien au survol */
 .navbar-links a::after {
     content: '';
     position: absolute;
@@ -80,32 +71,17 @@
     transition: width 0.3s ease;
 }
 
-.navbar-links a:hover::after {
+.navbar-links a:hover::after, .navbar-links a.active::after {
     width: 100%;
 }
 
-/* Lien de déconnexion spécifique */
 .navbar-links a[style*="color: #ff5f57"]::after {
     background-color: #ff5f57;
 }
 
-/* ============================================
-   RESPONSIVE (Mobile)
-   ============================================ */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 0 5%;
-    }
-
-    .navbar-links {
-        gap: 15px;
-    }
-
-    .navbar-links a {
-        font-size: 13px;
-    }
-
-    .navbar-logo {
-        height: 35px;
-    }
+    .navbar { padding: 0 5%; }
+    .navbar-links { gap: 15px; }
+    .navbar-links a { font-size: 13px; }
+    .navbar-logo { height: 35px; }
 }

@@ -2,8 +2,6 @@
    STYLE VISITEUR — Portfolio (Design iOS/VisionOS + Space Grotesk)
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 /* ---- Reset & Base ---- */
 * {
     margin: 0;
@@ -11,53 +9,18 @@
     box-sizing: border-box;
 }
 
-:root {
-    --primary-color: #256af4;
-    --bg-primary: #050505;
-    --text-headline: #f1f5f9;
-    --text-paragraph: #94a3b8;
+/* Note : Les variables de couleurs et de polices (--text-headline, --color-highlight, etc.)
+   sont gérées globalement dans couleur.css
+*/
 
-    /* Variables Glassmorphism & Safari */
-    --glass-bg: rgba(28, 28, 30, 0.7);
-    --bg-glass: rgba(255, 255, 255, 0.04);
-    --border-glass: rgba(255, 255, 255, 0.1);
-    --glass-blur: blur(20px);
-    --radius-apple: 18px;
-
-    --color-highlight: #256af4;
-    --color-button: #256af4;
-    --color-button-hover: #1d4ed8;
-
-    /* Typographies */
-    --font-body: 'Inter', sans-serif;
-    --font-heading: 'Space Grotesk', sans-serif;
-}
-
-body {
-    font-family: var(--font-body);
-    background-color: var(--bg-primary);
-    background-image:
-            radial-gradient(at 0% 0%, rgba(37, 106, 244, 0.12) 0px, transparent 40%),
-            radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 40%),
-            radial-gradient(at 50% 100%, rgba(37, 106, 244, 0.05) 0px, transparent 40%);
-    background-attachment: fixed;
-    color: var(--text-paragraph);
-    line-height: 1.7;
-    overflow-x: hidden;
-    padding-top: 80px;
-}
-
-/* Application de Space Grotesk sur tous les éléments de Titre/Mise en avant */
-h1, h2, h3, h4, h5, h6,
-.section-title,
-.card-title,
-.stat-number,
-.footer-logo,
-.safari-title-badge {
-    font-family: var(--font-heading);
-}
-
-.highlight { color: var(--color-highlight); }
+/* Classes utilitaires */
+.text-transparent { color: transparent; }
+.bg-clip-text { background-clip: text; -webkit-background-clip: text; background-image: linear-gradient(to right, var(--color-highlight), #60a5fa); }
+.text-center { text-align: center; }
+.w-100 { width: 100%; }
+.text-primary { color: var(--color-highlight); }
+.text-white { color: #fff; }
+.icon-small { font-size: 12px; }
 
 /* ---- Boutons globaux ---- */
 .btn-primary {
@@ -74,7 +37,6 @@ h1, h2, h3, h4, h5, h6,
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: var(--font-body);
 }
 
 .btn-primary:hover {
@@ -97,12 +59,15 @@ h1, h2, h3, h4, h5, h6,
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: var(--font-body);
 }
 
 .btn-secondary:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-3px);
+}
+
+.btn-glow {
+    box-shadow: 0 0 25px rgba(37, 106, 244, 0.4);
 }
 
 /* ---- Section Header ---- */
@@ -114,12 +79,10 @@ h1, h2, h3, h4, h5, h6,
 .section-title {
     font-size: 28px;
     font-weight: 700;
-    color: var(--text-headline);
     margin-bottom: 5px;
 }
 .section-subtitle {
     font-size: 14px;
-    color: var(--text-paragraph);
 }
 
 /* ============================================
@@ -169,8 +132,18 @@ h1, h2, h3, h4, h5, h6,
     letter-spacing: 0.5px;
 }
 
+.safari-actions {
+    width: 33.333%;
+    display: flex;
+    justify-content: flex-end;
+    color: var(--text-paragraph);
+    font-size: 14px;
+}
+
+.lock-icon, .user-icon { font-size: 10px; }
+
 /* ============================================
-   GLASSMORPHISM - Cartes génériques (Projets, Outils, etc.)
+   GLASSMORPHISM - Cartes génériques
    ============================================ */
 .glass-card,
 .projet-card,
@@ -188,7 +161,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ============================================
-   HERO & À PROPOS (Nouveau Layout fenêtré)
+   HERO & À PROPOS (Layout fenêtré)
    ============================================ */
 .hero-wrapper {
     max-width: 1100px;
@@ -199,8 +172,108 @@ h1, h2, h3, h4, h5, h6,
     gap: 40px;
 }
 
+/* Contenu Fenêtre Profil */
+.hero-window-content {
+    padding: 60px 40px;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.hero-desc {
+    font-size: 1.15rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+.hero-desc strong { font-weight: 500; color: var(--text-headline); }
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-img-container {
+    flex-basis: 250px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 4px solid #1c1c1e;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.hero-status-badge {
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    background-color: #28c840;
+    border-radius: 50%;
+    border: 4px solid #1c1c1e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+/* Contenu Fenêtre À propos */
+.about-window-content {
+    padding: 40px;
+}
+
+.about-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.about-desc {
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.about-stats {
+    margin-top: 30px;
+    display: flex;
+    gap: 40px;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.stat-label {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
 /* ============================================
-   PROJETS (Hérite du slider existant)
+   PROJETS
    ============================================ */
 .projets-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
 .projet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
@@ -208,8 +281,28 @@ h1, h2, h3, h4, h5, h6,
 .projet-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
 .card-icon { width: 45px; height: 45px; border-radius: 12px; background-color: rgba(37, 106, 244, 0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border: 1px solid rgba(37, 106, 244, 0.3); }
 .card-icon i { font-size: 20px; color: var(--color-highlight); }
-.card-title { font-size: 18px; font-weight: 700; color: var(--text-headline); margin-bottom: 8px; }
-.card-description { font-size: 14px; color: var(--text-paragraph); margin-bottom: 16px; line-height: 1.6; }
+.card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.card-description { font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
+
+.btn-details {
+    background: none;
+    border: none;
+    color: var(--color-highlight);
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    transition: color 0.3s;
+}
+.btn-details:hover { color: var(--color-button-hover); }
+
+/* Modale Projet */
+.modal-bg { background-color: var(--bg-primary); }
+.modal-link-btn { width: fit-content; }
+#modalTitle { color: var(--text-headline); }
 
 /* ============================================
    COMPÉTENCES
@@ -217,13 +310,22 @@ h1, h2, h3, h4, h5, h6,
 .competences-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
 .competences-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
 .competence-category { padding: 30px; }
-.competence-category h3 { font-size: 18px; font-weight: 700; color: var(--text-headline); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+.competence-category h3 { font-size: 18px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
 .competence-category h3 i { color: var(--color-highlight); }
 .skills-list { display: flex; flex-direction: column; gap: 18px; }
 .skill-item { width: 100%; }
 .skill-info { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--text-headline); margin-bottom: 8px; }
 .skill-bar { width: 100%; height: 6px; background-color: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
 .skill-progress { height: 100%; width: 0; background: var(--color-highlight); border-radius: 10px; transition: width 1.5s ease; }
+
+/* ============================================
+   OUTILS
+   ============================================ */
+.outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
+.outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.outil-card { width: 120px; height: 120px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
+.outil-name { font-size: 12px; font-weight: 500; text-align: center; }
 
 /* ============================================
    CONTACT
@@ -233,15 +335,15 @@ h1, h2, h3, h4, h5, h6,
 .contact-info { flex: 1; display: flex; flex-direction: column; gap: 24px; }
 .contact-item { display: flex; align-items: center; gap: 16px; }
 .contact-item i { font-size: 20px; color: var(--color-highlight); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; }
-.contact-item h4 { font-size: 14px; font-weight: 600; color: var(--text-headline); margin-bottom: 2px; }
-.contact-item a, .contact-item p { font-size: 13px; color: var(--text-paragraph); text-decoration: none; }
+.contact-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.contact-item a, .contact-item p { font-size: 13px; text-decoration: none; }
 .contact-item a:hover { color: var(--color-highlight); }
 
 .contact-form { flex: 1.5; display: flex; flex-direction: column; gap: 18px; }
 .form-row { display: flex; gap: 18px; }
 .contact-form .form-group { display: flex; flex-direction: column; flex: 1; }
-.contact-form label { font-size: 13px; font-weight: 500; color: var(--text-headline); margin-bottom: 8px; }
-.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; font-family: var(--font-body); color: var(--text-headline); outline: none; }
+.contact-form label { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+.contact-form input, .contact-form textarea { padding: 14px 16px; font-size: 14px; outline: none; }
 .contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.08); }
 .contact-form textarea { resize: vertical; }
 
@@ -249,15 +351,7 @@ h1, h2, h3, h4, h5, h6,
    CV
    ============================================ */
 .cv-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
-
-/* ============================================
-   OUTILS & CERTIFICATIONS
-   ============================================ */
-.outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
-.outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-.outil-card { width: 120px; height: 120px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
-.outil-name { font-size: 12px; font-weight: 500; color: var(--text-headline); text-align: center; font-family: var(--font-heading); }
+.cv-download-btn { width: 100%; max-width: 400px; padding: 20px; background-color: var(--bg-glass); }
 
 /* ============================================
    FOOTER
@@ -265,10 +359,10 @@ h1, h2, h3, h4, h5, h6,
 .site-footer { max-width: 1100px; margin: 0 auto; padding: 40px 20px; border-top: 1px solid var(--border-glass); margin-top: 60px; }
 .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 .footer-brand { text-align: left; }
-.footer-logo { font-size: 20px; font-weight: 700; color: var(--text-headline); letter-spacing: 1px; }
-.footer-brand p { font-size: 12px; color: var(--text-paragraph); margin-top: 4px; }
+.footer-logo { font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+.footer-brand p { font-size: 12px; margin-top: 4px; }
 .footer-socials { display: flex; gap: 16px; }
-.footer-socials a { font-size: 13px; font-weight: 500; color: var(--text-paragraph); text-decoration: none; transition: color 0.3s ease; }
+.footer-socials a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.3s ease; }
 .footer-socials a:hover { color: var(--color-highlight); }
 
 /* ============================================
@@ -288,5 +382,7 @@ h1, h2, h3, h4, h5, h6,
 @media (max-width: 600px) {
     .hero-buttons { flex-direction: column; width: 100%; }
     .hero-buttons a { width: 100%; text-align: center; }
+    .hero-title { font-size: 2.2rem; }
     .section-title { font-size: 24px; }
+    .hero-window-content, .about-window-content { padding: 30px 20px; }
 }

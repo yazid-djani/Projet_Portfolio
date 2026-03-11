@@ -25,29 +25,30 @@
                 <div class="traffic-light tl-green"></div>
             </div>
             <div class="safari-title">
-                <div class="safari-title-badge"><i class="fas fa-lock" style="font-size: 10px;"></i> profil.dev</div>
+                <div class="safari-title-badge"><i class="fas fa-lock lock-icon"></i> profil.dev</div>
             </div>
-            <div style="width: 33.333%; display: flex; justify-content: flex-end;">
-                <i class="fas fa-share" style="color: var(--text-paragraph); font-size: 14px;"></i>
+            <div class="safari-actions">
+                <i class="fas fa-share"></i>
             </div>
         </div>
-        <div style="padding: 60px 40px; display: flex; gap: 40px; align-items: center; flex-wrap: wrap-reverse;">
-            <div style="flex: 1; min-width: 300px;">
-                <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 20px; line-height: 1.1; color: var(--text-headline); letter-spacing: -1px;">
+
+        <div class="hero-window-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
                     Bienvenue sur le <span class="highlight text-transparent bg-clip-text">portfolio</span>
                 </h1>
-                <p style="font-size: 1.15rem; margin-bottom: 30px; color: var(--text-paragraph); line-height: 1.6;">
-                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, <strong style="color: var(--text-headline); font-weight: 500;"><?= htmlspecialchars($profil['titre_poste'] ?? '') ?></strong>.
+                <p class="hero-desc">
+                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, <strong><?= htmlspecialchars($profil['titre_poste'] ?? '') ?></strong>.
                 </p>
-                <div class="hero-buttons" style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <a href="#contact" class="btn-primary" style="box-shadow: 0 0 25px rgba(37,106,244,0.4);">Démarrer un projet</a>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary btn-glow">Démarrer un projet</a>
                     <a href="#projets" class="btn-secondary">Explorer le travail</a>
                 </div>
             </div>
-            <div style="flex-basis: 250px; display: flex; justify-content: center; position: relative;">
-                <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 18px; border: 4px solid #1c1c1e; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <div style="position: absolute; bottom: -10px; right: 10px; width: 36px; height: 36px; background-color: #28c840; border-radius: 50%; border: 4px solid #1c1c1e; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-check" style="color: white; font-size: 14px;"></i>
+            <div class="hero-img-container">
+                <img src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Photo de profil" class="hero-img">
+                <div class="hero-status-badge">
+                    <i class="fas fa-check"></i>
                 </div>
             </div>
         </div>
@@ -61,21 +62,22 @@
                 <div class="traffic-light tl-green"></div>
             </div>
             <div class="safari-title">
-                <div class="safari-title-badge"><i class="fas fa-user" style="font-size: 10px;"></i> a-propos.txt</div>
+                <div class="safari-title-badge"><i class="fas fa-user user-icon"></i> a-propos.txt</div>
             </div>
-            <div style="width: 33.333%;"></div>
+            <div class="safari-actions"></div>
         </div>
-        <div style="padding: 40px;">
-            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--text-headline);">À propos <span class="highlight">de moi</span></h2>
-            <p style="font-size: 15px; line-height: 1.8; color: var(--text-paragraph);">
+
+        <div class="about-window-content">
+            <h2 class="about-title">À propos <span class="highlight">de moi</span></h2>
+            <p class="about-desc">
                 <?= nl2br(htmlspecialchars($profil['description_hero'] ?? '')) ?><br><br>
                 <?= nl2br(htmlspecialchars($profil['description_about'] ?? '')) ?>
             </p>
 
-            <div class="about-stats" style="margin-top: 30px; display: flex; gap: 40px;">
+            <div class="about-stats">
                 <div class="stat-item">
-                    <span class="stat-number highlight" data-target="10" style="font-size: 32px; font-weight: 800;">0</span><span class="highlight" style="font-size: 32px; font-weight: 800;">+</span>
-                    <span class="stat-label" style="display: block; font-size: 13px; margin-top: 5px;">Projets réalisés</span>
+                    <span class="stat-number highlight" data-target="10">0</span><span class="stat-number highlight">+</span>
+                    <span class="stat-label">Projets réalisés</span>
                 </div>
             </div>
         </div>
@@ -111,7 +113,7 @@
                                 <div class="card-icon"><i class="fas fa-code"></i></div>
                                 <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
                                 <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-                                <button class="btn-details" style="background:none; border:none; color:var(--color-highlight); font-weight:600; cursor:pointer;">En savoir plus <i class="fas fa-arrow-right" style="font-size: 12px;"></i></button>
+                                <button class="btn-details">En savoir plus <i class="fas fa-arrow-right icon-small"></i></button>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -133,7 +135,7 @@
                                 <div class="card-icon"><i class="fas fa-network-wired"></i></div>
                                 <h3 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h3>
                                 <p class="card-description"><?= htmlspecialchars($projet['description']) ?></p>
-                                <button class="btn-details" style="background:none; border:none; color:var(--color-highlight); font-weight:600; cursor:pointer;">En savoir plus <i class="fas fa-arrow-right" style="font-size: 12px;"></i></button>
+                                <button class="btn-details">En savoir plus <i class="fas fa-arrow-right icon-small"></i></button>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -144,15 +146,15 @@
 </section>
 
 <div id="projectModal" class="modal-overlay">
-    <div class="modal-container glass-card" style="background-color: var(--bg-primary);">
+    <div class="modal-container glass-card modal-bg">
         <button class="modal-close" id="modalClose">&times;</button>
         <div class="modal-content">
             <div class="modal-media"></div>
             <div class="modal-info">
-                <h3 id="modalTitle" style="color: var(--text-headline);">Titre du projet</h3>
+                <h3 id="modalTitle">Titre du projet</h3>
                 <div class="modal-tags" id="modalTags"></div>
                 <p id="modalDesc">Description détaillée...</p>
-                <a href="#" target="_blank" class="btn-primary" id="modalLink" style="width: fit-content;">
+                <a href="#" target="_blank" class="btn-primary modal-link-btn" id="modalLink">
                     <i class="fab fa-github"></i> Voir le code
                 </a>
             </div>
@@ -195,7 +197,7 @@
 
 <?php if(!empty($outils)): ?>
     <section id="outils" class="outils-section">
-        <div class="section-header" style="text-align: center;">
+        <div class="section-header text-center">
             <h2 class="section-title">Technologies</h2>
         </div>
         <div class="outils-grid">
@@ -274,7 +276,7 @@
                 <label for="contact-message">Message</label>
                 <textarea id="contact-message" name="message" rows="6" required placeholder="Votre message..."></textarea>
             </div>
-            <button type="submit" class="btn-primary" style="width: 100%;">
+            <button type="submit" class="btn-primary w-100">
                 <i class="fas fa-paper-plane"></i> Envoyer
             </button>
         </form>
@@ -284,32 +286,14 @@
 <section id="cv" class="cv-section">
     <div class="cv-content animate-fade-up">
         <?php if (!empty($profil['lien_cv'])): ?>
-            <a href="/?mon_cv" target="_blank" class="btn-secondary" style="background-color: var(--bg-glass); width: 100%; max-width: 400px; padding: 20px;">
+            <a href="/?mon_cv" target="_blank" class="btn-secondary cv-download-btn">
                 <i class="fas fa-download"></i> Consulter / Télécharger mon CV
             </a>
         <?php endif; ?>
     </div>
 </section>
 
-<footer class="site-footer">
-    <div class="footer-content">
-        <div class="footer-brand">
-            <span class="footer-logo text-primary">PORTFOLIO</span><span class="footer-logo text-white">.</span>
-            <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>.</p>
-        </div>
-        <div class="footer-socials">
-            <?php if (!empty($profil['lien_github'])): ?>
-                <a href="<?= htmlspecialchars($profil['lien_github']) ?>" target="_blank">GitHub</a>
-            <?php endif; ?>
-            <?php if (!empty($profil['lien_linkedin'])): ?>
-                <a href="<?= htmlspecialchars($profil['lien_linkedin']) ?>" target="_blank">LinkedIn</a>
-            <?php endif; ?>
-            <?php if (!empty($profil['email_contact'])): ?>
-                <a href="mailto:<?= htmlspecialchars($profil['email_contact']) ?>">Contact</a>
-            <?php endif; ?>
-        </div>
-    </div>
-</footer>
+<?php require_once __DIR__ . '/layout/footer.php'; ?>
 
 <script src="public/scriptJS/navbar.js"></script>
 <script src="public/scriptJS/viewer.js"></script>

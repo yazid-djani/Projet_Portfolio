@@ -2,80 +2,70 @@
    STYLE DU DASHBOARD ADMINISTRATEUR
    ============================================ */
 
-/* Enlève les marges par défaut */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Fond de la page d'administration */
 .admin-body {
-    background-color: var(--bg-primary); /* Fond bleu nuit */
-    background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%); /* Taches de lumière */
-    color: var(--text-paragraph); /* Texte en gris bleuté */
-    font-family: 'Segoe UI', sans-serif; /* Police d'écriture */
-    padding-top: 100px; /* Décale le contenu vers le bas pour ne pas être caché par la navbar */
+    background-color: var(--bg-primary);
+    background-image: radial-gradient(at 0% 0%, rgba(37, 106, 244, 0.12) 0px, transparent 40%), radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 40%), radial-gradient(at 50% 100%, rgba(37, 106, 244, 0.05) 0px, transparent 40%);
+    color: var(--text-paragraph);
+    font-family: var(--font-body);
+    padding-top: 100px;
 }
 
-/* Conteneur principal qui limite la largeur */
 .admin-main {
-    max-width: 1200px; /* Largeur maximum */
-    margin: 0 auto; /* Centre le conteneur sur l'écran */
-    padding: 0 20px; /* Ajoute un peu d'espace sur les côtés */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* L'en-tête (Bienvenue Admin) */
 .admin-header {
-    margin-bottom: 40px; /* Espace sous l'en-tête */
+    margin-bottom: 40px;
 }
 
-/* Titre de l'en-tête */
 .admin-header h1 {
-    color: var(--text-headline); /* Texte en blanc */
-    font-size: 32px; /* Grande taille */
+    color: var(--text-headline);
+    font-size: 32px;
 }
 
-/* Grille contenant les rectangles (cartes) du dashboard */
 .dashboard-grid {
-    display: grid; /* Active le système de grille CSS */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Crée des colonnes qui s'adaptent automatiquement à la largeur de l'écran */
-    gap: 20px; /* Espace entre les cartes */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
-/* Style de chaque carte (Profil, Projets, etc.) - EFFET VERRE */
 .dashboard-card {
-    background: var(--bg-glass); /* Fond transparent */
-    backdrop-filter: var(--glass-blur); /* Applique le flou derrière */
-    -webkit-backdrop-filter: var(--glass-blur); /* Flou pour Safari */
-    border: 1px solid var(--border-glass); /* Bordure blanche très fine */
-    border-radius: 16px; /* Coins arrondis */
-    padding: 30px; /* Espace à l'intérieur de la carte */
-    text-align: center; /* Centre le texte */
-    text-decoration: none; /* Enlève le soulignement des liens */
-    color: var(--text-headline); /* Texte en blanc */
-    box-shadow: var(--glass-shadow); /* Ombre douce */
-    transition: all 0.3s ease; /* Animation fluide lors du survol */
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-headline);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
 }
 
-/* Quand on survole une carte avec la souris */
 .dashboard-card:hover {
-    background: var(--bg-glass-hover); /* Rend la carte un peu plus claire */
-    transform: translateY(-5px); /* Fait monter la carte */
-    border-color: var(--color-highlight); /* Change la couleur de la bordure en bleu */
+    background: var(--bg-glass-hover);
+    transform: translateY(-5px);
+    border-color: var(--color-highlight);
 }
 
-/* L'icône à l'intérieur de la carte */
 .card-icon-admin {
-    font-size: 40px; /* Grande icône */
-    color: var(--color-highlight); /* Icône en bleu */
-    margin-bottom: 15px; /* Espace sous l'icône */
+    font-size: 40px;
+    color: var(--color-highlight);
+    margin-bottom: 15px;
 }
 
-/* Cas particulier : la carte Déconnexion (en rouge) */
 .card-danger:hover {
-    border-color: #ff5f57; /* La bordure devient rouge au lieu de bleu */
+    border-color: #ff5f57;
 }
 .card-danger .card-icon-admin {
-    color: #ff5f57; /* L'icône est rouge de base */
+    color: #ff5f57;
 }

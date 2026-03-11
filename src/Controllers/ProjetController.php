@@ -8,7 +8,6 @@ use App\Models\Competence;
 use App\Models\Outil;
 use App\Models\Certification;
 use App\Models\Message;
-use App\Lib\Database;
 
 class ProjetController
 {
@@ -36,7 +35,6 @@ class ProjetController
     }
 
     public static function trackVisit() {
-        // Le JS envoie les données en JSON dans le corps de la requête
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($data) {
@@ -47,7 +45,6 @@ class ProjetController
             Visite::record($page, $userAgent, $type);
         }
 
-        // Réponse HTTP 200 OK
         http_response_code(200);
         exit;
     }
@@ -60,11 +57,28 @@ class ProjetController
             $message = trim($_POST['message'] ?? '');
 
             if (!empty($nom) && !empty($email) && !empty($message)) {
-                // Ajout dans la base de données
+                // 1. Ajout dans la base de données
                 Message::add($nom, $email, $sujet, $message);
+
+                // 2. Envoi de l'email à l'admin
+                $profil = (new Profil())->getProfil();
+                // Utilise l'email renseigné dans le profil admin, sinon un email par défaut
+                $destinataire = !empty($profil['email_contact']) ? $profil['email_contact'] : 'ton.email@gmail.com';
+
+                $headers = "From: $email\r\n";
+                $headers .= "Reply-To: $email\r\n";
+                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+                $contenuMail = "Nouveau message depuis ton Portfolio !\n\n";
+                $contenuMail .= "Nom : $nom\n";
+                $contenuMail .= "Email : $email\n";
+                $contenuMail .= "Sujet : $sujet\n\n";
+                $contenuMail .= "Message :\n$message\n";
+
+                // Le @ permet d'éviter d'afficher une erreur si le serveur local ne gère pas les mails
+                @mail($destinataire, "Nouveau contact : $sujet", $contenuMail, $headers);
             }
         }
-        // Redirection vers la page d'accueil avec une ancre
         header('Location: /#contact');
         exit;
     }

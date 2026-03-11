@@ -100,6 +100,7 @@ try {
                 case 'outils': \App\Controllers\AdminController::outils(); break;
                 case 'certifications': \App\Controllers\AdminController::certifications(); break;
                 case 'statistiques': \App\Controllers\AdminController::statistiques(); break;
+                case 'messages': \App\Controllers\AdminController::messages(); break; // <-- NOUVELLE LIGNE
                 case 'dashboard':
                 default:
                     \App\Controllers\AdminController::dashboard();

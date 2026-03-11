@@ -10,7 +10,8 @@
         <a href="?page=projets">Projets</a>
         <a href="?page=competences">Compétences</a>
         <a href="?page=outils">Outils</a>
-        <a href="?page=certifications">Certifs</a>
+        <a href="?page=certifications">Certifications</a>
+        <a href="?page=messages">Messages</a>
         <a href="?page=statistiques">Trafic Panel</a>
 
         <a href="?action=logout" style="color: #ff5f57;">Déconnexion</a>

@@ -282,4 +282,19 @@ class AdminController
         $certifications = Certification::findAll();
         require_once __DIR__ . '/../views/admin/AdminCertifications.php';
     }
+
+    public static function messages(): void
+    {
+        $message = null;
+
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            \App\Models\Message::delete($_GET['id']);
+            header('Location: ?page=messages');
+            exit;
+        }
+
+        // On récupère tous les messages
+        $messages = \App\Models\Message::findAll();
+        require_once __DIR__ . '/../views/admin/ListMessages.php';
+    }
 }

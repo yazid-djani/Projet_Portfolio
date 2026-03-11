@@ -46,6 +46,12 @@
             <p>Ajouter des diplômes ou certifications.</p>
         </a>
 
+        <a href="?page=messages" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-envelope"></i></div>
+            <h3>Boîte de réception</h3>
+            <p>Lire les messages envoyés depuis le site.</p>
+        </a>
+
         <a href="?page=statistiques" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-chart-bar"></i></div>
             <h3>Statistiques</h3>

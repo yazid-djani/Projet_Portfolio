@@ -10,7 +10,7 @@
         <a href="?page=certifications">Certifs</a>
         <a href="?page=messages">Messages</a>
         <a href="?page=statistiques">Trafic Panel</a>
-        <a href="/" target="_blank" class="nav-link-warning"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+        <a href="index.php" target="_blank" class="nav-link-warning"><i class="fas fa-external-link-alt"></i> Voir le site</a>
         <a href="?action=logout" class="nav-link-danger"><i class="fas fa-sign-out-alt"></i></a>
     </div>
 </nav>

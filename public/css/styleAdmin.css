@@ -236,7 +236,12 @@
 /* ============================================
    BADGES CV (Page Paramètres Profil)
    ============================================ */
-.cv-badge-container { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.cv-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Un peu plus d'espace entre le CV et la poubelle */
+    margin-top: 5px;
+}
 
 .cv-badge {
     padding: 8px 14px;
@@ -249,26 +254,33 @@
     gap: 8px;
 }
 
+/* LE BOUTON CV : TEXTE VERT ET ENCADRÉ VERT */
 .cv-badge-success {
-    background: rgba(40, 200, 64, 0.1);
-    border: 1px solid rgba(40, 200, 64, 0.3);
-    color: #28c840;
+    background: transparent;
+    border: 2px solid #28c840; /* L'encadré vert */
+    color: #28c840; /* Le texte vert */
     transition: all 0.3s ease;
 }
-.cv-badge-success:hover { background: rgba(40, 200, 64, 0.2); border-color: #28c840; }
 
+.cv-badge-success:hover {
+    background: #28c840;
+    color: #fff;
+}
+
+/* LE BOUTON CV INEXISTANT (Gris) */
 .cv-badge-danger {
-    background: rgba(255, 95, 87, 0.05);
-    border: 1px solid rgba(255, 95, 87, 0.2);
+    background: transparent;
+    border: 2px solid var(--text-paragraph);
     color: var(--text-paragraph);
 }
 
+/* LA POUBELLE : ICÔNE ROUGE ET ENCADRÉ ROUGE */
 .btn-delete-cv {
-    color: #ff5f57;
-    background: rgba(255, 95, 87, 0.1);
-    border: 1px solid rgba(255, 95, 87, 0.3);
-    width: 35px;
-    height: 35px;
+    color: #ff5f57; /* La poubelle rouge */
+    background: transparent;
+    border: 2px solid #ff5f57; /* L'encadré rouge */
+    width: 37px;
+    height: 37px;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -276,6 +288,7 @@
     text-decoration: none;
     transition: all 0.3s ease;
 }
+
 .btn-delete-cv:hover {
     background: #ff5f57;
     color: #fff;

@@ -17,7 +17,7 @@ html {
 
 /* Évite que la barre de navigation initiale ne cache le haut du site */
 body {
-    padding-top: 100px;
+    padding-top: 300px;
 }
 
 /* Classes utilitaires */
@@ -29,7 +29,9 @@ body {
 .text-white { color: #fff; }
 .icon-small { font-size: 12px; }
 
-/* ---- Boutons globaux ---- */
+/* ============================================
+    BOUTONS (HERO, PROJETS, CONTACT)
+   ============================================ */
 .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -93,7 +95,7 @@ body {
 }
 
 /* ============================================
-   FENETRES STYLE MACOS / SAFARI
+   FENETRES STYLE SAFARI (HERO, A PROPOS)
    ============================================ */
 .safari-window {
     background: var(--glass-bg);
@@ -150,7 +152,7 @@ body {
 .lock-icon, .user-icon { font-size: 10px; }
 
 /* ============================================
-   GLASSMORPHISM - Cartes génériques
+   GLASSMORPHISM CARDS (PROJETS, COMPETENCES, OUTILS, CERTIFICATIONS)
    ============================================ */
 .glass-card,
 .projet-card,
@@ -166,7 +168,7 @@ body {
 }
 
 /* ============================================
-   HERO & À PROPOS (Layout fenêtré)
+   HERO
    ============================================ */
 .hero-wrapper {
     max-width: 1100px;
@@ -177,7 +179,9 @@ body {
     gap: 40px;
 }
 
-/* Contenu Fenêtre Profil */
+/* ============================================
+   PROFILS
+   ============================================ */
 .hero-window-content {
     padding: 60px 40px;
     display: flex;
@@ -244,7 +248,9 @@ body {
     font-size: 14px;
 }
 
-/* Contenu Fenêtre À propos */
+/* ============================================
+   A PROPOS
+   ============================================ */
 .about-window-content {
     padding: 40px;
 }

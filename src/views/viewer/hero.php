@@ -18,10 +18,10 @@
         <div class="hero-window-content">
             <div class="hero-text">
                 <h1 class="hero-title">
-                    Bienvenue sur le <span class="highlight text-transparent bg-clip-text">portfolio</span>
+                    Bienvenue sur mon <span class="highlight text-transparent bg-clip-text">portfolio</span>
                 </h1>
                 <p class="hero-desc">
-                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>.
+                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, étudiant chez IPSSI Paris.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projets" class="btn-primary btn-glow">Voir mes projets</a>

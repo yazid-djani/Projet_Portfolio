@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?> | Portfolio</title>
-    <meta name="description" content="Portfolio de <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?> — <?= htmlspecialchars($profil['titre_poste'] ?? '') ?>. Découvrez mes projets, compétences et parcours.">
+    <meta name="description" content="Portfolio de <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>. Découvrez mes projets, compétences et parcours.">
 
     <link rel="stylesheet" href="public/css/couleur.css">
     <link rel="stylesheet" href="public/css/styleNavbar.css">
@@ -21,8 +21,9 @@
 <?php require_once __DIR__ . '/viewer/projets.php'; ?>
 <?php require_once __DIR__ . '/viewer/competences.php'; ?>
 <?php require_once __DIR__ . '/viewer/outils.php'; ?>
-<?php require_once __DIR__ . '/viewer/cv.php'; ?>
+<?php require_once __DIR__ . '/viewer/certifications.php'; ?>
 <?php require_once __DIR__ . '/viewer/contact.php'; ?>
+<?php require_once __DIR__ . '/viewer/cv.php'; ?>
 
 <?php require_once __DIR__ . '/layout/footer.php'; ?>
 

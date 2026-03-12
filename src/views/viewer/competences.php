@@ -1,6 +1,6 @@
 <section id="competences" class="competences-section">
     <div class="section-header">
-        <h2 class="section-title">Expertise</h2>
+        <h2 class="section-title">Compétences</h2>
         <p class="section-subtitle">Compétences techniques & Domaines d'application</p>
     </div>
     <div class="competences-grid">

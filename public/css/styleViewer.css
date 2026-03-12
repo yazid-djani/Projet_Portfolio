@@ -332,63 +332,37 @@ body {
 /* ============================================
    OUTILS
    ============================================ */
-.outils-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+.outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
 
 .outils-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center; /* Centre les éléments verticalement sur la ligne */
-    gap: 30px; /* Garantit un espacement strict et identique entre toutes les cartes */
-    padding: 50px 0; /* Plus d'espace pour laisser les cartes respirer avec le gros zoom */
+    gap: 20px; /* L'espacement strict entre chaque case */
+    padding: 20px 0; /* Laisse un peu de place pour le débordement du zoom */
 }
 
 .outil-card {
-    width: 120px; /* Taille de base */
+    width: 120px;
     height: 120px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animation fluide et légèrement rebondissante */
     cursor: default;
     position: relative;
+    z-index: 1; /* Position de base */
 }
 
-/* --- EFFET MASHUP & TAILLES ALÉATOIRES --- */
-/* Une carte sur deux est plus grande et descendue */
-.outil-card:nth-child(2n) {
-    width: 140px;
-    height: 140px;
-    margin-top: 40px;
-}
-
-/* Une carte sur trois est plus petite et montée */
-.outil-card:nth-child(3n) {
-    width: 100px;
-    height: 100px;
-    margin-top: -30px;
-}
-
-/* Une carte sur cinq est de taille moyenne avec un petit décalage */
-.outil-card:nth-child(5n) {
-    width: 130px;
-    height: 130px;
-    margin-top: 15px;
-}
-
-/* Ajustement proportionnel de la taille des icônes pour les petites et grandes cartes */
-.outil-card:nth-child(3n) .outil-img { width: 35px; height: 35px; }
-.outil-card:nth-child(2n) .outil-img { width: 55px; height: 55px; }
-
-/* --- ANIMATION AU SURVOL (Gros Zoom + Lueur Argentée) --- */
+/* --- ANIMATION AU SURVOL (La carte grossit pour toucher les voisines) --- */
 .outil-card:hover {
-    transform: scale(1.35); /* Agrandit fortement la case (Zoom de 35%) */
-    border-color: rgba(255, 255, 255, 0.5); /* Bordure blanche plus prononcée */
-    box-shadow: 0 20px 45px rgba(255, 255, 255, 0.12); /* Lueur grise plus large */
-    background: rgba(255, 255, 255, 0.1); /* Rend le fond un peu plus clair */
-    z-index: 20; /* Fait passer la carte bien au-dessus de ses voisines */
+    transform: scale(1.18); /* Grossit de 18% pour venir coller exactement les cases autour ! */
+    border-color: rgba(255, 255, 255, 0.5); /* Surligne la bordure en blanc/gris */
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12); /* Lueur d'argent derrière */
+    background: rgba(255, 255, 255, 0.1); /* Éclaircit le fond */
+    z-index: 10; /* Indispensable : fait passer la case zoomée AU-DESSUS des autres */
 }
 
 .outil-img {
@@ -399,11 +373,12 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* L'icône à l'intérieur subit aussi un petit bond au survol */
+/* L'icône à l'intérieur grossit aussi légèrement */
 .outil-card:hover .outil-img {
     transform: scale(1.15);
 }
 
+.outil-name { font-size: 12px; font-weight: 500; text-align: center; }
 .outil-name { font-size: 12px; font-weight: 500; text-align: center; }
 /* ============================================
    CONTACT

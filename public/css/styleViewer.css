@@ -30,7 +30,7 @@ body {
 .icon-small { font-size: 12px; }
 
 /* ============================================
-    BOUTONS (HERO, PROJETS, CONTACT)
+    BOUTONS (HERO, CONTACT)
    ============================================ */
 .btn-primary {
     display: inline-flex;
@@ -152,10 +152,9 @@ body {
 .lock-icon, .user-icon { font-size: 10px; }
 
 /* ============================================
-   GLASSMORPHISM CARDS (PROJETS, COMPETENCES, OUTILS, CERTIFICATIONS)
+   GLASSMORPHISM CARDS (COMPETENCES, OUTILS, CERTIFICATIONS)
    ============================================ */
 .glass-card,
-.projet-card,
 .competence-category,
 .outil-card,
 .certif-card {
@@ -284,38 +283,6 @@ body {
 }
 
 /* ============================================
-   PROJETS
-   ============================================ */
-.projets-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
-.projet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-.projet-card { padding: 25px; cursor: pointer; }
-.projet-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.2); }
-.card-icon { width: 45px; height: 45px; border-radius: 12px; background-color: rgba(37, 106, 244, 0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border: 1px solid rgba(37, 106, 244, 0.3); }
-.card-icon i { font-size: 20px; color: var(--color-highlight); }
-.card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-.card-description { font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
-
-.btn-details {
-    background: none;
-    border: none;
-    color: var(--color-highlight);
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    transition: color 0.3s;
-}
-.btn-details:hover { color: var(--color-button-hover); }
-
-/* Modale Projet */
-.modal-bg { background-color: var(--bg-primary); }
-.modal-link-btn { width: fit-content; }
-#modalTitle { color: var(--text-headline); }
-
-/* ============================================
    COMPÉTENCES
    ============================================ */
 .competences-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
@@ -338,8 +305,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px; /* L'espacement strict entre chaque case */
-    padding: 20px 0; /* Laisse un peu de place pour le débordement du zoom */
+    gap: 20px;
+    padding: 20px 0;
 }
 
 .outil-card {
@@ -350,19 +317,18 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animation fluide et légèrement rebondissante */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: default;
     position: relative;
-    z-index: 1; /* Position de base */
+    z-index: 1;
 }
 
-/* --- ANIMATION AU SURVOL (La carte grossit pour toucher les voisines) --- */
 .outil-card:hover {
-    transform: scale(1.18); /* Grossit de 18% pour venir coller exactement les cases autour ! */
-    border-color: rgba(255, 255, 255, 0.5); /* Surligne la bordure en blanc/gris */
-    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12); /* Lueur d'argent derrière */
-    background: rgba(255, 255, 255, 0.1); /* Éclaircit le fond */
-    z-index: 10; /* Indispensable : fait passer la case zoomée AU-DESSUS des autres */
+    transform: scale(1.18);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10;
 }
 
 .outil-img {
@@ -373,13 +339,12 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* L'icône à l'intérieur grossit aussi légèrement */
 .outil-card:hover .outil-img {
     transform: scale(1.15);
 }
 
 .outil-name { font-size: 12px; font-weight: 500; text-align: center; }
-.outil-name { font-size: 12px; font-weight: 500; text-align: center; }
+
 /* ============================================
    CONTACT
    ============================================ */
@@ -397,7 +362,6 @@ body {
 .contact-form .form-group { display: flex; flex-direction: column; flex: 1; }
 .contact-form label { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
 
-/* Formulaire Contact - Champs de saisie (Ajout de bordure, couleur et arrondis) */
 .contact-form input, .contact-form textarea {
     padding: 14px 16px;
     font-size: 14px;
@@ -450,7 +414,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
-    padding: 20px 0; /* Marge pour le zoom */
+    padding: 20px 0;
 }
 
 .certif-card-viewer {
@@ -464,7 +428,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Effet fluide et élastique */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     z-index: 1;
     cursor: default;
@@ -479,24 +443,21 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* L'animation au survol copiée des Outils */
 .certif-card-viewer:hover {
-    transform: scale(1.12); /* Agrandissement qui colle les voisines */
-    border-color: rgba(255, 255, 255, 0.5); /* Bordure blanche/grise */
-    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12); /* Lueur d'argent */
+    transform: scale(1.12);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12);
     background: rgba(255, 255, 255, 0.1);
-    z-index: 10; /* Fait passer la carte au-dessus des autres */
+    z-index: 10;
 }
 
 .certif-card-viewer:hover img {
-    transform: scale(1.05); /* L'image gonfle à l'intérieur de la carte */
+    transform: scale(1.05);
 }
-
 
 /* ============================================
    MISE EN BLANC DES LIENS DE CONTACT
    ============================================ */
-/* Force les liens de la section Contact (email, etc.) à être en blanc */
 .contact-item a {
     color: #ffffff !important;
     transition: color 0.3s ease;
@@ -504,7 +465,6 @@ body {
 .contact-item a:hover {
     color: var(--color-highlight) !important;
 }
-
 
 /* ============================================
    FOOTER VIEWER
@@ -537,9 +497,8 @@ body {
     margin-top: 5px;
 }
 
-/* Design des boutons sociaux (GitHub/LinkedIn) du Footer */
 .footer-socials a {
-    color: #ffffff; /* Icônes en blanc */
+    color: #ffffff;
     font-size: 20px;
     display: flex;
     align-items: center;
@@ -554,8 +513,8 @@ body {
 }
 
 .footer-socials a:hover {
-    background: var(--color-highlight); /* Devient bleu au survol */
+    background: var(--color-highlight);
     border-color: var(--color-highlight);
-    transform: translateY(-5px); /* Se soulève */
-    box-shadow: 0 10px 20px rgba(37, 106, 244, 0.3); /* Lueur bleutée */
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(37, 106, 244, 0.3);
 }

@@ -9,12 +9,13 @@
     box-sizing: border-box;
 }
 
+/* --- FIX NAVBAR : Règle le point d'arrivée des clics du menu --- */
 html {
-    scroll-padding-top: 100px; /* Aligne le défilement juste en dessous de la navbar */
-    scroll-behavior: smooth; /* Assure un défilement fluide */
+    scroll-padding-top: 100px; /* Décale l'arrêt de 100px vers le bas pour la navbar */
+    scroll-behavior: smooth;   /* Animation de défilement fluide native */
 }
 
-/* Évite que la barre de navigation (70px) ne cache le haut du site */
+/* Évite que la barre de navigation initiale ne cache le haut du site */
 body {
     padding-top: 100px;
 }
@@ -155,8 +156,6 @@ body {
 .projet-card,
 .competence-category,
 .outil-card,
-.contact-form input,
-.contact-form textarea,
 .certif-card {
     background: var(--bg-glass);
     backdrop-filter: var(--glass-blur);
@@ -172,7 +171,7 @@ body {
 .hero-wrapper {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 40px 20px 60px; /* Ajout d'un peu d'espace */
+    padding: 40px 20px 60px;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -349,14 +348,23 @@ body {
 .form-row { display: flex; gap: 18px; }
 .contact-form .form-group { display: flex; flex-direction: column; flex: 1; }
 .contact-form label { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
+
+/* Formulaire Contact - Champs de saisie (Ajout de bordure, couleur et arrondis) */
 .contact-form input, .contact-form textarea {
     padding: 14px 16px;
     font-size: 14px;
+    font-family: var(--font-body);
     color: #ffffff;
     background: rgba(255, 255, 255, 0.05);
     outline: none;
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    transition: border-color 0.3s ease, background 0.3s ease;
 }
-.contact-form input:focus, .contact-form textarea:focus { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.08); }
+.contact-form input:focus, .contact-form textarea:focus {
+    border-color: var(--color-highlight);
+    background: rgba(255, 255, 255, 0.08);
+}
 .contact-form textarea { resize: vertical; }
 
 /* ============================================
@@ -364,18 +372,6 @@ body {
    ============================================ */
 .cv-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
 .cv-download-btn { width: 100%; max-width: 400px; padding: 20px; background-color: var(--bg-glass); }
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.site-footer { max-width: 1100px; margin: 0 auto; padding: 40px 20px; border-top: 1px solid var(--border-glass); margin-top: 60px; }
-.footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-.footer-brand { text-align: left; }
-.footer-logo { font-size: 20px; font-weight: 700; letter-spacing: 1px; }
-.footer-brand p { font-size: 12px; margin-top: 4px; }
-.footer-socials { display: flex; gap: 16px; }
-.footer-socials a { font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.3s ease; }
-.footer-socials a:hover { color: var(--color-highlight); }
 
 /* ============================================
    ANIMATIONS

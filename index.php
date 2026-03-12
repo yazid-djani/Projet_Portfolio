@@ -73,7 +73,6 @@ try {
             $page   = $_GET['page']   ?? 'dashboard';
             $action = $_GET['action'] ?? null;
 
-            // Actions ne nécessitant pas d'être connecté (ou action de déconnexion)
             switch ($action) {
                 case 'logout':
                     \App\Controllers\AdminController::logout();

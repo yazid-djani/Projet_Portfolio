@@ -3,58 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Connexion</title>
-
-    <link rel="stylesheet" href="/public/css/couleur.css">
-    <link rel="stylesheet" href="/public/css/styleAdminConnexion.css">
+    <title>Connexion Admin</title>
+    <link rel="stylesheet" href="public/css/couleur.css">
+    <link rel="stylesheet" href="public/css/styleAdminConnexion.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <body class="login-body">
-
 <div class="login-container">
     <div class="login-header">
-        <h1 class="login-logo">YD</h1>
-        <h2>Panel Administrateur</h2>
-        <p>Connectez-vous pour accéder au tableau de bord</p>
+        <h2><i class="fas fa-lock lock-icon-login"></i> Accès <span class="highlight">Sécurisé</span></h2>
+        <p>Veuillez vous identifier pour accéder au panel.</p>
     </div>
 
-    <?php if (!empty($error)): ?>
-        <div class="login-error">
-            ⚠️ <?= htmlspecialchars($error) ?>
-        </div>
-    <?php endif; ?>
+    <?php if (!empty($erreur)) echo "<div class='login-error'><i class='fas fa-exclamation-circle'></i> $erreur</div>"; ?>
 
-    <form method="POST" action="?action=login" class="login-form">
-
+    <form action="?action=login" method="POST" class="login-form">
         <div class="form-group">
-            <label for="username">Nom d'utilisateur</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                    autocomplete="username"
-                    placeholder="Entrez votre identifiant"
-                    value="<?= htmlspecialchars($username ?? '') ?>"
-            >
+            <label for="username">Identifiant</label>
+            <input type="text" id="username" name="username" required autocomplete="username">
         </div>
-
-        <div class="form-group">
+        <div class="form-group form-group-last">
             <label for="password">Mot de passe</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    autocomplete="current-password"
-                    placeholder="Entrez votre mot de passe"
-            >
+            <input type="password" id="password" name="password" required autocomplete="current-password">
         </div>
-
         <button type="submit" class="login-btn">Se connecter</button>
-
     </form>
 </div>
-
 </body>
 </html>

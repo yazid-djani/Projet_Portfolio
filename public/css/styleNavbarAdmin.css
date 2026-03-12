@@ -48,7 +48,7 @@
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-    font-family: var(--font-heading); /* Police Tech */
+    font-family: var(--font-heading);
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     position: relative;
@@ -58,7 +58,8 @@
     color: var(--text-headline);
 }
 
-.navbar-links a:not([style*="color"])::after {
+/* Soulignement classique */
+.navbar-links a:not(.nav-link-warning):not(.nav-link-danger)::after {
     content: '';
     position: absolute;
     width: 0;
@@ -69,20 +70,31 @@
     transition: width 0.3s ease;
 }
 
-.navbar-links a:hover::after {
+.navbar-links a:not(.nav-link-warning):not(.nav-link-danger):hover::after {
     width: 100%;
 }
 
-.navbar-links a[style*="color: #ff5f57"] {
+/* Liens spéciaux (Site et Déconnexion) */
+.navbar-links a.nav-link-warning {
+    color: #ffbd2e;
+}
+.navbar-links a.nav-link-warning:hover {
+    color: #ffbd2e;
+    transform: scale(1.1);
+}
+
+.navbar-links a.nav-link-danger {
+    color: #ff5f57;
     padding: 8px 15px;
     border: 1px solid rgba(255, 95, 87, 0.3);
     border-radius: 8px;
     background: rgba(255, 95, 87, 0.1);
 }
 
-.navbar-links a[style*="color: #ff5f57"]:hover {
+.navbar-links a.nav-link-danger:hover {
     background: rgba(255, 95, 87, 0.2);
     border-color: #ff5f57;
+    color: #ff5f57;
 }
 
 @media (max-width: 900px) {

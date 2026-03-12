@@ -37,6 +37,11 @@
     margin-bottom: 5px;
 }
 
+/* Nouveau style pour l'icône */
+.lock-icon-login {
+    color: var(--color-highlight);
+}
+
 .login-header p {
     font-size: 14px;
     color: var(--text-paragraph);
@@ -56,6 +61,11 @@
 .form-group {
     margin-bottom: 20px;
     text-align: left;
+}
+
+/* Remplace l'espacement codé en dur */
+.form-group-last {
+    margin-bottom: 30px;
 }
 
 .form-group label {

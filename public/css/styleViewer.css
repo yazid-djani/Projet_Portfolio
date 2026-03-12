@@ -332,8 +332,14 @@ body {
 /* ============================================
    OUTILS
    ============================================ */
-.outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
-.outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+.outils-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+.outils-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 30px 0; /* Ajoute de l'espace en haut et en bas pour laisser les éléments déborder */
+}
 
 .outil-card {
     width: 120px;
@@ -343,19 +349,48 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease; /* Rend l'animation fluide */
-    cursor: default; /* Curseur normal pour montrer que ce n'est pas cliquable */
+    /* Transition un peu "élastique" pour le zoom */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
+    position: relative;
 }
 
-/* L'animation au survol (Glow + Soulèvement) */
+/* --- EFFET MASHUP / ÉCHIQUIER DÉSTRUCTURÉ --- */
+/* On décale une carte sur deux vers le bas */
+.outil-card:nth-child(2n) {
+    margin-top: 35px;
+}
+/* On décale une carte sur trois vers le haut pour casser la ligne */
+.outil-card:nth-child(3n) {
+    margin-top: -20px;
+}
+/* On rajoute un petit décalage sur une carte sur cinq pour le côté aléatoire */
+.outil-card:nth-child(5n) {
+    margin-top: 15px;
+}
+
+/* --- ANIMATION AU SURVOL (Zoom + Surlignage Gris) --- */
 .outil-card:hover {
-    transform: translateY(-5px); /* Monte légèrement */
-    border-color: var(--color-highlight); /* Bordure bleue */
-    box-shadow: 0 0 25px rgba(37, 106, 244, 0.4); /* L'effet de lueur du bouton Hero */
+    transform: scale(1.15); /* Zoom de 15% */
+    border-color: rgba(255, 255, 255, 0.4); /* Bordure gris/blanc */
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.08); /* Douce lueur grise/blanche */
     background: rgba(255, 255, 255, 0.08); /* Éclaircit légèrement le fond */
+    z-index: 10; /* Fait passer la carte par-dessus les autres pendant le zoom */
 }
 
-.outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
+.outil-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+/* L'icône à l'intérieur grossit aussi légèrement au survol */
+.outil-card:hover .outil-img {
+    transform: scale(1.05);
+}
+
 .outil-name { font-size: 12px; font-weight: 500; text-align: center; }
 
 /* ============================================

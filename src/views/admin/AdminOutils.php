@@ -30,12 +30,15 @@
         </form>
     </div>
 
-    <div class="dashboard-grid">
+    <div class="outils-grid-admin">
         <?php foreach ($outils as $o): ?>
             <div class="dashboard-card outil-card-admin">
+                <a href="?page=outils&action=delete&id=<?= $o['id'] ?>" class="btn-delete-corner" title="Supprimer cet outil" onclick="return confirm('Voulez-vous vraiment supprimer cet outil ?')">
+                    <i class="fas fa-times"></i>
+                </a>
+
                 <img src="public/images/<?= htmlspecialchars($o['image_url']) ?>" class="outil-img-admin" alt="Outil">
                 <h4 class="outil-title-admin"><?= htmlspecialchars($o['nom']) ?></h4>
-                <a href="?page=outils&action=delete&id=<?= $o['id'] ?>" class="btn-secondary btn-danger w-100" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i></a>
             </div>
         <?php endforeach; ?>
     </div>

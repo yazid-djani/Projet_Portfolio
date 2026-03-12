@@ -20,6 +20,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    padding-bottom: 60px;
 }
 
 .admin-header {
@@ -70,8 +71,9 @@
     color: #ff5f57;
 }
 
+
 /* ============================================
-   AJOUTS POUR NETTOYAGE CSS INLINE (ADMIN)
+   CLASSES UTILITAIRES (Nettoyage du CSS inline)
    ============================================ */
 
 /* Headers et conteneurs flexibles */
@@ -125,11 +127,6 @@
 .projet-title-admin { font-size: 18px; color: var(--text-headline); margin-bottom: 5px; }
 .projet-cat-admin { font-size: 13px; color: var(--color-highlight); margin-bottom: 15px; text-transform: uppercase; }
 
-/* Outils Admin Card */
-.outil-card-admin { padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.outil-img-admin { width: 50px; height: 50px; object-fit: contain; }
-.outil-title-admin { color: #fff; font-size: 14px; }
-
 /* Compétences Admin Card */
 .comp-card-admin { padding: 15px; display: flex; justify-content: space-between; align-items: center; }
 .comp-info-admin { text-align: left; }
@@ -156,3 +153,82 @@
 .date-col { font-size: 13px; }
 .path-col { font-size: 13px; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .font-bold { font-weight: bold; }
+
+
+/* ============================================
+   GRILLE DES OUTILS (Design V2 - Compact)
+   ============================================ */
+
+/* Grille spécifique pour les petites cartes (Outils) */
+.outils-grid-admin {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Outils Admin Card (Format compact comme la page visiteur) */
+.outil-card-admin {
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    position: relative;
+    width: 140px;
+    height: 140px;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.outil-card-admin:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-5px);
+    border-color: var(--color-highlight);
+}
+
+.outil-img-admin {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.outil-title-admin {
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ajoute "..." si le nom est trop long */
+    white-space: nowrap;
+}
+
+/* La petite croix de suppression en haut à droite */
+.btn-delete-corner {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(255, 95, 87, 0.1);
+    border: 1px solid rgba(255, 95, 87, 0.3);
+    color: #ff5f57;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-delete-corner:hover {
+    background-color: #ff5f57;
+    color: #fff;
+    transform: scale(1.1);
+}

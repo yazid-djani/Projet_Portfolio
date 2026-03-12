@@ -333,49 +333,62 @@ body {
    OUTILS
    ============================================ */
 .outils-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+
 .outils-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px;
-    padding: 30px 0; /* Ajoute de l'espace en haut et en bas pour laisser les éléments déborder */
+    align-items: center; /* Centre les éléments verticalement sur la ligne */
+    gap: 30px; /* Garantit un espacement strict et identique entre toutes les cartes */
+    padding: 50px 0; /* Plus d'espace pour laisser les cartes respirer avec le gros zoom */
 }
 
 .outil-card {
-    width: 120px;
+    width: 120px; /* Taille de base */
     height: 120px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* Transition un peu "élastique" pour le zoom */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: default;
     position: relative;
 }
 
-/* --- EFFET MASHUP / ÉCHIQUIER DÉSTRUCTURÉ --- */
-/* On décale une carte sur deux vers le bas */
+/* --- EFFET MASHUP & TAILLES ALÉATOIRES --- */
+/* Une carte sur deux est plus grande et descendue */
 .outil-card:nth-child(2n) {
-    margin-top: 35px;
+    width: 140px;
+    height: 140px;
+    margin-top: 40px;
 }
-/* On décale une carte sur trois vers le haut pour casser la ligne */
+
+/* Une carte sur trois est plus petite et montée */
 .outil-card:nth-child(3n) {
-    margin-top: -20px;
+    width: 100px;
+    height: 100px;
+    margin-top: -30px;
 }
-/* On rajoute un petit décalage sur une carte sur cinq pour le côté aléatoire */
+
+/* Une carte sur cinq est de taille moyenne avec un petit décalage */
 .outil-card:nth-child(5n) {
+    width: 130px;
+    height: 130px;
     margin-top: 15px;
 }
 
-/* --- ANIMATION AU SURVOL (Zoom + Surlignage Gris) --- */
+/* Ajustement proportionnel de la taille des icônes pour les petites et grandes cartes */
+.outil-card:nth-child(3n) .outil-img { width: 35px; height: 35px; }
+.outil-card:nth-child(2n) .outil-img { width: 55px; height: 55px; }
+
+/* --- ANIMATION AU SURVOL (Gros Zoom + Lueur Argentée) --- */
 .outil-card:hover {
-    transform: scale(1.15); /* Zoom de 15% */
-    border-color: rgba(255, 255, 255, 0.4); /* Bordure gris/blanc */
-    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.08); /* Douce lueur grise/blanche */
-    background: rgba(255, 255, 255, 0.08); /* Éclaircit légèrement le fond */
-    z-index: 10; /* Fait passer la carte par-dessus les autres pendant le zoom */
+    transform: scale(1.35); /* Agrandit fortement la case (Zoom de 35%) */
+    border-color: rgba(255, 255, 255, 0.5); /* Bordure blanche plus prononcée */
+    box-shadow: 0 20px 45px rgba(255, 255, 255, 0.12); /* Lueur grise plus large */
+    background: rgba(255, 255, 255, 0.1); /* Rend le fond un peu plus clair */
+    z-index: 20; /* Fait passer la carte bien au-dessus de ses voisines */
 }
 
 .outil-img {
@@ -386,13 +399,12 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* L'icône à l'intérieur grossit aussi légèrement au survol */
+/* L'icône à l'intérieur subit aussi un petit bond au survol */
 .outil-card:hover .outil-img {
-    transform: scale(1.05);
+    transform: scale(1.15);
 }
 
 .outil-name { font-size: 12px; font-weight: 500; text-align: center; }
-
 /* ============================================
    CONTACT
    ============================================ */

@@ -9,12 +9,12 @@
 <?php require_once __DIR__ . '/../layout/navbarAdmin.php'; ?>
 
 <main class="admin-main">
-    <div class="admin-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+    <div class="admin-header admin-header-flex">
         <div>
             <h1>Gestion des <span class="highlight">Projets</span></h1>
             <p>Gérez les projets affichés sur votre portfolio.</p>
         </div>
-        <a href="?page=projets&action=create" class="btn-primary" style="margin-bottom: 10px;">
+        <a href="?page=projets&action=create" class="btn-primary mb-10">
             <i class="fas fa-plus"></i> Nouveau Projet
         </a>
     </div>
@@ -23,15 +23,15 @@
 
     <div class="dashboard-grid">
         <?php if (empty($projets)): ?>
-            <p style="color: var(--text-paragraph);">Aucun projet pour le moment.</p>
+            <p class="msg-empty">Aucun projet pour le moment.</p>
         <?php else: ?>
             <?php foreach ($projets as $p): ?>
-                <div class="dashboard-card" style="padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <img src="/public/images/<?= htmlspecialchars($p['image_url']) ?>" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
-                    <h3 style="font-size: 18px; color: var(--text-headline); margin-bottom: 5px;"><?= htmlspecialchars($p['titre']) ?></h3>
-                    <p style="font-size: 13px; color: var(--color-highlight); margin-bottom: 15px; text-transform: uppercase;"><?= htmlspecialchars($p['categorie']) ?></p>
+                <div class="dashboard-card projet-card-admin">
+                    <img src="/public/images/<?= htmlspecialchars($p['image_url']) ?>" class="projet-img-admin" alt="Projet">
+                    <h3 class="projet-title-admin"><?= htmlspecialchars($p['titre']) ?></h3>
+                    <p class="projet-cat-admin"><?= htmlspecialchars($p['categorie']) ?></p>
 
-                    <a href="?page=projets&action=delete&id=<?= $p['id'] ?>" class="btn-secondary" style="border-color:#ff5f57; color:#ff5f57; width: 100%;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
+                    <a href="?page=projets&action=delete&id=<?= $p['id'] ?>" class="btn-secondary btn-danger w-100" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')">
                         <i class="fas fa-trash"></i> Supprimer
                     </a>
                 </div>

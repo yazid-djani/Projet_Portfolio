@@ -10,13 +10,13 @@
     <div class="admin-header"><h1>Gestion des <span class="highlight">Certifications</span></h1></div>
     <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
 
-    <div class="dashboard-card admin-form-container" style="text-align: left; transform: none; margin-bottom: 30px;">
+    <div class="dashboard-card admin-form-container admin-form-left form-mb-30">
         <form action="?page=certifications" method="POST" enctype="multipart/form-data" class="admin-form">
 
             <div class="form-group">
                 <label>Image du certificat :</label>
                 <input type="file" name="image_certif" accept="image/*" required onchange="previewImg(event)">
-                <img id="img-preview" src="#" alt="Aperçu" style="display:none; width:150px; margin-top:10px; border-radius:8px;">
+                <img id="img-preview" src="#" alt="Aperçu" class="img-preview-rect" style="display:none;">
             </div>
 
             <div class="form-group">
@@ -35,11 +35,13 @@
 
     <div class="dashboard-grid">
         <?php foreach ($certifications as $c): ?>
-            <div class="dashboard-card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <img src="public/images/<?= htmlspecialchars($c['image_url']) ?>" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;">
-                <h4 style="color:#fff; font-size:16px; margin: 0; text-align: center;"><?= htmlspecialchars($c['nom']) ?></h4>
-                <p style="font-size: 13px; text-align: center; opacity: 0.8; margin: 0;"><?= htmlspecialchars($c['description']) ?></p>
-                <a href="?page=certifications&action=delete&id=<?= $c['id'] ?>" class="btn-secondary" style="border-color:#ff5f57; color:#ff5f57; width: 100%; text-align: center;" onclick="return confirm('Supprimer ?')"><i class="fas fa-trash"></i> Supprimer</a>
+            <div class="dashboard-card certif-card-admin">
+                <img src="public/images/<?= htmlspecialchars($c['image_url']) ?>" class="certif-img-admin" alt="Certificat">
+                <h4 class="certif-title-admin"><?= htmlspecialchars($c['nom']) ?></h4>
+                <p class="certif-desc-admin"><?= htmlspecialchars($c['description']) ?></p>
+                <a href="?page=certifications&action=delete&id=<?= $c['id'] ?>" class="btn-secondary btn-danger w-100" onclick="return confirm('Supprimer ?')">
+                    <i class="fas fa-trash"></i> Supprimer
+                </a>
             </div>
         <?php endforeach; ?>
     </div>

@@ -11,12 +11,12 @@
 <main class="admin-main">
     <div class="admin-header">
         <h1>Créer un <span class="highlight">Projet</span></h1>
-        <a href="?page=dashboard" class="btn-secondary" style="margin-top: 15px;">Retour au Dashboard</a>
+        <a href="?page=dashboard" class="btn-secondary mt-15">Retour au Dashboard</a>
     </div>
 
     <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
 
-    <div class="dashboard-card admin-form-container" style="text-align: left; transform: none;">
+    <div class="dashboard-card admin-form-container admin-form-left">
         <form action="?page=projets&action=create" method="POST" enctype="multipart/form-data" class="admin-form">
 
             <div class="form-group">

@@ -11,18 +11,18 @@
 <main class="admin-main">
     <div class="admin-header">
         <h1>Paramètres du <span class="highlight">Profil</span></h1>
-        <a href="?page=dashboard" class="btn-secondary" style="margin-top: 15px;">Retour au Dashboard</a>
+        <a href="?page=dashboard" class="btn-secondary mt-15">Retour au Dashboard</a>
     </div>
 
     <?php if (!empty($message)) echo "<div class='admin-success'>$message</div>"; ?>
 
-    <div class="dashboard-card admin-form-container" style="text-align: left; transform: none;">
+    <div class="dashboard-card admin-form-container admin-form-left">
         <form action="?page=profil" method="POST" enctype="multipart/form-data" class="admin-form">
 
             <div class="form-group">
                 <label>Photo de profil :</label>
-                <div style="margin-bottom: 10px;">
-                    <img id="img-preview" src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Actuelle" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-highlight);">
+                <div class="mb-10">
+                    <img id="img-preview" src="public/images/<?= htmlspecialchars($profil['image_profil'] ?? 'default_profil.png') ?>" alt="Actuelle" class="img-preview-round">
                 </div>
                 <input type="file" name="photo_profil" accept="image/*" onchange="previewImg(event)">
             </div>
@@ -70,10 +70,10 @@
             <div class="form-group">
                 <label>Uploader votre CV (Format PDF uniquement) :</label>
                 <?php if(!empty($profil['lien_cv'])): ?>
-                    <p style="font-size: 13px; margin-bottom: 5px; color: #28c840;">✅ Un CV est actuellement en ligne (<a href="/?mon_cv" target="_blank" style="color: #3b82f6;">Le voir</a>)</p>
+                    <p class="text-success">✅ Un CV est actuellement en ligne (<a href="/?mon_cv" target="_blank" class="text-link">Le voir</a>)</p>
                 <?php endif; ?>
                 <input type="file" name="fichier_cv" accept="application/pdf">
-                <small style="color: var(--text-paragraph); margin-top: 5px;">Laissez vide pour conserver le CV actuel.</small>
+                <small class="text-hint">Laissez vide pour conserver le CV actuel.</small>
             </div>
 
             <button type="submit" class="btn-primary">Sauvegarder les modifications</button>

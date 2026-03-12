@@ -14,34 +14,34 @@
         <p>Vos derniers messages de contact.</p>
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 20px; max-width: 1000px; margin: 0 auto;">
+    <div class="msg-list-container">
         <?php if (empty($messages)): ?>
-            <p style="text-align: center; color: var(--text-paragraph);">Aucun message reçu pour le moment.</p>
+            <p class="msg-empty">Aucun message reçu pour le moment.</p>
         <?php else: ?>
             <?php foreach ($messages as $msg): ?>
-                <div class="dashboard-card" style="text-align: left; padding: 25px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; border-bottom: 1px solid var(--border-glass); padding-bottom: 15px;">
+                <div class="dashboard-card msg-card">
+                    <div class="msg-header">
                         <div>
-                            <h3 style="font-size: 18px; margin-bottom: 5px;"><?= htmlspecialchars($msg['sujet']) ?: 'Sans sujet' ?></h3>
-                            <p style="font-size: 13px; color: var(--text-paragraph);">
+                            <h3 class="msg-title"><?= htmlspecialchars($msg['sujet']) ?: 'Sans sujet' ?></h3>
+                            <p class="msg-meta">
                                 <i class="fas fa-user"></i> <?= htmlspecialchars($msg['nom']) ?> &nbsp;|&nbsp;
-                                <i class="fas fa-envelope"></i> <a href="mailto:<?= htmlspecialchars($msg['email']) ?>" style="color: var(--color-highlight); text-decoration: none;"><?= htmlspecialchars($msg['email']) ?></a>
+                                <i class="fas fa-envelope"></i> <a href="mailto:<?= htmlspecialchars($msg['email']) ?>"><?= htmlspecialchars($msg['email']) ?></a>
                             </p>
                         </div>
-                        <div style="text-align: right;">
-                            <span style="font-size: 12px; color: var(--text-paragraph); display: block; margin-bottom: 10px;">
+                        <div class="text-right">
+                            <span class="msg-date">
                                 <?= date('d/m/Y à H:i', strtotime($msg['created_at'])) ?>
                             </span>
-                            <a href="?page=messages&action=delete&id=<?= $msg['id'] ?>" class="btn-secondary" style="border-color:#ff5f57; color:#ff5f57; padding: 6px 12px; font-size: 12px;" onclick="return confirm('Supprimer ce message ?')">
+                            <a href="?page=messages&action=delete&id=<?= $msg['id'] ?>" class="btn-secondary btn-danger btn-sm" onclick="return confirm('Supprimer ce message ?')">
                                 <i class="fas fa-trash"></i> Supprimer
                             </a>
                         </div>
                     </div>
 
-                    <p style="font-size: 14px; line-height: 1.8; color: var(--text-headline); white-space: pre-wrap;"><?= htmlspecialchars($msg['message']) ?></p>
+                    <p class="msg-body"><?= htmlspecialchars($msg['message']) ?></p>
 
-                    <div style="margin-top: 20px;">
-                        <a href="mailto:<?= htmlspecialchars($msg['email']) ?>?subject=Re: <?= htmlspecialchars($msg['sujet']) ?>" class="btn-primary" style="padding: 10px 20px; font-size: 13px;">
+                    <div class="msg-actions">
+                        <a href="mailto:<?= htmlspecialchars($msg['email']) ?>?subject=Re: <?= htmlspecialchars($msg['sujet']) ?>" class="btn-primary msg-reply-btn">
                             <i class="fas fa-reply"></i> Répondre par mail
                         </a>
                     </div>

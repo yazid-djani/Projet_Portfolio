@@ -442,3 +442,120 @@ body {
     .section-title { font-size: 24px; }
     .hero-window-content, .about-window-content { padding: 30px 20px; }
 }
+
+/* ============================================
+   CERTIFICATIONS (Grille + Animation Zoom)
+   ============================================ */
+.certif-grid-viewer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0; /* Marge pour le zoom */
+}
+
+.certif-card-viewer {
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-apple);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Effet fluide et élastique */
+    position: relative;
+    z-index: 1;
+    cursor: default;
+}
+
+.certif-card-viewer img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+/* L'animation au survol copiée des Outils */
+.certif-card-viewer:hover {
+    transform: scale(1.12); /* Agrandissement qui colle les voisines */
+    border-color: rgba(255, 255, 255, 0.5); /* Bordure blanche/grise */
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.12); /* Lueur d'argent */
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10; /* Fait passer la carte au-dessus des autres */
+}
+
+.certif-card-viewer:hover img {
+    transform: scale(1.05); /* L'image gonfle à l'intérieur de la carte */
+}
+
+
+/* ============================================
+   MISE EN BLANC DES LIENS DE CONTACT
+   ============================================ */
+/* Force les liens de la section Contact (email, etc.) à être en blanc */
+.contact-item a {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+}
+.contact-item a:hover {
+    color: var(--color-highlight) !important;
+}
+
+
+/* ============================================
+   FOOTER VIEWER
+   ============================================ */
+.footer-viewer {
+    margin-top: 80px;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid var(--border-glass);
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-text {
+    color: var(--text-paragraph);
+    font-size: 14px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+/* Design des boutons sociaux (GitHub/LinkedIn) du Footer */
+.footer-socials a {
+    color: #ffffff; /* Icônes en blanc */
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-socials a:hover {
+    background: var(--color-highlight); /* Devient bleu au survol */
+    border-color: var(--color-highlight);
+    transform: translateY(-5px); /* Se soulève */
+    box-shadow: 0 10px 20px rgba(37, 106, 244, 0.3); /* Lueur bleutée */
+}

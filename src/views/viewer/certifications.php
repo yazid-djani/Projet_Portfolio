@@ -3,14 +3,14 @@
         <h2 class="section-title">Certifications</h2>
         <p class="section-subtitle">Mes diplômes et attestations</p>
     </div>
-    <div class="projet-grid">
+    <div class="certif-grid-viewer">
         <?php if (empty($certifications)): ?>
             <p>Aucune certification pour le moment.</p>
         <?php else: ?>
             <?php foreach ($certifications as $certif): ?>
-                <div class="projet-card animate-fade-up text-center">
-                    <img src="/public/images/<?= htmlspecialchars($certif['image_url']) ?>" alt="Certification" class="w-100">
-                    <h3 class="card-title"><br><?= htmlspecialchars($certif['nom']) ?></h3>
+                <div class="certif-card-viewer animate-fade-up">
+                    <img src="/public/images/<?= htmlspecialchars($certif['image_url']) ?>" alt="Certification">
+                    <h3 class="card-title"><?= htmlspecialchars($certif['nom']) ?></h3>
                     <p class="card-description"><?= htmlspecialchars($certif['description']) ?></p>
                 </div>
             <?php endforeach; ?>

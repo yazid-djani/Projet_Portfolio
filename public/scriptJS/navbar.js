@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("section, .hero-wrapper").forEach((section) => {
             const sectionTop = section.offsetTop;
             // On déduit 150px pour anticiper la zone d'arrivée
-            if (pageYOffset >= sectionTop - 100) {
+            if (pageYOffset >= sectionTop - 200) {
                 current = section.getAttribute("id");
             }
         });

@@ -8,6 +8,7 @@
         <a href="#projets">Projets</a>
         <a href="#competences">Compétences</a>
         <a href="#outils">Outils</a>
+        <a href="#certifications">Outils</a>
         <a href="#contact" class="nav-contact-btn"><i class="fas fa-paper-plane"></i> Contact</a>
     </div>
 </nav>

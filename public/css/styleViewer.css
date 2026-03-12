@@ -334,7 +334,27 @@ body {
    ============================================ */
 .outils-section { padding: 40px 20px; max-width: 1100px; margin: 0 auto; }
 .outils-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-.outil-card { width: 120px; height: 120px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+.outil-card {
+    width: 120px;
+    height: 120px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* Rend l'animation fluide */
+    cursor: default; /* Curseur normal pour montrer que ce n'est pas cliquable */
+}
+
+/* L'animation au survol (Glow + Soulèvement) */
+.outil-card:hover {
+    transform: translateY(-5px); /* Monte légèrement */
+    border-color: var(--color-highlight); /* Bordure bleue */
+    box-shadow: 0 0 25px rgba(37, 106, 244, 0.4); /* L'effet de lueur du bouton Hero */
+    background: rgba(255, 255, 255, 0.08); /* Éclaircit légèrement le fond */
+}
+
 .outil-img { width: 45px; height: 45px; object-fit: contain; margin-bottom: 12px; }
 .outil-name { font-size: 12px; font-weight: 500; text-align: center; }
 

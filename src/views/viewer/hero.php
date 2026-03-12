@@ -21,7 +21,7 @@
                     Bienvenue sur le <span class="highlight text-transparent bg-clip-text">portfolio</span>
                 </h1>
                 <p class="hero-desc">
-                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, <strong><?= htmlspecialchars($profil['titre_poste'] ?? '') ?></strong>.
+                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projets" class="btn-primary btn-glow">Voir mes projets</a>

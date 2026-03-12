@@ -11,7 +11,7 @@
 
 /* --- FIX NAVBAR : Règle le point d'arrivée des clics du menu --- */
 html {
-    scroll-padding-top: 100px; /* Décale l'arrêt de 100px vers le bas pour la navbar */
+    scroll-padding-top: 700px; /* Décale l'arrêt de 100px vers le bas pour la navbar */
     scroll-behavior: smooth;   /* Animation de défilement fluide native */
 }
 

@@ -38,17 +38,12 @@
             </div>
 
             <div class="form-group">
-                <label>Titre/Poste:</label>
-                <input type="text" name="titre_poste" value="<?= htmlspecialchars($profil['titre_poste'] ?? '') ?>">
-            </div>
-
-            <div class="form-group">
-                <label>Description Hero (Texte d'accueil):</label>
+                <label>Texte d'accueil - Hero :</label>
                 <textarea name="description_hero" rows="4"><?= htmlspecialchars($profil['description_hero'] ?? '') ?></textarea>
             </div>
 
             <div class="form-group">
-                <label>À propos (Texte de présentation détaillé):</label>
+                <label>Texte de présentation - A propos:</label>
                 <textarea name="description_about" rows="6"><?= htmlspecialchars($profil['description_about'] ?? '') ?></textarea>
             </div>
 

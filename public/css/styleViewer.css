@@ -17,7 +17,7 @@ html {
 
 /* Évite que la barre de navigation initiale ne cache le haut du site */
 body {
-    padding-top: 700px;
+    padding-top: 140px;
 }
 
 /* Classes utilitaires */

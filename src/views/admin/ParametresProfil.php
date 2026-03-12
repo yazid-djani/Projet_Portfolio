@@ -32,12 +32,23 @@
                 <input type="text" name="prenom" value="<?= htmlspecialchars($profil['prenom'] ?? '') ?>">
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-10">
                 <label>Nom:</label>
                 <input type="text" name="nom" value="<?= htmlspecialchars($profil['nom'] ?? '') ?>">
             </div>
 
-            <div class="form-group">
+            <div class="form-row-flex mb-10">
+                <div class="form-group form-col-1">
+                    <label>Poste :</label>
+                    <input type="text" name="titre_poste" value="<?= htmlspecialchars($profil['titre_poste'] ?? '') ?>" placeholder="Ex: Étudiant">
+                </div>
+                <div class="form-group form-col-1">
+                    <label>Entreprise / École :</label>
+                    <input type="text" name="entreprise" value="<?= htmlspecialchars($profil['entreprise'] ?? '') ?>" placeholder="Ex: IPSSI Paris">
+                </div>
+            </div>
+
+            <div class="form-group mt-15">
                 <label>Texte d'accueil - Hero :</label>
                 <textarea name="description_hero" rows="4"><?= htmlspecialchars($profil['description_hero'] ?? '') ?></textarea>
             </div>
@@ -67,16 +78,29 @@
                 <input type="text" name="localisation" value="<?= htmlspecialchars($profil['localisation'] ?? '') ?>" placeholder="Ex: Paris, France">
             </div>
 
-            <div class="form-group">
+            <div class="form-group mt-15">
                 <label>Uploader votre CV (Format PDF uniquement) :</label>
-                <?php if(!empty($profil['lien_cv'])): ?>
-                    <p class="text-success">✅ Un CV est actuellement en ligne (<a href="/?mon_cv" target="_blank" class="text-link">Le voir</a>)</p>
-                <?php endif; ?>
+
+                <div class="cv-badge-container mb-10">
+                    <?php if(!empty($profil['lien_cv'])): ?>
+                        <a href="/public/images/<?= htmlspecialchars($profil['lien_cv']) ?>" target="_blank" class="cv-badge cv-badge-success">
+                            <i class="fas fa-file-pdf"></i> Voir le CV
+                        </a>
+                        <a href="?page=profil&action=delete_cv" class="btn-delete-cv" title="Supprimer le CV" onclick="return confirm('Êtes-vous sûr de vouloir supprimer définitivement votre CV actuel ?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    <?php else: ?>
+                        <span class="cv-badge cv-badge-danger">
+                            <i class="fas fa-times-circle"></i> Pas de CV
+                        </span>
+                    <?php endif; ?>
+                </div>
+
                 <input type="file" name="fichier_cv" accept="application/pdf">
-                <small class="text-hint">Laissez vide pour conserver le CV actuel.</small>
+                <small class="text-hint">Ajoutez un nouveau fichier pour remplacer l'ancien.</small>
             </div>
 
-            <button type="submit" class="btn-primary">Sauvegarder les modifications</button>
+            <button type="submit" class="btn-primary mt-10">Sauvegarder les modifications</button>
         </form>
     </div>
 </main>

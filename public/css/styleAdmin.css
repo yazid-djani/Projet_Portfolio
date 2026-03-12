@@ -232,3 +232,52 @@
     color: #fff;
     transform: scale(1.1);
 }
+
+/* ============================================
+   BADGES CV (Page Paramètres Profil)
+   ============================================ */
+.cv-badge-container { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+
+.cv-badge {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cv-badge-success {
+    background: rgba(40, 200, 64, 0.1);
+    border: 1px solid rgba(40, 200, 64, 0.3);
+    color: #28c840;
+    transition: all 0.3s ease;
+}
+.cv-badge-success:hover { background: rgba(40, 200, 64, 0.2); border-color: #28c840; }
+
+.cv-badge-danger {
+    background: rgba(255, 95, 87, 0.05);
+    border: 1px solid rgba(255, 95, 87, 0.2);
+    color: var(--text-paragraph);
+}
+
+.btn-delete-cv {
+    color: #ff5f57;
+    background: rgba(255, 95, 87, 0.1);
+    border: 1px solid rgba(255, 95, 87, 0.3);
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.btn-delete-cv:hover {
+    background: #ff5f57;
+    color: #fff;
+    transform: scale(1.05);
+}

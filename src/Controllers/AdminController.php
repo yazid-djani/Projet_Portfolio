@@ -194,24 +194,35 @@ class AdminController
     {
         $profilModel = new Profil();
         $message = null;
+
+        if (isset($_GET['success']) && $_GET['success'] === 'cv_deleted') {
+            $message = "Le CV a été supprimé avec succès.";
+        }
+
         $profilActuel = $profilModel->getProfil();
 
+        // GESTION DE LA SUPPRESSION DU CV DIRECTEMENT VIA LA POUBELLE
+        if (isset($_GET['action']) && $_GET['action'] === 'delete_cv') {
+            if (!empty($profilActuel['lien_cv'])) {
+                self::deleteOldFile($profilActuel['lien_cv']); // Supprime le PDF du serveur
+                $profilActuel['lien_cv'] = ''; // Vide le nom du fichier
+                $profilModel->updateProfil($profilActuel); // Met à jour la BDD
+                header('Location: ?page=profil&success=cv_deleted');
+                exit;
+            }
+        }
+
+        // MISE À JOUR NORMALE DU PROFIL
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Gestion de l'image de profil
             $ancienneImage = $profilActuel['image_profil'] ?? 'default_profil.png';
             $_POST['image_profil'] = self::handleUpload('photo_profil', $ancienneImage);
-
-            // Si une nouvelle photo a été envoyée, on supprime l'ancienne pour faire de la place
             if ($_POST['image_profil'] !== $ancienneImage) {
                 self::deleteOldFile($ancienneImage);
             }
 
-            // Gestion du fichier CV (PDF)
             $ancienCv = $profilActuel['lien_cv'] ?? '';
             $_POST['lien_cv'] = self::handleUpload('fichier_cv', $ancienCv);
-
-            // Si un nouveau CV a été envoyé, on supprime l'ancien PDF
-            if ($_POST['lien_cv'] !== $ancienCv) {
+            if ($_POST['lien_cv'] !== $ancienCv && !empty($ancienCv)) {
                 self::deleteOldFile($ancienCv);
             }
 

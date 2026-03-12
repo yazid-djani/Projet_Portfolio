@@ -21,7 +21,8 @@
                     Bienvenue sur mon <span class="highlight text-transparent bg-clip-text">portfolio</span>
                 </h1>
                 <p class="hero-desc">
-                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>, étudiant chez IPSSI Paris.
+                    Je suis <?= htmlspecialchars($profil['prenom'] ?? '') ?> <?= htmlspecialchars($profil['nom'] ?? '') ?>,
+                    <?= htmlspecialchars($profil['titre_poste'] ?? 'Étudiant') ?> chez <?= htmlspecialchars($profil['entreprise'] ?? 'IPSSI Paris') ?>.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projets" class="btn-primary btn-glow">Voir mes projets</a>

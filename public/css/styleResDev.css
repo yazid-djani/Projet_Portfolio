@@ -2,13 +2,13 @@
    STYLE RESDEV — Slider & Cartes Projets
    ============================================ */
 
-/* --- Section Container --- */
+/* ---- 1. SECTION PRINCIPALE ---- */
 .projets-section {
     padding: 100px 80px;
-    overflow: hidden; /* Important pour le slider */
+    overflow: hidden; /* Indispensable pour masquer la partie cachée du slider */
 }
 
-/* --- Boutons de Filtre (Dev / Reseau) --- */
+/* ---- 2. BOUTONS DE FILTRE (Dev / Réseau) ---- */
 .projets-filter {
     display: flex;
     justify-content: center;
@@ -35,7 +35,7 @@
     background-color: var(--color-highlight-soft);
 }
 
-/* --- SLIDER MECHANISM --- */
+/* ---- 3. MÉCANISME DU SLIDER ---- */
 .projects-viewport {
     width: 100%;
     overflow: hidden;
@@ -44,7 +44,7 @@
 
 .projects-slider {
     display: flex;
-    width: 200%; /* 2 panneaux côte à côte */
+    width: 200%; /* Permet d'avoir les 2 panneaux côte à côte (100% chacun) */
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -53,7 +53,7 @@
     padding: 10px;
 }
 
-/* --- Grille des cartes --- */
+/* ---- 4. GRILLE DES CARTES PROJETS ---- */
 .projet-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -62,14 +62,14 @@
     margin: 0 auto;
 }
 
-/* --- Carte Projet (Design) --- */
+/* ---- 5. DESIGN DE LA CARTE PROJET ---- */
 .projet-card {
     background-color: var(--bg-card);
     border: 1px solid #2a2a30;
     border-radius: 14px;
     padding: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    cursor: pointer; /* Indique qu'on peut cliquer pour la modale */
+    cursor: pointer;
 }
 
 .projet-card:hover {
@@ -78,7 +78,6 @@
     border-color: var(--color-highlight);
 }
 
-/* Icône dans la carte */
 .card-icon {
     width: 50px;
     height: 50px;
@@ -90,7 +89,10 @@
     margin-bottom: 18px;
 }
 
-.card-icon i { font-size: 22px; color: var(--color-highlight); }
+.card-icon i {
+    font-size: 22px;
+    color: var(--color-highlight);
+}
 
 .card-title {
     font-size: 20px;
@@ -106,6 +108,7 @@
     line-height: 1.7;
 }
 
+/* Tags et Boutons dans la carte */
 .card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -133,8 +136,11 @@
     transition: color 0.3s;
 }
 
-.btn-details:hover { color: var(--color-button); }
+.btn-details:hover {
+    color: var(--color-button);
+}
 
+/* État vide (Aucun projet) */
 .no-projets {
     text-align: center;
     color: var(--text-paragraph);
@@ -143,7 +149,7 @@
     padding: 40px;
 }
 
-/* --- Responsive Slider/Projets --- */
+/* ---- 6. RESPONSIVE ---- */
 @media (max-width: 600px) {
     .projets-section { padding: 60px 20px; }
     .projet-grid { grid-template-columns: 1fr; }

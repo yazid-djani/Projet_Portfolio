@@ -2,6 +2,7 @@
    STYLE DE LA PAGE DE CONNEXION ADMIN
    ============================================ */
 
+/* ---- 1. BASE & LAYOUT ---- */
 * {
     margin: 0;
     padding: 0;
@@ -19,6 +20,7 @@
     color: var(--text-headline);
 }
 
+/* ---- 2. CONTENEUR PRINCIPAL ---- */
 .login-container {
     width: 100%;
     max-width: 400px;
@@ -32,22 +34,12 @@
     text-align: center;
 }
 
-.login-header h2 {
-    font-size: 28px;
-    margin-bottom: 5px;
-}
+/* ---- 3. EN-TÊTE DE CONNEXION ---- */
+.login-header h2 { font-size: 28px; margin-bottom: 5px; }
+.login-header p { font-size: 14px; color: var(--text-paragraph); margin-bottom: 25px; }
+.lock-icon-login { color: var(--color-highlight); }
 
-/* Nouveau style pour l'icône */
-.lock-icon-login {
-    color: var(--color-highlight);
-}
-
-.login-header p {
-    font-size: 14px;
-    color: var(--text-paragraph);
-    margin-bottom: 25px;
-}
-
+/* ---- 4. MESSAGES D'ERREUR ---- */
 .login-error {
     background: rgba(255, 95, 87, 0.1);
     color: #ff5f57;
@@ -58,15 +50,9 @@
     border: 1px solid rgba(255, 95, 87, 0.3);
 }
 
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-/* Remplace l'espacement codé en dur */
-.form-group-last {
-    margin-bottom: 30px;
-}
+/* ---- 5. FORMULAIRE & INPUTS ---- */
+.form-group { margin-bottom: 20px; text-align: left; }
+.form-group-last { margin-bottom: 30px; }
 
 .form-group label {
     display: block;
@@ -93,6 +79,7 @@
     background: rgba(255, 255, 255, 0.08);
 }
 
+/* ---- 6. BOUTON DE SOUMISSION ---- */
 .login-btn {
     width: 100%;
     padding: 14px;

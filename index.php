@@ -1,19 +1,8 @@
 <?php
 session_start();
 
-// --- CHARGEMENT DES CLASSES (Requires) ---
-require_once __DIR__ . '/src/Lib/Database.php';
-require_once __DIR__ . '/src/Models/Visite.php';
-require_once __DIR__ . '/src/Models/Profil.php';
-require_once __DIR__ . '/src/Models/Projet.php';
-require_once __DIR__ . '/src/Models/Competence.php';
-require_once __DIR__ . '/src/Models/Outil.php';
-require_once __DIR__ . '/src/Models/Certification.php';
-require_once __DIR__ . '/src/Models/Message.php';
-require_once __DIR__ . '/src/Models/Admin.php';
-require_once __DIR__ . '/src/Models/Parcours.php'; // <-- NOUVEAU MODÈLE
-
-require_once __DIR__ . '/src/Controllers/AdminController.php';
+// --- CHARGEMENT DES CLASSES AVEC COMPOSER ---
+require_once __DIR__ . '/vendor/autoload.php';
 
 // --- ROUTEUR PRINCIPAL ---
 $page = $_GET['page'] ?? 'home';

@@ -48,15 +48,19 @@ if (in_array($page, $adminPages) || $page === 'login') {
 
 // --- PARTIE VISITEUR (Portfolio Public) ---
 
-// 1. Enregistrement de la visite pour le trafic
-$visiteModel = new \App\Models\Visite();
-$visiteModel->enregistrerVisite($_SERVER['REQUEST_URI']);
+// 1. Enregistrement de la visite pour le trafic (Appel statique avec le bon nom de méthode)
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Inconnu';
+\App\Models\Visite::record($_SERVER['REQUEST_URI'], $userAgent);
 
 // 2. Traitement du formulaire de contact (si soumis)
 $contactMessageSuccess = null;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'], $_POST['email'], $_POST['message'])) {
-    $messageModel = new \App\Models\Message();
-    $messageModel->add($_POST);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['email'], $_POST['message'])) {
+    $nom = $_POST['name'];
+    $email = $_POST['email'];
+    $sujet = $_POST['subject'] ?? 'Sans sujet';
+    $message = $_POST['message'];
+
+    \App\Models\Message::add($nom, $email, $sujet, $message);
     $contactMessageSuccess = "Votre message a bien été envoyé !";
 }
 
@@ -64,20 +68,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'], $_POST['email'
 $profilModel = new \App\Models\Profil();
 $profil = $profilModel->getProfil();
 
-$projetModel = new \App\Models\Projet();
-$projets = $projetModel->getAll();
+// Récupération et tri des Projets (statique)
+$projets = \App\Models\Projet::findAll();
+$projetsDev = [];
+$projetsReseau = [];
+foreach ($projets as $p) {
+    if ($p['categorie'] === 'developpement') $projetsDev[] = $p;
+    elseif ($p['categorie'] === 'reseau') $projetsReseau[] = $p;
+}
 
-$competenceModel = new \App\Models\Competence();
-$competencesDev = $competenceModel->getByCategory('developpement');
-$competencesReseau = $competenceModel->getByCategory('reseau');
+// Récupération et tri des Compétences (statique)
+$competences = \App\Models\Competence::findAll();
+$competencesDev = [];
+$competencesReseau = [];
+foreach ($competences as $c) {
+    if ($c['categorie'] === 'developpement') $competencesDev[] = $c;
+    elseif ($c['categorie'] === 'reseau') $competencesReseau[] = $c;
+}
 
-$outilModel = new \App\Models\Outil();
-$outils = $outilModel->getAll();
+$outils = \App\Models\Outil::findAll();
+$certifications = \App\Models\Certification::findAll();
 
-$certificationModel = new \App\Models\Certification();
-$certifications = $certificationModel->getAll();
-
-// NOUVEAU : Récupération du Parcours
+// Récupération du Parcours (instancié car les méthodes ne sont pas statiques dans le modèle)
 $parcoursModel = new \App\Models\Parcours();
 $formations = $parcoursModel->getFormations();
 $experiences = $parcoursModel->getExperiences();

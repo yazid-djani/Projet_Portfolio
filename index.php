@@ -4,6 +4,12 @@ session_start();
 // --- CHARGEMENT DES CLASSES AVEC COMPOSER ---
 require_once __DIR__ . '/vendor/autoload.php';
 
+// --- CHARGEMENT DU FICHIER .env (Base de données) ---
+if (file_exists(__DIR__ . '/.env')) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}
+
 // --- ROUTEUR PRINCIPAL ---
 $page = $_GET['page'] ?? 'home';
 $action = $_GET['action'] ?? null;

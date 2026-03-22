@@ -83,6 +83,16 @@ CREATE TABLE IF NOT EXISTS certifications (
     image_url VARCHAR(255) NOT NULL
     );
 
+-- 9. Table Parcours : Historise les formations et expériences (type, titre, établissement, période, description).
+CREATE TABLE IF NOT EXISTS parcours (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        type ENUM('formation', 'experience') NOT NULL,
+    titre VARCHAR(255) NOT NULL,
+    etablissement VARCHAR(255) NOT NULL,
+    date_periode VARCHAR(100) NOT NULL,
+    description TEXT
+    );
+
 -- Insertion du profil vide par défaut
 INSERT INTO profil (nom, prenom, titre_poste, entreprise, description_hero, description_about, email_contact, lien_github, lien_linkedin, localisation, lien_cv, image_profil)
 VALUES ('', '', '', '', '', '', '', '', '', '', '', 'default_profil.png');

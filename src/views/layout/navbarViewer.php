@@ -5,6 +5,7 @@
     <div class="navbar-links">
         <a href="#hero" class="active">Profil</a>
         <a href="#about">À propos</a>
+        <a href="#parcours">Parcours</a>
         <a href="#projets">Projets</a>
         <a href="#competences">Compétences</a>
         <a href="#outils">Outils</a>

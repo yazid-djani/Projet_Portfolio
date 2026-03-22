@@ -308,4 +308,33 @@ class AdminController
         $messages = \App\Models\Message::findAll();
         require_once __DIR__ . '/../views/admin/ListMessages.php';
     }
+
+    public static function parcours(): void
+    {
+        // On n'oublie pas d'inclure le fichier Parcours en haut du contrôleur s'il ne se charge pas tout seul !
+        require_once __DIR__ . '/../Models/Parcours.php';
+
+        $parcoursModel = new \App\Models\Parcours();
+        $message = null;
+
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            $parcoursModel->delete($_GET['id']);
+            header('Location: ?page=parcours&success=deleted');
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $parcoursModel->add($_POST);
+            $message = "Élément ajouté au parcours avec succès !";
+        }
+
+        if (isset($_GET['success']) && $_GET['success'] === 'deleted') {
+            $message = "Élément supprimé avec succès.";
+        }
+
+        $formations = $parcoursModel->getFormations();
+        $experiences = $parcoursModel->getExperiences();
+
+        require_once __DIR__ . '/../views/admin/AdminParcours.php';
+    }
 }

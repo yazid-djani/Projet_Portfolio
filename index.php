@@ -1,136 +1,97 @@
 <?php
-declare(strict_types=1);
+session_start();
 
-// Démarrage de la session si elle n'est pas déjà lancée
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+// --- CHARGEMENT DES CLASSES (Requires) ---
+require_once __DIR__ . '/src/Lib/Database.php';
+require_once __DIR__ . '/src/Models/Visite.php';
+require_once __DIR__ . '/src/Models/Profil.php';
+require_once __DIR__ . '/src/Models/Projet.php';
+require_once __DIR__ . '/src/Models/Competence.php';
+require_once __DIR__ . '/src/Models/Outil.php';
+require_once __DIR__ . '/src/Models/Certification.php';
+require_once __DIR__ . '/src/Models/Message.php';
+require_once __DIR__ . '/src/Models/Admin.php';
+require_once __DIR__ . '/src/Models/Parcours.php'; // <-- NOUVEAU MODÈLE
+
+require_once __DIR__ . '/src/Controllers/AdminController.php';
+
+// --- ROUTEUR PRINCIPAL ---
+$page = $_GET['page'] ?? 'home';
+$action = $_GET['action'] ?? null;
+
+// Gestion de la déconnexion
+if ($action === 'logout') {
+    \App\Controllers\AdminController::logout();
+    exit;
 }
 
-require_once __DIR__ . '/vendor/autoload.php';
-use Dotenv\Dotenv;
+// --- PARTIE ADMINISTRATION (Panel) ---
+$adminPages = ['dashboard', 'projets', 'competences', 'outils', 'certifications', 'messages', 'statistiques', 'profil', 'parcours'];
 
-// Chargement des variables d'environnement (.env)
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+if (in_array($page, $adminPages) || $page === 'login') {
 
-// ==========================================
-// ROUTAGE : AFFICHAGE DU CV PDF (?mon_cv)
-// ==========================================
-if (isset($_GET['mon_cv'])) {
-    $profil = (new \App\Models\Profil())->getProfil();
-    $cvFile = $profil['lien_cv'] ?? '';
-    $path = __DIR__ . '/public/images/' . $cvFile;
-
-    // On vérifie que le fichier existe et qu'il s'agit bien d'un PDF
-    if (!empty($cvFile) && file_exists($path) && str_ends_with(strtolower($cvFile), '.pdf')) {
-        // Force le navigateur à afficher le PDF proprement dans un nouvel onglet
-        header('Content-Type: application/pdf');
-
-        // Nettoie le nom de famille pour éviter les caractères spéciaux dans le nom du fichier téléchargé
-        $nomFichier = preg_replace('/[^a-zA-Z0-9_-]/', '_', $profil['nom'] ?? 'Portfolio');
-        header('Content-Disposition: inline; filename="CV_' . $nomFichier . '.pdf"');
-
-        readfile($path);
+    if ($page === 'login') {
+        \App\Controllers\AdminController::login();
         exit;
-    } else {
-        die("Le CV n'est pas encore disponible ou n'a pas été uploader au format PDF.");
-    }
-}
-
-// ==========================================
-// ROUTAGE : ACCÈS AU PANEL ADMINISTRATEUR
-// ==========================================
-$host = $_SERVER['HTTP_HOST'];
-$route = 'home'; // Par défaut, on affiche le site public
-
-// Par défaut, le panel s'ouvre via un sous-domaine (ex: admin.votre-site.com)
-if (str_starts_with($host, 'admin.')) {
-    $route = 'admin';
-}
-
-/* * -------------------------------------------------------------------
- * ASTUCE POUR LE DÉVELOPPEMENT LOCAL / UTILISATEURS GITHUB :
- * -------------------------------------------------------------------
- * Si vous n'avez pas de sous-domaine configuré (ex: en local avec XAMPP/WAMP),
- * vous pouvez commenter le bloc 'if' ci-dessus et décommenter
- * celui ci-dessous.
- * Vous accéderez alors à l'admin via l'URL : http://localhost/?admin
- */
-/*
-if (isset($_GET['admin'])) {
-    $route = 'admin';
-}
-*/
-
-// ==========================================
-// CONTRÔLEUR FRONTAL (DISPATCHER)
-// ==========================================
-try {
-    switch ($route) {
-
-        // --- ROUTES DE L'ADMINISTRATION ---
-        case 'admin':
-            $page   = $_GET['page']   ?? 'dashboard';
-            $action = $_GET['action'] ?? null;
-
-            switch ($action) {
-                case 'logout':
-                    \App\Controllers\AdminController::logout();
-                    exit;
-                case 'login':
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        \App\Controllers\AdminController::login();
-                        exit;
-                    }
-                    break;
-            }
-
-            // Vérification de la session : si non connecté -> Page de connexion
-            if (!isset($_SESSION['admin_id'])) {
-                \App\Controllers\AdminController::showLogin();
-                exit;
-            }
-
-            // Routage des pages internes de l'admin
-            switch ($page) {
-                case 'profil': \App\Controllers\AdminController::profil(); break;
-                case 'projets': \App\Controllers\AdminController::projets(); break;
-                case 'competences': \App\Controllers\AdminController::competences(); break;
-                case 'outils': \App\Controllers\AdminController::outils(); break;
-                case 'certifications': \App\Controllers\AdminController::certifications(); break;
-                case 'statistiques': \App\Controllers\AdminController::statistiques(); break;
-                case 'messages': \App\Controllers\AdminController::messages(); break; // <-- NOUVELLE LIGNE
-                case 'dashboard':
-                default:
-                    \App\Controllers\AdminController::dashboard();
-                    break;
-            }
-            break;
-
-        // --- ROUTES DU SITE PUBLIC (VISITEUR) ---
-        case 'home':
-        default:
-            $action = $_GET['action'] ?? null;
-
-            // Route pour enregistrer les visites (appelée en AJAX via JS)
-            if ($action === 'track_visit' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-                \App\Controllers\ProjetController::trackVisit();
-                exit;
-            }
-            // Route pour traiter le formulaire de contact
-            elseif ($action === 'contact' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-                \App\Controllers\ProjetController::handleContact();
-                exit;
-            }
-            // Affichage normal du portfolio
-            else {
-                \App\Controllers\ProjetController::index();
-            }
-            break;
     }
 
-} catch (Exception $e) {
-    // Gestion globale des erreurs fatales
-    http_response_code(500);
-    echo "<h1>Erreur Interne</h1><p>" . htmlspecialchars($e->getMessage()) . "</p>";
+    // Sécurité : Vérification de la session Admin
+    if (!isset($_SESSION['admin_logged']) || $_SESSION['admin_logged'] !== true) {
+        header('Location: ?page=login');
+        exit;
+    }
+
+    // Routage des pages de l'administration
+    switch ($page) {
+        case 'dashboard': \App\Controllers\AdminController::dashboard(); break;
+        case 'projets': \App\Controllers\AdminController::projets(); break;
+        case 'competences': \App\Controllers\AdminController::competences(); break;
+        case 'outils': \App\Controllers\AdminController::outils(); break;
+        case 'certifications': \App\Controllers\AdminController::certifications(); break;
+        case 'messages': \App\Controllers\AdminController::messages(); break;
+        case 'statistiques': \App\Controllers\AdminController::statistiques(); break;
+        case 'profil': \App\Controllers\AdminController::profil(); break;
+        case 'parcours': \App\Controllers\AdminController::parcours(); break; // <-- NOUVELLE ROUTE
+    }
+    exit;
 }
+
+
+// --- PARTIE VISITEUR (Portfolio Public) ---
+
+// 1. Enregistrement de la visite pour le trafic
+$visiteModel = new \App\Models\Visite();
+$visiteModel->enregistrerVisite($_SERVER['REQUEST_URI']);
+
+// 2. Traitement du formulaire de contact (si soumis)
+$contactMessageSuccess = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nom'], $_POST['email'], $_POST['message'])) {
+    $messageModel = new \App\Models\Message();
+    $messageModel->add($_POST);
+    $contactMessageSuccess = "Votre message a bien été envoyé !";
+}
+
+// 3. Récupération de toutes les données de la base de données
+$profilModel = new \App\Models\Profil();
+$profil = $profilModel->getProfil();
+
+$projetModel = new \App\Models\Projet();
+$projets = $projetModel->getAll();
+
+$competenceModel = new \App\Models\Competence();
+$competencesDev = $competenceModel->getByCategory('developpement');
+$competencesReseau = $competenceModel->getByCategory('reseau');
+
+$outilModel = new \App\Models\Outil();
+$outils = $outilModel->getAll();
+
+$certificationModel = new \App\Models\Certification();
+$certifications = $certificationModel->getAll();
+
+// NOUVEAU : Récupération du Parcours
+$parcoursModel = new \App\Models\Parcours();
+$formations = $parcoursModel->getFormations();
+$experiences = $parcoursModel->getExperiences();
+
+// 4. Affichage de la vue Visiteur (qui intègrera toutes ces variables)
+require_once __DIR__ . '/src/views/ViewerPage.php';

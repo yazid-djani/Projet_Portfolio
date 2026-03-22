@@ -106,3 +106,10 @@
 .ip-col { font-family: monospace; color: var(--text-headline); }
 .date-col { font-size: 13px; }
 .path-col { font-size: 13px; max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- 11. PARCOURS ADMIN ---- */
+.parcours-list-admin { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+.parcours-item-admin { display: flex; justify-content: space-between; align-items: flex-start; padding: 20px; text-align: left; }
+.parcours-item-info h4 { color: #fff; font-size: 16px; margin-bottom: 5px; display: flex; align-items: center; }
+.parcours-item-info span { font-size: 13px; color: var(--color-highlight); display: block; margin-bottom: 10px; }
+.parcours-item-info p { font-size: 13px; color: var(--text-paragraph); }

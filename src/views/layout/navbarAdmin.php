@@ -4,6 +4,7 @@
     </a>
     <div class="navbar-links">
         <a href="?page=dashboard">Dashboard</a>
+        <a href="?page=parcours">Parcours</a>
         <a href="?page=projets">Projets</a>
         <a href="?page=competences">Compétences</a>
         <a href="?page=outils">Outils</a>

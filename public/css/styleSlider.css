@@ -1,26 +1,27 @@
 /* ============================================
-   STYLE RESDEV — Slider & Cartes Projets
+   STYLE SLIDER — Boutons, Sliders (Projets/Parcours) & Cartes
    ============================================ */
 
 /* ---- 1. SECTION PRINCIPALE ---- */
 .projets-section {
     padding: 100px 80px;
-    overflow: hidden; /* Indispensable pour masquer la partie cachée du slider */
+    overflow: hidden;
 }
 
-/* ---- 2. BOUTONS DE FILTRE (Dev / Réseau) ---- */
+/* ---- 2. BOUTONS DE FILTRE (Générique) ---- */
 .projets-filter {
     display: flex;
     justify-content: center;
     gap: 12px;
     margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .filter-btn {
     padding: 10px 24px;
     font-size: 14px;
     font-weight: 600;
-    border: 2px solid #2a2a30;
+    border: 2px solid rgba(255, 255, 255, 0.1);
     background-color: transparent;
     color: var(--text-paragraph);
     border-radius: 8px;
@@ -32,23 +33,31 @@
 .filter-btn.active {
     border-color: var(--color-highlight);
     color: var(--color-highlight);
-    background-color: var(--color-highlight-soft);
+    background-color: rgba(37, 106, 244, 0.1); /* Correction du fond bleu clair */
 }
 
-/* ---- 3. MÉCANISME DU SLIDER ---- */
-.projects-viewport {
+/* ---- 3. MÉCANISME DES SLIDERS ---- */
+.projects-viewport,
+.parcours-viewport {
     width: 100%;
     overflow: hidden;
     position: relative;
 }
 
-.projects-slider {
+.parcours-viewport {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.projects-slider,
+.parcours-slider {
     display: flex;
-    width: 200%; /* Permet d'avoir les 2 panneaux côte à côte (100% chacun) */
+    width: 200%;
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.projects-panel {
+.projects-panel,
+.parcours-panel {
     width: 50%;
     padding: 10px;
 }
@@ -64,8 +73,8 @@
 
 /* ---- 5. DESIGN DE LA CARTE PROJET ---- */
 .projet-card {
-    background-color: var(--bg-card);
-    border: 1px solid #2a2a30;
+    background-color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 14px;
     padding: 30px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -74,7 +83,7 @@
 
 .projet-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px var(--color-highlight-soft);
+    box-shadow: 0 15px 40px rgba(37, 106, 244, 0.15);
     border-color: var(--color-highlight);
 }
 
@@ -82,7 +91,7 @@
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    background-color: var(--color-highlight-soft);
+    background-color: rgba(37, 106, 244, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,23 +117,6 @@
     line-height: 1.7;
 }
 
-/* Tags et Boutons dans la carte */
-.card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.tag {
-    padding: 4px 12px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--color-highlight);
-    background-color: var(--color-highlight-soft);
-    border-radius: 20px;
-}
-
 .btn-details {
     margin-top: 15px;
     background: none;
@@ -140,7 +132,6 @@
     color: var(--color-button);
 }
 
-/* État vide (Aucun projet) */
 .no-projets {
     text-align: center;
     color: var(--text-paragraph);
@@ -153,5 +144,4 @@
 @media (max-width: 600px) {
     .projets-section { padding: 60px 20px; }
     .projet-grid { grid-template-columns: 1fr; }
-    .projets-filter { flex-wrap: wrap; }
 }

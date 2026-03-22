@@ -64,22 +64,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     statNumbers.forEach(num => countObserver.observe(num));
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Gestion du slider du Parcours
-    const parcoursBtns = document.querySelectorAll('.parcours-filter');
-    const parcoursSlider = document.getElementById('parcours-slider');
-
-    if (parcoursBtns.length > 0 && parcoursSlider) {
-        parcoursBtns.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                parcoursBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                // Index 0 = Formations (0%), Index 1 = Expériences (-50%)
-                const translateX = index * -50;
-                parcoursSlider.style.transform = `translateX(${translateX}%)`;
-            });
-        });
-    }
-});

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="public/css/couleur.css">
     <link rel="stylesheet" href="public/css/styleNavbar.css">
     <link rel="stylesheet" href="public/css/styleViewer.css">
-    <link rel="stylesheet" href="public/css/styleResDev.css">
+    <link rel="stylesheet" href="public/css/styleSlider.css">
     <link rel="stylesheet" href="public/css/styleOpenProject.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -31,7 +31,7 @@
 <script src="public/scriptJS/navbar.js"></script>
 <script src="public/scriptJS/viewer.js"></script>
 <script src="public/scriptJS/trafic.js"></script>
-<script src="public/scriptJS/ResDevPanel.js"></script>
+<script src="public/scriptJS/slider.js"></script>
 <script src="public/scriptJS/openProjet.js"></script>
 
 </body>

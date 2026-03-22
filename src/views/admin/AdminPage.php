@@ -23,6 +23,12 @@
             <p>Modifier les textes et informations du site public.</p>
         </a>
 
+        <a href="?page=parcours" class="dashboard-card">
+            <div class="card-icon-admin"><i class="fas fa-route"></i></div>
+            <h3>Parcours</h3>
+            <p>Gérer vos formations et vos expériences.</p>
+        </a>
+
         <a href="?page=projets" class="dashboard-card">
             <div class="card-icon-admin"><i class="fas fa-folder-open"></i></div>
             <h3>Projets</h3>
@@ -42,7 +48,8 @@
         </a>
 
         <a href="?page=certifications" class="dashboard-card">
-            <div class="card-icon-admin"><i class="fas fa-award"></i></div> <h3>Certifications</h3>
+            <div class="card-icon-admin"><i class="fas fa-award"></i></div>
+            <h3>Certifications</h3>
             <p>Ajouter des diplômes ou certifications.</p>
         </a>
 

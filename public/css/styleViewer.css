@@ -11,11 +11,10 @@
 
 /* --- FIX NAVBAR : Règle le point d'arrivée des clics du menu --- */
 html {
-    scroll-padding-top: 100px; /* Décale l'arrêt de 100px vers le bas pour la navbar */
-    scroll-behavior: smooth;   /* Animation de défilement fluide native */
+    scroll-padding-top: 100px;
+    scroll-behavior: smooth;
 }
 
-/* Évite que la barre de navigation initiale ne cache le haut du site */
 body {
     padding-top: 140px;
 }
@@ -152,7 +151,7 @@ body {
 .lock-icon, .user-icon { font-size: 10px; }
 
 /* ============================================
-   GLASSMORPHISM CARDS (COMPETENCES, OUTILS, CERTIFICATIONS)
+   GLASSMORPHISM CARDS
    ============================================ */
 .glass-card,
 .competence-category,
@@ -178,9 +177,6 @@ body {
     gap: 40px;
 }
 
-/* ============================================
-   PROFILS
-   ============================================ */
 .hero-window-content {
     padding: 60px 40px;
     display: flex;
@@ -356,6 +352,8 @@ body {
 .contact-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 .contact-item a, .contact-item p { font-size: 13px; text-decoration: none; }
 .contact-item a:hover { color: var(--color-highlight); }
+.contact-item a { color: #ffffff !important; transition: color 0.3s ease; }
+.contact-item a:hover { color: var(--color-highlight) !important; }
 
 .contact-form { flex: 1.5; display: flex; flex-direction: column; gap: 18px; }
 .form-row { display: flex; gap: 18px; }
@@ -408,7 +406,7 @@ body {
 }
 
 /* ============================================
-   CERTIFICATIONS (Grille + Animation Zoom)
+   CERTIFICATIONS
    ============================================ */
 .certif-grid-viewer {
     display: grid;
@@ -453,17 +451,6 @@ body {
 
 .certif-card-viewer:hover img {
     transform: scale(1.05);
-}
-
-/* ============================================
-   MISE EN BLANC DES LIENS DE CONTACT
-   ============================================ */
-.contact-item a {
-    color: #ffffff !important;
-    transition: color 0.3s ease;
-}
-.contact-item a:hover {
-    color: var(--color-highlight) !important;
 }
 
 /* ============================================
@@ -522,10 +509,6 @@ body {
 /* ============================================
    PARCOURS (Timeline Formations & Expériences)
    ============================================ */
-.parcours-viewport { width: 100%; overflow: hidden; position: relative; max-width: 900px; margin: 0 auto; }
-.parcours-slider { display: flex; width: 200%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-.parcours-panel { width: 50%; padding: 10px 20px; }
-
 .timeline { position: relative; padding-left: 30px; margin-top: 10px; }
 
 /* Ligne verticale */
